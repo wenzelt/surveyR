@@ -50,3 +50,17 @@ barplot(colSums(R216, na.rm = T), ylim = c(0,300),main = "Which of the following
 dev.copy(png,'Use_case.png')
 dev.off()
 
+LA01 <- select(singleSourceOfTruthAppended,LA01_01:LA01_03)
+means <- rowMeans(LA01)
+d <- density(means)
+plot(d, main = "LA 01 Legislation protects me from unwanted: access/sharing/processing")
+dev.copy(png,'LA01.png')
+dev.off()
+
+
+LA02 <- select(singleSourceOfTruthAppended,LA02_01:LA02_03)
+means <- rowMeans(LA02)
+d <- density(means)
+plot(d, main = "LA 01 My country prosecutes protects me from unwanted: access/sharing/processing")
+dev.copy(png,'LA02.png')
+dev.off()
