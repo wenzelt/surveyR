@@ -36,9 +36,9 @@ par(mar=c(12, 4 ,4.1 ,2.1))
 barplot(table(singleSourceOfTruthAppended$R204), main = "Purchase Location", ylim = c(0,150), las = 3) #count ownership situation
 dev.copy(png,'Purchase_Location.png')
 dev.off()
-par(mar=c(5.1, 4.1, 4.1, 2.1)
+par(mar=c(5.1, 4.1, 4.1, 2.1))
 
-#################Plotting true false 
+#################Plotting TRUE / FALSE 
 
 R216 <- select(singleSourceOfTruthAppended, R216_01:R216_06)
 barplot(colSums(R216, na.rm = T), ylim = c(0,300),main = "Which of the following Sources did you consult prior to purchasing this device?")
