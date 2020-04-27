@@ -32,9 +32,21 @@ barplot(table(singleSourceOfTruthAppended$R101), main = "Amount of Smart Device 
 dev.copy(png,'Number_Smart_devices_owned.png')
 dev.off()
 
+par(mar=c(12, 4 ,4.1 ,2.1))
+barplot(table(singleSourceOfTruthAppended$R204), main = "Purchase Location", ylim = c(0,150), las = 3) #count ownership situation
+dev.copy(png,'Purchase_Location.png')
+dev.off()
+par(mar=c(5.1, 4.1, 4.1, 2.1)
+
 #################Plotting true false 
 
 R216 <- select(singleSourceOfTruthAppended, R216_01:R216_06)
 barplot(colSums(R216, na.rm = T), ylim = c(0,300),main = "Which of the following Sources did you consult prior to purchasing this device?")
 dev.copy(png,'Source_Consultation.png')
 dev.off()
+
+R210 <- select(singleSourceOfTruthAppended, R210_01:R210_06)
+barplot(colSums(R216, na.rm = T), ylim = c(0,300),main = "Which of the following Sources did you consult prior to purchasing this device?")
+dev.copy(png,'Use_case.png')
+dev.off()
+
