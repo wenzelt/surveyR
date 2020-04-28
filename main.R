@@ -19,7 +19,7 @@ barplot(table(singleSourceOfTruthAppended$A005), main = "singleSourceOfTruthAppe
 dev.copy(png,'singleSourceOfTruthAppended_Size.png')
 dev.off()
 
-barplot(table(singleSourceOfTruthAppended$A006), main = "Personal Income", ylim = c(0,300)) #count ownership situation
+barplot(table(singleSourceOfTruthAppended$A006), main = "Personal Income", ylim = c(0,100),las=2) #count ownership situation
 dev.copy(png,'Personal_Income.png')
 dev.off()
 
