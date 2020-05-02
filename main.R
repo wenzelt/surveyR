@@ -64,3 +64,6 @@ d <- density(means)
 plot(d, main = "LA 01 My country prosecutes protects me from unwanted: access/sharing/processing")
 dev.copy(png,'LA02.png')
 dev.off()
+
+### 3-Way ANOVA over categories ### 
+### t-test for other categroeies###
