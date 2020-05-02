@@ -1,9 +1,12 @@
-list.of.packages <- c("ggplot2", "tidyverse")
+list.of.packages <- c("ggplot2", "tidyverse", "dplyr", "ggpubr")
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
 
 library(tidyverse)
-
+library(dplyr)
+library(ggplot2)
+library(ggpubr)
+ 
 #householasdd <- select(singleSourceOfTruthAppended,participant_id,A004,A005,A006,A007,`Current Country of Residence`)
 
 barplot(table(singleSourceOfTruthAppended$A007), main = "Count Ownership Situation", ylim = c(0,300)) #count ownership situation
@@ -67,3 +70,9 @@ dev.off()
 
 ### 3-Way ANOVA over categories ### 
 ### t-test for other categroeies###
+
+### t-test for owning and device amount ###
+rent_own_id <- select(singleSourceOfTruthAppended, A007, R101) #count ownership situation
+rent_own_id <- subset(rent_own_id, A007 == "Rent" | A007 == "Own")
+rent_own_id$A007 <- as.factor(rent_own_id$A007)
+t.test(rent_own_id$R101 ~ rent_own_id$A007)
