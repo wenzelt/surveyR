@@ -80,3 +80,6 @@ t.test(rent_own$R101 ~ rent_own$A007, mu = 0 , alt = "two.sided", conf =0.95, va
 attach(rent_own)
 t.test(R101[A007=="Rent"], R101[A007=="Own"])
 detach()
+
+###t-test for R3 according to doc###
+R3 <- select(singleSourceOfTruthAppended, A004, A005, A007, R101, R216, HP02_01,HP02_02,HP02_03,HP02_04,HP02_05, R501, R534, R528, R507)
