@@ -73,8 +73,10 @@ dev.off()
 
 ### t-test for owning and device amount ###
 rent_own <- select(singleSourceOfTruthAppended, A007, R101) #count ownership situation
-rent_own <- subset(rent_own_id, A007 == "Rent" | A007 == "Own")
-rent_own$A007 <- as.factor(rent_own_id$A007)
-t.test(rent_own_id$R101 ~ rent_own_id$A007, mu = 0 , alt = "two.sided", conf =0.95, var.eq = F, paired = F)
+rent_own <- subset(rent_own, A007 == "Rent" | A007 == "Own")
+rent_own$A007 <- as.factor(rent_own$A007)
+t.test(rent_own$R101 ~ rent_own$A007, mu = 0 , alt = "two.sided", conf =0.95, var.eq = F, paired = F)
 ##alternative spelling##
+attach(rent_own)
 t.test(R101[A007=="Rent"], R101[A007=="Own"])
+detach()
