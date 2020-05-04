@@ -7,11 +7,11 @@ library(sqldf)
 
 # H1: The purchasing trends of buying a Smart Home device differs internationally.
 H1 <- select(singleSourceOfTruthAppended,'Current Country of Residence', R216,R218,R220,HP02_01:HP02_05)
-
-
+dachData <- subset(H1.16, H1.16$`Current Country of Residence` == "DACH" )
 
 H1.16<- na.omit(select(H1,'Current Country of Residence', R216))
-dachData <- filter(H1.16, !grepl('DACH', 'Current Country of Residence'))
+dachData <- subset(H1.16, 'Current Country of Residence' == "DACH" )
+
 dachData %>% filter(H1.16,'Current Country of Residence'== 'United Kingdom')
 
 test <- c(2,3,4,5)
