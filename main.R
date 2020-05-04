@@ -86,7 +86,7 @@ detach()
 
 ###t-test for R3 according to doc###
 RQ3 <- select(singleSourceOfTruthAppended, A004, A005, A007, R101, R501, R534, R528, R507) #Rq3 Selection
-Children_OwnedDevices <- select(R3,A004,R101) #setting two vars for t test
+Children_OwnedDevices <- select(RQ3,A004,R101) #setting two vars for t test
 Children_OwnedDevices$A004 <- cut(Children_OwnedDevices$A004, breaks=c(0, 1, Inf))
 Children_OwnedDevices$A004 <- factor(Children_OwnedDevices$A004)
 t.test(Children_OwnedDevices$R101~Children_OwnedDevices$A004, mu = 0 , alt = "two.sided", conf =0.95, var.eq = F, paired = F)
