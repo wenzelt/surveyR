@@ -3,11 +3,15 @@
 library(tidyverse)
 library(dplyr)
 library(dbplyr)
+library(ggpubr)
 
 # H1: The purchasing trends of buying a Smart Home device differs internationally.
 H1 <- select(singleSourceOfTruthAppended,'Current Country of Residence', R216,R218,R220,HP02_01:HP02_05)
 #Changes 'Current Country of Residence' to 'country' #spacessuck
 H1 <-H1 %>% rename(country = 'Current Country of Residence')
+
+###########
+###rrCountry Comparison on their Pre-Purchase Consultation R216-R220
 
 ## D1
 H1.16<- na.omit(select(H1,country, R216))
@@ -91,5 +95,45 @@ stacked_groups <- stack(combined_groups)
 H1.R220.aov <- aov(values~ind,data=stacked_groups)
 summary(H1.R220.aov)
 cricitcalF20 <- qf(.95, df1=2, df2=165)
+###########
 
-####Country of Residence; Market Tools; HP02
+###########
+### Country of Residence; Market Tools; HP02
+
+H1.HP<- na.omit(select(H1,country, HP02_01:HP02_05))
+
+##Step 1, Vectors of HP02_01
+
+dachDataHP01 <- subset(H1.HP, H1.HP$country == "DACH" )
+dachDataHP01 <- subset( dachDataHP01, select = -country)
+dachDataHP01 <- select( dachDataHP01, 'HP02_01')
+
+ukDataHP01 <- subset(H1.HP, H1.HP$country == "United Kingdom" )
+ukDataHP01 <- subset( ukDataHP01, select = -country)
+ukDataHP01 <- select( ukDataHP01, 'HP02_01')
+
+usDataHP01 <- subset(H1.HP, H1.HP$country == "United States" )
+usDataHP01 <- subset( usDataHP01, select = -country)
+usDataHP01 <- select( usDataHP01, 'HP02_01')
+
+
+#Data same length?
+dataLength <- c(count(dachDataHP01),count(ukDataHP01),count(usDataHP01))
+shortestDataHP01 <- min(unlist(dataLength))
+# shortesDataHP01 is the size of the us data set
+dachDataHP01Picked <- sample_n(dachDataHP01, shortestDataHP01)
+ukDataHP01Picked <- sample_n(ukDataHP01, shortestDataHP01)
+usDataHP01Picked <- sample_n(ukDataHP01, shortestDataHP01)
+
+##Schritt 2, Data Frame aus Vectoren bauen
+combined_groups <- data.frame(cbind(dachDataHP01Picked,ukDataHP01Picked,usDataHP01Picked))
+##Schritt 3, Gruppen Stacken
+stacked_groups <- stack(combined_groups)
+##Schritt 4, Anova
+H1.HP01_01.aov <- aov(values~ind,data=stacked_groups)
+summary(H1.HP01_01.aov)
+cricitcalHP01_01 <- qf(.95, df1=2, df2=348)
+
+
+
+###########
