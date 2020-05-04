@@ -70,6 +70,10 @@ dev.off()
 
 ### 3-Way ANOVA over categories ### 
 ### t-test for other categroeies###
+ggqqplot(RQ3$R101)
+dev.copy(png,'qqnorm_R101.png')
+dev.off()
+ggqqplot(singleSourceOfTruthAppended$R101)
 
 
 
