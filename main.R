@@ -30,7 +30,6 @@ barplot(table(singleSourceOfTruthAppended$`Current Country of Residence`), main 
 dev.copy(png,'Current Country of Residence.png')
 dev.off()
 
-
 barplot(table(singleSourceOfTruthAppended$R101), main = "Amount of Smart Device from Device List Owned", ylim = c(0,300)) #count ownership situation
 dev.copy(png,'Number_Smart_devices_owned.png')
 dev.off()
@@ -60,7 +59,6 @@ plot(d, main = "LA 01 Legislation protects me from unwanted: access/sharing/proc
 dev.copy(png,'LA01.png')
 dev.off()
 
-
 LA02 <- select(singleSourceOfTruthAppended,LA02_01:LA02_03)
 means <- rowMeans(LA02)
 d <- density(means)
@@ -74,12 +72,7 @@ ggqqplot(RQ3$R101)
 dev.copy(png,'qqnorm_R101.png')
 dev.off()
 ggqqplot(singleSourceOfTruthAppended$R101)
-<<<<<<< HEAD
 ggqqplot(singleSourceOfTruthAppended$HP02_01)
-
-=======
->>>>>>> 8497b56dfd632bdb03a02971ac2fc49db47bed37
-
 
 
 ###t-test for R3 according to doc###
@@ -117,3 +110,6 @@ t.test(Children_DailyUsage$R528~Children_DailyUsage$A004, mu = 0 , alt = "two.si
 RentOwn_DeviceLocation <- select(RQ3,A007,R528) #setting two vars for t test
 RentOwn_DeviceLocation <- subset(RentOwn_DeviceLocation, A007 == "Rent" | A007 == "Own")
 t.test(RentOwn_DeviceLocation$R528~RentOwn_DeviceLocation$A007, mu = 0 , alt = "two.sided", conf =0.95, var.eq = F, paired = F)
+
+
+
