@@ -1,10 +1,13 @@
 # 3-Way Anova RQ2 - Country comparison
 
+list.of.packages <- c("ggplot2", "tidyverse", "dplyr", "ggpubr")
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages)
+
 library(tidyverse)
 library(dplyr)
-library(dbplyr)
+library(ggplot2)
 library(ggpubr)
-
 # H1: The purchasing trends of buying a Smart Home device differs internationally.
 H1 <- select(singleSourceOfTruthAppended,'Current Country of Residence', R216,R218,R220,HP02_01:HP02_05)
 #Changes 'Current Country of Residence' to 'country' #spacessuck
@@ -37,8 +40,7 @@ combined_groups <- data.frame(cbind(dachData,ukDataPicked,usDataPicked))
 stacked_groups <- stack(combined_groups)
 ##Schritt 4, Anova
 H1.R216.aov <- aov(values~ind,data=stacked_groups)
-summary(H1.R216.aov)
-cricitcalF <- qf(.95, df1=2, df2=237)
+cricitcalF <- qf(.95, df1=2, df2=348)
 
 ## D2
 H1.18<- na.omit(select(H1,country, R218))
@@ -65,8 +67,7 @@ combined_groups <- data.frame(cbind(dachData18Picked,ukData18Picked,usData18))
 stacked_groups <- stack(combined_groups)
 ##Schritt 4, Anova
 H1.R218.aov <- aov(values~ind,data=stacked_groups)
-summary(H1.R218.aov)
-cricitcalF18 <- qf(.95, df1=2, df2=258)
+cricitcalF18 <- qf(.95, df1=2, df2=237)
 
 ## D3
 H1.20<- na.omit(select(H1,country, R220))
@@ -93,8 +94,13 @@ combined_groups <- data.frame(cbind(dachData20Picked,ukData20Picked,usData20))
 stacked_groups <- stack(combined_groups)
 ##Schritt 4, Anova
 H1.R220.aov <- aov(values~ind,data=stacked_groups)
-summary(H1.R220.aov)
 cricitcalF20 <- qf(.95, df1=2, df2=165)
+
+summary(H1.R216.aov)
+summary(H1.R218.aov)
+summary(H1.R220.aov)
+
+
 ###########
 
 ###########
@@ -133,7 +139,4 @@ stacked_groups <- stack(combined_groups)
 H1.HP01_01.aov <- aov(values~ind,data=stacked_groups)
 summary(H1.HP01_01.aov)
 cricitcalHP01_01 <- qf(.95, df1=2, df2=348)
-
-
-
 ###########
