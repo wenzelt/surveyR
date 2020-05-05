@@ -10,6 +10,10 @@ library(ggplot2)
 library(ggpubr)
 # H1: The purchasing trends of buying a Smart Home device differs internationally.
 H1 <- select(singleSourceOfTruthAppended,'Current Country of Residence', R216,R218,R220,HP02_01:HP02_05)
+
+likertScaleCheck <- select(singleSourceOfTruthAppended,participant_id, E201_01:E201_20,A305_01:A305_09,S101_01:S101_12,S102_01:S102_09)
+
+
 #Changes 'Current Country of Residence' to 'country' #spacessuck
 H1 <-H1 %>% rename(country = 'Current Country of Residence')
 
@@ -34,11 +38,11 @@ usData <- subset( usData, select = -country)
 ukDataPicked <- sample_n(ukData, 117)
 usDataPicked <- sample_n(usData, 117)
 
-##Schritt 2, Data Frame aus Vectoren bauen
+##Step 2, Built data frame out of vectors
 combined_groups <- data.frame(cbind(dachData,ukDataPicked,usDataPicked))
-##Schritt 3, Gruppen Stacken
+##Step 3, Stack groups
 stacked_groups <- stack(combined_groups)
-##Schritt 4, Anova
+##Step 4, Anova
 H1.R216.aov <- aov(values~ind,data=stacked_groups)
 cricitcalF <- qf(.95, df1=2, df2=348)
 
@@ -61,11 +65,11 @@ dachData18Picked <- sample_n(dachData18, 80)
 ukData18Picked <- sample_n(ukData18, 80)
 #usData18Picked <- sample_n(usData19, 117)
 
-##Schritt 2, Data Frame aus Vectoren bauen
+##Step 2, Built data frame out of vectors
 combined_groups <- data.frame(cbind(dachData18Picked,ukData18Picked,usData18))
-##Schritt 3, Gruppen Stacken
+##Step 3, Stack groups
 stacked_groups <- stack(combined_groups)
-##Schritt 4, Anova
+##Step 4, Anova
 H1.R218.aov <- aov(values~ind,data=stacked_groups)
 cricitcalF18 <- qf(.95, df1=2, df2=237)
 
@@ -88,11 +92,11 @@ dachData20Picked <- sample_n(dachData20, 56)
 ukData20Picked <- sample_n(ukData20, 56)
 #usData20Picked <- sample_n(usData19, 117)
 
-##Schritt 2, Data Frame aus Vectoren bauen
+##Step 2, Built data frame out of vectors
 combined_groups <- data.frame(cbind(dachData20Picked,ukData20Picked,usData20))
-##Schritt 3, Gruppen Stacken
+##Step 3, Stack groups
 stacked_groups <- stack(combined_groups)
-##Schritt 4, Anova
+##Step 4, Anova
 H1.R220.aov <- aov(values~ind,data=stacked_groups)
 cricitcalF20 <- qf(.95, df1=2, df2=165)
 
@@ -131,11 +135,11 @@ dachDataHP01Picked <- sample_n(dachDataHP01, shortestDataHP01)
 ukDataHP01Picked <- sample_n(ukDataHP01, shortestDataHP01)
 usDataHP01Picked <- sample_n(ukDataHP01, shortestDataHP01)
 
-##Schritt 2, Data Frame aus Vectoren bauen
+##Step 2, Built data frame out of vectors
 combined_groups <- data.frame(cbind(dachDataHP01Picked,ukDataHP01Picked,usDataHP01Picked))
-##Schritt 3, Gruppen Stacken
+##Step 3, Stack groups
 stacked_groups <- stack(combined_groups)
-##Schritt 4, Anova
+##Step 4, Anova
 H1.HP01_01.aov <- aov(values~ind,data=stacked_groups)
 summary(H1.HP01_01.aov)
 cricitcalHP01_01 <- qf(.95, df1=2, df2=348)
