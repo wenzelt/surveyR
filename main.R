@@ -66,7 +66,6 @@ plot(d, main = "LA 01 My country prosecutes protects me from unwanted: access/sh
 dev.copy(png,'LA02.png')
 dev.off()
 
-### 3-Way ANOVA over categories ### 
 ### t-test for other categroeies###
 ggqqplot(RQ3$R101)
 dev.copy(png,'qqnorm_R101.png')
@@ -88,11 +87,12 @@ t.test(rent_own$R101 ~ rent_own$A007, mu = 0 , alt = "two.sided", conf =0.95, va
 qqnorm(rent_own$R101)
 qqline(rent_own$R101)
 
-##alternative spelling##
+##alternative spelling for t test ##
 attach(rent_own)
 t.test(R101[A007=="Rent"], R101[A007=="Own"])
 detach()
 
+###t - test### 
 Children_OwnedDevices <- select(RQ3,A004,R101) #setting two vars for t test
 Children_OwnedDevices$A004 <- factor(Children_OwnedDevices$A004)
 t.test(Children_OwnedDevices$R101~Children_OwnedDevices$A004, mu = 0 , alt = "two.sided", conf =0.95, var.eq = F, paired = F)
