@@ -1,4 +1,7 @@
 ##Data Cleaning##
+library(readr)
+singleSourceOfTruthAppended <- read_csv("singleSourceOfTruthAppended.csv",stringsAsFactors = True)
+View(singleSourceOfTruthAppended)
 
 list.of.packages <- c("ggplot2", "tidyverse", "dplyr", "ggpubr")
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
@@ -9,9 +12,19 @@ library(dplyr)
 library(ggplot2)
 library(ggpubr)
 
-
 threshold_lower = mean(time_taken) - 2*sd(time_taken)
 threshold_upper = mean(time_taken) + 2*sd(time_taken)
 ssot_filtered = subset(singleSourceOfTruthAppended, time_taken < threshold_upper & time_taken >threshold_lower)
+ssot_filtered_sosci = subset(singleSourceOfTruthAppended, TIME_SUM < threshold_upper & TIME_SUM >threshold_lower)
+threshold_upper = mean(LA01_01)
 
-apply(ggqqplot(nums))
+ssot_Corrected_LA <- cleanSD(LA01_01)
+cleanSD <- function(column){
+  upper = mean(column) + 2*sd(column)
+  lower = mean(column) - 2*sd(column)
+  filtered = subset(singleSourceOfTruthAppended, column < upper & column >lower)
+  return(filtered)
+}
+
+
+nums <- dplyr::select_if(singleSourceOfTruthAppended, is.numeric)
