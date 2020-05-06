@@ -1,5 +1,4 @@
 # 3-Way Anova RQ2 - Country comparison
-
 list.of.packages <- c("ggplot2", "tidyverse", "dplyr", "ggpubr")
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
@@ -144,3 +143,6 @@ H1.HP01_01.aov <- aov(values~ind,data=stacked_groups)
 summary(H1.HP01_01.aov)
 cricitcalHP01_01 <- qf(.95, df1=2, df2=348)
 ###########
+#!#!#!#! READ YaRrr today for only 9,99$ - EXLUSIVE TIPPS!#!#!#  https://bookdown.org/ndphillips/YaRrr/ 
+#!#!#!#! EXLUSIVE TIPPS - NASTY HACKS - COOL TRICKS - YaRrr has it all!#!#!# 
+#!#!#!#! ORDER NOW +4917647321889!!! ONLY 3 LEFT IN STOCK !!!!!!!!!!!#!#!# 
