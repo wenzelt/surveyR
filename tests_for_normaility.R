@@ -11,17 +11,12 @@ library(ggpubr)
 load.Rdata( filename="SSOT.Rdata", "singleSourceOfTruthAppended" ) ###this loads the ssot from the root dir directly as a data frame 
 nums = dplyr::select_if(singleSourceOfTruthAppended, is.numeric)
 
-f <- function(x) {
-  if (diff(range(x)) == 0) list() else shapiro.test(x)
-}
-
-saveqqplot <- function(column){
-  ggqqplot(column, title = colnames(column)[0])
-}
-
-apply(nums, MARGIN = 2, saveqqplot)
-
 df.shapiro <- apply(nums,2 , shapiro.test)
+df2 <- mutate_all(nums, function(x) as.numeric(as.character(x)))
 
-do.call(rbind, lapply(df,shapiro.test(nums)[c("statistic", "p.value")]))
+nums <- dplyr::select_if(singleSourceOfTruthAppended, is.numeric)
+nums <- select(nums, -c(R233_01,R233_02,R233_03, S101_13))
+nums <- select(nums, R101:S102_09)
+
+normality <- do.call(rbind, lapply(nums, function(x) shapiro.test(x)[c("statistic", "p.value")]))
 

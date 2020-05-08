@@ -111,5 +111,8 @@ RentOwn_DeviceLocation <- select(RQ3,A007,R528) #setting two vars for t test
 RentOwn_DeviceLocation <- subset(RentOwn_DeviceLocation, A007 == "Rent" | A007 == "Own")
 t.test(RentOwn_DeviceLocation$R528~RentOwn_DeviceLocation$A007, mu = 0 , alt = "two.sided", conf =0.95, var.eq = F, paired = F)
 
+likertScale <- dplyr::select_if(likertScaleCheck, is.numeric)
+likertScale <- select(subset(likertScaleCheck, E201_var != 0 ), E201_01:E201_20)
 
-
+likertScale <- lapply(likertScale, as.numeric)
+do.call(rbind, lapply(likertScale,shapiro.test(x)[c("statistic", "p.value")]))
