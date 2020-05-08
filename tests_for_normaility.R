@@ -29,3 +29,4 @@ orange <- lapply(nums, function(x) cleanSD)
 
 normality <- normality(nums)
 batch_shapiro(nums)
+
