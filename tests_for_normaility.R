@@ -18,8 +18,10 @@ f <- function(x) {
 saveqqplot <- function(column){
   ggqqplot(column, title = colnames(column)[0])
 }
+
 apply(nums, MARGIN = 2, saveqqplot)
 
 df.shapiro <- apply(nums,2 , shapiro.test)
 
 do.call(rbind, lapply(df,shapiro.test(nums)[c("statistic", "p.value")]))
+
