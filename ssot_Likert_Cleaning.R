@@ -8,5 +8,6 @@ library(dplyr)
 library(ggplot2)
 library(ggpubr)
 
-
 likertScaleCheck <- select(singleSourceOfTruthAppended,participant_id, E201_01:E201_20,A305_01:A305_09,S101_01:S101_12,S102_01:S102_09)
+
+likertScaleCheck$E2avg <- rowMeans(likertScaleCheck$E201_01:E201_20)
