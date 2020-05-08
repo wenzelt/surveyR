@@ -13,8 +13,8 @@ library(ggpubr)
 threshold_lower = mean(time_taken) - 2*sd(time_taken)
 threshold_upper = mean(time_taken) + 2*sd(time_taken)
 ssot_filtered = subset(singleSourceOfTruthAppended, time_taken < threshold_upper & time_taken >threshold_lower)
-ssot_filtered_sosci = subset(singleSourceOfTruthAppended, TIME_SUM < threshold_upper & TIME_SUM >threshold_lower)
-threshold_upper = mean(LA01_01)
+singleSourceOfTruthAppended = subset(singleSourceOfTruthAppended, TIME_SUM < threshold_upper & TIME_SUM >threshold_lower)
 
 ssot_Corrected_LA <- cleanSD(LA01_01)
 
+description = describe(nums)

@@ -25,8 +25,7 @@ t(lres)
 
 shapiro <- do.call(rbind, lapply(nums, function(x) shapiro.test(x)[c("statistic", "p.value")]))
 
-orange <- lapply(nums, function(x) cleanSD)
-
 normality <- normality(nums)
-batch_shapiro(nums)
 
+corrected = subset(select(likertScaleCheck, E201_01:var_flag),  var_flag != 1)
+orange <- normality(select(corrected, -c(var_flag,S101_13)))
