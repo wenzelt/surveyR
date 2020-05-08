@@ -17,11 +17,4 @@ ssot_filtered_sosci = subset(singleSourceOfTruthAppended, TIME_SUM < threshold_u
 threshold_upper = mean(LA01_01)
 
 ssot_Corrected_LA <- cleanSD(LA01_01)
-cleanSD <- function(column){
-  upper = mean(column) + 2*sd(column)
-  lower = mean(column) - 2*sd(column)
-  filtered = subset(singleSourceOfTruthAppended, column < upper & column >lower)
-  return(filtered)
-}
-
 
