@@ -29,3 +29,9 @@ normality <- normality(nums)
 
 corrected = subset(select(likertScaleCheck, E201_01:var_flag),  var_flag != 1)
 orange <- normality(select(corrected, -c(var_flag,S101_13)))
+
+
+###PLAN FOR CLEANING###
+## removing two sd() from TIME to filter out people not taking the questionnaire seriously
+## cleaining participants who entered repeated values for our likert scale blocks
+## cleaning participants who misanswered likert scale checks 
