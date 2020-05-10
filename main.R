@@ -7,8 +7,6 @@ library(dplyr)
 library(ggplot2)
 library(ggpubr)
  
-#householasdd <- select(singleSourceOfTruthAppended,participant_id,A004,A005,A006,A007,`Current Country of Residence`)
-
 barplot(table(singleSourceOfTruthAppended$A007), main = "Count Ownership Situation", ylim = c(0,300)) #count ownership situation
 dev.copy(png,'RENT_OWN.png')
 dev.off()
@@ -67,7 +65,7 @@ dev.copy(png,'LA02.png')
 dev.off()
 
 ### t-test for other categroeies###
-ggqqplot(RQ3$R101)
+#ggqqplot(RQ3$R101)
 dev.copy(png,'qqnorm_R101.png')
 dev.off()
 ggqqplot(singleSourceOfTruthAppended$R101)
