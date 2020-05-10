@@ -35,8 +35,8 @@ library(ggpubr)
 library(tidyr)
 
 
-threshold_lower = mean(time_taken) - 2*sd(time_taken)
-threshold_upper = mean(time_taken) + 2*sd(time_taken)
+threshold_lower = mean(singleSourceOfTruthAppended$time_taken) - 2*sd(singleSourceOfTruthAppended$time_taken)
+threshold_upper = mean(singleSourceOfTruthAppended$time_taken) + 2*sd(singleSourceOfTruthAppended$time_taken)
 ssot_filtered = subset(singleSourceOfTruthAppended, time_taken < threshold_upper & time_taken >threshold_lower)
 singleSourceOfTruthAppended = subset(singleSourceOfTruthAppended, TIME_SUM < threshold_upper & TIME_SUM >threshold_lower)
 
