@@ -8,6 +8,7 @@ library(dplyr)
 library(ggplot2)
 library(ggpubr)
 # H1: The purchasing trends of buying a Smart Home device differs internationally.
+
 H1 <- select(singleSourceOfTruthAppended,'Current Country of Residence', R216,R218,R220,HP02_01:HP02_05)
 
 likertScaleCheck <- select(singleSourceOfTruthAppended,participant_id, E201_01:E201_20,A305_01:A305_09,S101_01:S101_12,S102_01:S102_09)
@@ -15,7 +16,8 @@ likertScaleCheck <- select(singleSourceOfTruthAppended,participant_id, E201_01:E
 
 #Changes 'Current Country of Residence' to 'country' #spacessuck
 H1 <-H1 %>% rename(country = 'Current Country of Residence')
-
+# if i may propose an alternative: 
+#colnames(H1)[1] <- "country"
 ###########
 ###rrCountry Comparison on their Pre-Purchase Consultation R216-R220
 
