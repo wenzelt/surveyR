@@ -30,5 +30,6 @@ table(A004,R501)
 
 ## checking for dependence of disabling features and having children
 table(A004,R507)
-chisq.test(A004, R507)
+chisq.test(A004, R507) ##In chisq.test(A004, R507) : Chi-squared approximation may be incorrect
+
            
