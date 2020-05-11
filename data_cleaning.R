@@ -35,18 +35,12 @@ library(ggpubr)
 library(tidyr)
 
 load(file = "likertScaleCheck.Rdata")
-orange <- merge(x = ssot_filtered_sosci, y = likertScaleCheck, by = "participant_id" , all.x = TRUE)
-
-threshold_lower = mean(singleSourceOfTruthAppended$time_taken) - 2*sd(singleSourceOfTruthAppended$time_taken)
-threshold_upper = mean(singleSourceOfTruthAppended$time_taken) + 2*sd(singleSourceOfTruthAppended$time_taken)
-ssot_filtered = subset(singleSourceOfTruthAppended, time_taken < threshold_upper & time_taken >threshold_lower)
-
 threshold_lower = mean(singleSourceOfTruthAppended$time_taken) - 2*sd(singleSourceOfTruthAppended$TIME_SUM)
 threshold_upper = mean(singleSourceOfTruthAppended$time_taken) + 2*sd(singleSourceOfTruthAppended$TIME_SUM)
 ssot_filtered_sosci = subset(singleSourceOfTruthAppended, TIME_SUM < threshold_upper & TIME_SUM >threshold_lower)
 
-
-ssot_Corrected_LA <- cleanSD(LA01_01)
+ssot_merged_likertCheck <- merge(x = ssot_filtered_sosci, y = select(likertScaleCheck, participant_id, var_flag), by = "participant_id" , all.x = TRUE)
+ssot_clean = subset(ssot_merged_likertCheck, var_flag == 0)
 
 description = describe(nums)
 
