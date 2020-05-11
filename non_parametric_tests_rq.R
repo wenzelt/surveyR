@@ -19,6 +19,8 @@ wilcox.test(rowMeans(select(ssot_clean, LA02_01:LA02_03)),ssot_clean$R101)
 
 wilcox.test(rowMeans(select(ssot_clean, LA01_01:LA01_03)),rowMeans(select(ssot_clean, E201_01:E201_20)))
 wilcox.test(rowMeans(select(singleSourceOfTruthAppended, LA01_01:LA01_03)),rowMeans(select(singleSourceOfTruthAppended, E201_01:E201_20)))#both are statistically significant 
+kruskal.test(rowMeans(select(singleSourceOfTruthAppended, LA01_01:LA01_03)),rowMeans(select(singleSourceOfTruthAppended, E201_01:E201_20)))#both are statistically significant 
+kruskal.test(rowMeans(select(ssot_clean, LA01_01:LA01_03)),rowMeans(select(ssot_clean, E201_01:E201_20)))
 
 
 ##testing wilcox test for children > 0 impact on amount of devices##
