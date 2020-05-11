@@ -15,7 +15,7 @@ nums = dplyr::select_if(singleSourceOfTruthAppended, is.numeric)
 df.shapiro <- apply(nums,2 , shapiro.test)
 df2 <- mutate_all(nums, function(x) as.numeric(as.character(x)))
 
-nums <- dplyr::select_if(singleSourceOfTruthAppended, is.numeric) ## load all numeric values we have in the dataset
+nums <- dplyr::select_if(ssot_clean, is.numeric) ## load all numeric values we have in the dataset
 nums <- select(nums, -c(R222, R223,R233_01,R233_02,R233_03, S101_13)) # drop all columns that have identical values 
 nums <- select(nums, R101:S102_09)
 
