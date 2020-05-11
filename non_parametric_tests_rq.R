@@ -8,10 +8,17 @@ library(ggplot2)
 library(ggpubr)
 
 singleSourceOfTruthAppended <- read_csv("singleSourceOfTruthAppended.csv")
-RQ1 <- select(singleSourceOfTruthAppended, LA01_01:LA02_03, R101, R501,R507,  R510, R513, E201_01:E201_20, A204_01:A204_06 )
-RQ2 <- select(singleSourceOfTruthAppended, 'Current Country of Residence', R216:R216_06, R501, R507,R510, R513, R534:R534_09, E201_01:E201_20, A204_01:A204_06, A307_01:A307_09, HP02_01:HP02_05 )
-RQ3 <- select(singleSourceOfTruthAppended, A004, A005, A007, R101, R501, R534, R528, R507, R510, R513) #Rq3 Selection
-attach(RQ3)
+RQ1 <- select(ssot_clean, LA01_01:LA02_03, R101, R501,R507,  R510, R513, E201_01:E201_20, A204_01:A204_06 )
+RQ2 <- select(ssot_clean, 'Current Country of Residence', R216:R216_06, R501, R507,R510, R513, R534:R534_09, E201_01:E201_20, A204_01:A204_06, A307_01:A307_09, HP02_01:HP02_05 )
+RQ3 <- select(ssot_clean, A004, A005, A007, R101, R501, R534, R528, R507, R510, R513) #Rq3 Selection
+
+##testing for rq_01
+wilcox.test(rowMeans(select(ssot_clean, LA01_01:LA01_03)),ssot_clean$R101)
+
+wilcox.test(rowMeans(select(ssot_clean, LA02_01:LA02_03)),ssot_clean$R101)
+
+wilcox.test(rowMeans(select(ssot_clean, LA01_01:LA01_03)),rowMeans(select(ssot_clean, E201_01:E201_20)))
+wilcox.test(rowMeans(select(singleSourceOfTruthAppended, LA01_01:LA01_03)),rowMeans(select(singleSourceOfTruthAppended, E201_01:E201_20)))#both are statistically significant 
 
 
 ##testing wilcox test for children > 0 impact on amount of devices##
@@ -32,10 +39,6 @@ table(A004,R501)
 
 ## checking for dependence of disabling features and having children
 table(A004,R507)
-chisq.test(A004, R507) ##In chisq.test(A004, R507) : Chi-squared approximation may be incorrect
-chisq.test(A004, R510) ##In chisq.test(A004, R507) : Chi-squared approximation may be incorrect
-chisq.test(A004, R513) ##In chisq.test(A004, R507) : Chi-squared approximation may be incorrect
-
-
-orange <- rbind(A004,R507)
-           
+chisq.test(A004, R507,simulate.p.value = TRUE) ##In chisq.test(A004, R507) : Chi-squared approximation may be incorrect
+chisq.test(A004, R510, simulate.p.value = TRUE) ##In chisq.test(A004, R507) : Chi-squared approximation may be incorrect
+chisq.test(A004, R513, simulate.p.value = TRUE) ##In chisq.test(A004, R507) : Chi-squared approximation may be incorrect
