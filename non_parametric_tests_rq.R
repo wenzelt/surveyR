@@ -8,7 +8,8 @@ library(ggplot2)
 library(ggpubr)
 
 singleSourceOfTruthAppended <- read_csv("singleSourceOfTruthAppended.csv")
-RQ2 <- select(singleSourceOfTruthAppended, )
+RQ1 <- select(singleSourceOfTruthAppended, 'Current Country of Residence', R216:R216_06, R501, R507, R534:R534_09, E201_01:E201_20, A204_01:A204_06, A307_01:A307_09, HP02_01:HP02_05 )
+RQ2 <- select(singleSourceOfTruthAppended, 'Current Country of Residence', R216:R216_06, R501, R507, R534:R534_09, E201_01:E201_20, A204_01:A204_06, A307_01:A307_09, HP02_01:HP02_05 )
 RQ3 <- select(singleSourceOfTruthAppended, A004, A005, A007, R101, R501, R534, R528, R507) #Rq3 Selection
 attach(RQ3)
 ##testing wilcox test for children > 0 impact on amount of devices##
