@@ -24,6 +24,7 @@ kruskal.test(rowMeans(select(ssot_filtered_sosci, LA01_01:LA01_03)),rowMeans(sel
 
 ## because numeric data we check how relationship is with correlation
 cor.test(rowMeans(select(singleSourceOfTruthAppended, LA01_01:LA01_03)),rowMeans(select(singleSourceOfTruthAppended, E201_01:E201_20))) ##statistically significant
+#The lack of appropriate legislative protection influences the perception of Smart Home device in users positively.
 
 cor.test(rowMeans(select(ssot_filtered_sosci, LA01_01:LA01_03)),rowMeans(select(ssot_filtered_sosci, E201_01:E201_20))) ##why is this not statistically significant
 rquery.cormat(cbind(rowMeans(select(singleSourceOfTruthAppended, LA01_01:LA01_03)),rowMeans(select(singleSourceOfTruthAppended, E201_01:E201_20))))
@@ -32,6 +33,7 @@ rquery.cormat(cbind(rowMeans(select(singleSourceOfTruthAppended, LA01_01:LA01_03
 ## testing for rq1 Legislative stance la01 on perceived responsibility between manufacturer and user 
 wilcox.test(rowMeans(select(ssot_filtered_sosci, LA01_01:LA01_03)),rowMeans(select(ssot_filtered_sosci, A204_01:A204_06)))
 kruskal.test(rowMeans(select(ssot_filtered_sosci, LA01_01:LA01_03)),rowMeans(select(ssot_filtered_sosci, A204_01:A204_06))) ##stat sig
+kruskal.test(singleSourceOfTruthAppended$LA01_01,singleSourceOfTruthAppended$A204_03)
 wilcox.test(rowMeans(select(singleSourceOfTruthAppended, LA01_01:LA01_03)),rowMeans(select(singleSourceOfTruthAppended, A204_01:A204_06)))
 kruskal.test(rowMeans(select(singleSourceOfTruthAppended, LA01_01:LA01_03)),rowMeans(select(singleSourceOfTruthAppended, A204_01:A204_06)))
 
@@ -75,7 +77,8 @@ chisq.test(R501,A004, correct = FALSE) ##output shows that the two variables are
 table(A004,R501)
 
 ## checking for dependence of disabling features and having children
-table(A004,R507)
+table(singleSourceOfTruthAppended$A004,singleSourceOfTruthAppended$R507)
+attach(RQ3)
 chisq.test(A004, R507,simulate.p.value = TRUE) ##In chisq.test(A004, R507) : Chi-squared approximation may be incorrect
 chisq.test(A004, R510, simulate.p.value = TRUE) ##In chisq.test(A004, R507) : Chi-squared approximation may be incorrect
 chisq.test(A004, R513, simulate.p.value = TRUE) ##In chisq.test(A004, R507) : Chi-squared approximation may be incorrect
