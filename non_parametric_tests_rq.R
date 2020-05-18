@@ -92,7 +92,13 @@ kruskal.test(LA01_01, E201_11) # testing for Smart Lights and legislative satisf
 
 
 ## H1 ##
-
+# 
+# 2 R216_01	Education about Device D1: Online reviews
+# 3	R216_02	Education about Device D1: Online forums
+# 4	R216_03	Education about Device D1: Print media (e.g., Newspapers, Magazines, etc.)
+# 5	R216_04	Education about Device D1: Friends and Family
+# 6	R216_05	Education about Device D1: Online news sites
+a
 attach(singleSourceOfTruthAppended)
 singleSourceOfTruthAppended$`Current Country of Residence` <-
   as.factor(singleSourceOfTruthAppended$`Current Country of Residence`)
@@ -115,6 +121,9 @@ kruskal.test(`Current Country of Residence`, rowMeans(select(
 
 
 ## H1 ####
+#testing for Pre purchase consultation in smart tv / smart lights / smart speaker users
+
+
 
 
 # 1	HP02_01	Market tools: Low prices
@@ -124,11 +133,17 @@ kruskal.test(`Current Country of Residence`, rowMeans(select(
 # 5	HP02_05	Market tools: Discounts (e.g., coupons)
 
 # testing for dependencies in country of residence in purchase was influenced by:
-kruskal.test(`Current Country of Residence`, HP02_01) # low prices
-kruskal.test(`Current Country of Residence`, HP02_02) # bundled offers
-kruskal.test(`Current Country of Residence`, HP02_03) # free trials
-kruskal.test(`Current Country of Residence`, HP02_04) # periodic sales # stat sig. p = 3.719 * 10^-6
-kruskal.test(`Current Country of Residence`, HP02_05) # general discounts and coupon codes
+
+kruskal_test(singleSourceOfTruthAppended,
+             formula = HP02_01 ~ `Current Country of Residence`)#n.s
+kruskal_test(singleSourceOfTruthAppended,
+             formula = HP02_02 ~ `Current Country of Residence`)#s
+kruskal_test(singleSourceOfTruthAppended,
+             formula = HP02_03 ~ `Current Country of Residence`)#s
+kruskal_test(singleSourceOfTruthAppended,
+             formula = HP02_04 ~ `Current Country of Residence`)#s p = 0.0000000901
+kruskal_test(singleSourceOfTruthAppended,
+             formula = HP02_05 ~ `Current Country of Residence`)#n.s
 
 
 ##H2####
@@ -257,3 +272,5 @@ singleSourceOfTruthAppended$A004 <- as.factor(singleSourceOfTruthAppended$A004)
   wilcox.test(R101,na.omit(A004), alternative = "greater")##mann whitney u test #not significant
   kruskal.test(R101 ~ (na.omit(A004))) ## for some reason significant TODO: WHY? 
 
+##  
+  
