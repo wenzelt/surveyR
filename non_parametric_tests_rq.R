@@ -67,6 +67,7 @@ RQ3 <-
 # LA01_02	Legislatory Framework: unwanted sharing with third parties.
 # LA01_03	Legislatory Framework: unwanted processing and analysis by third parties.
 
+####H1####
 #Rq1 - H1 LA01_01 - R101
 attach(singleSourceOfTruthAppended)
 kruskal.test(LA01_01, R101) #statistically significant for p-value 0.0004 -> Legislative opinion is connected with amount of devices
@@ -81,60 +82,7 @@ kruskal.test(LA01_01, E201_11) # testing for Smart Lights and legislative satisf
 
 
 
-##testing for rq_01 LA01 ~ E201 device risk
 
-wilcox.test(rowMeans(select(ssot_filtered_sosci, LA01_01:LA01_03)), rowMeans(select(ssot_filtered_sosci, E201_01:E201_20)))
-wilcox.test(rowMeans(select(
-  singleSourceOfTruthAppended, LA01_01:LA01_03
-)), rowMeans(select(
-  singleSourceOfTruthAppended, E201_01:E201_20
-)))#both are statistically significant (WRONG)
-kruskal.test(rowMeans(select(
-  singleSourceOfTruthAppended, LA01_01:LA01_03
-)), rowMeans(select(
-  singleSourceOfTruthAppended, E201_01:E201_20
-)))#both are statistically significant (WRONG)
-kruskal.test(rowMeans(select(ssot_filtered_sosci, LA01_01:LA01_03)), rowMeans(select(ssot_filtered_sosci, E201_01:E201_20))) ## can we set different levels of legislative concern?
-
-## because numeric data we check how relationship is with correlation
-cor.test(rowMeans(select(
-  singleSourceOfTruthAppended, LA01_01:LA01_03
-)), rowMeans(select(
-  singleSourceOfTruthAppended, E201_01:E201_20
-))) ##statistically significant
-#The lack of appropriate legislative protection influences the perception of Smart Home device in users positively.
-
-cor.test(rowMeans(select(ssot_filtered_sosci, LA01_01:LA01_03)), rowMeans(select(ssot_filtered_sosci, E201_01:E201_20))) ##why is this not statistically significant
-rquery.cormat(cbind(rowMeans(
-  select(singleSourceOfTruthAppended, LA01_01:LA01_03)
-), rowMeans(
-  select(singleSourceOfTruthAppended, E201_01:E201_20)
-)))
-
-
-## testing for rq1 Legislative stance la01 on perceived responsibility between manufacturer and user
-wilcox.test(rowMeans(select(ssot_filtered_sosci, LA01_01:LA01_03)), rowMeans(select(ssot_filtered_sosci, A204_01:A204_06)))
-kruskal.test(rowMeans(select(ssot_filtered_sosci, LA01_01:LA01_03)), rowMeans(select(ssot_filtered_sosci, A204_01:A204_06))) ##stat sig
-kruskal.test(singleSourceOfTruthAppended$LA01_01,
-             singleSourceOfTruthAppended$A204_03)
-wilcox.test(rowMeans(select(
-  singleSourceOfTruthAppended, LA01_01:LA01_03
-)), rowMeans(select(
-  singleSourceOfTruthAppended, A204_01:A204_06
-)))
-kruskal.test(rowMeans(select(
-  singleSourceOfTruthAppended, LA01_01:LA01_03
-)), rowMeans(select(
-  singleSourceOfTruthAppended, A204_01:A204_06
-)))
-
-cor.test(rowMeans(select(ssot_filtered_sosci, LA01_01:LA01_03)), rowMeans(select(ssot_filtered_sosci, E201_01:E201_02)))
-LA_Responsibility <-
-  cbind((select(ssot_filtered_sosci, LA01_01:LA01_03)), select(ssot_filtered_sosci, A204_01:A204_06))
-LA_Responsibility <-
-  cbind((select(ssot_filtered_sosci, LA02_01:LA02_03)), select(ssot_filtered_sosci, A204_01:A204_06))
-
-rquery.cormat(LA_Responsibility)
 ########################## RQ_02 ###################################################
 # RQ2: How does the cultural context impact Smart Home device adoption and use?
 # H1: The purchasing trends of buying a Smart Home device differs internationally.
@@ -166,26 +114,28 @@ kruskal.test(`Current Country of Residence`, rowMeans(select(
 ))) # not statistically sign.
 
 
-## using alternative H1 instead of device specifics
-# HP01_01	Pre-purchase consultation: Friends and Family
-# HP01_02	Pre-purchase consultation: Internet message boards
-#	HP01_03	Pre-purchase consultation: Print media (e.g., Newspapers, Magazines, etc.)
-#	HP01_04	Pre-purchase consultation: Online reviews
+## H1 ####
 
-## H1 ##
+
+# 1	HP02_01	Market tools: Low prices
+# 2	HP02_02	Market tools: Bundled offers (e.g., including other devices with purchase of one or more devices)
+# 3	HP02_03	Market tools: Trials (e.g., 30-day free use of a service)
+# 4	HP02_04	Market tools: Periodic sales
+# 5	HP02_05	Market tools: Discounts (e.g., coupons)
 
 # testing for dependencies in country of residence in purchase was influenced by:
 kruskal.test(`Current Country of Residence`, HP02_01) # low prices
-# testing for dependencies btw. country of residence and taking ad
 kruskal.test(`Current Country of Residence`, HP02_02) # bundled offers
 kruskal.test(`Current Country of Residence`, HP02_03) # free trials
 kruskal.test(`Current Country of Residence`, HP02_04) # periodic sales # stat sig. p = 3.719 * 10^-6
 kruskal.test(`Current Country of Residence`, HP02_05) # general discounts and coupon codes
 
 
+##H2####
 
 
-##H3 ##
+
+##H3####
 # 1 A204_01	Manufacturer responsibilitiy: Keeping the Smart Home device software up-to-date
 # 2	A204_02	Manufacturer responsibilitiy: Ensuring my privacy
 # 3	A204_03	Manufacturer responsibilitiy: Protecting my Smart Home ecosystem as a whole
@@ -193,12 +143,21 @@ kruskal.test(`Current Country of Residence`, HP02_05) # general discounts and co
 # 5	A204_05	Manufacturer responsibilitiy: Fixing a hardware failure
 # 6	A204_06	Manufacturer responsibilitiy: Fixing a software failure
 
-kruskal.test(`Current Country of Residence`, A204_01) # not stat sig
-kruskal.test(`Current Country of Residence`, A204_02) # not stat sig "p = 0.96"
-kruskal.test(`Current Country of Residence`, A204_03) # not stat sig "p = 0.96"
-kruskal.test(`Current Country of Residence`, A204_04) # statistically significant with p = 0.023 #keeping smart home device secure
-kruskal.test(`Current Country of Residence`, A204_05) # not stat significant
-kruskal.test(`Current Country of Residence`, A204_06) # not stat sig
+
+
+kruskal_test(singleSourceOfTruthAppended,
+             formula = A204_01 ~ `Current Country of Residence`)
+kruskal_test(singleSourceOfTruthAppended,
+             formula = A204_02 ~ `Current Country of Residence`)
+kruskal_test(singleSourceOfTruthAppended,
+             formula = A204_03 ~ `Current Country of Residence`) #0.0436
+kruskal_test(singleSourceOfTruthAppended,
+             formula = A204_04 ~ `Current Country of Residence`) #0.00227
+kruskal_test(singleSourceOfTruthAppended,
+             formula = A204_05 ~ `Current Country of Residence`)
+kruskal_test(singleSourceOfTruthAppended,
+             formula = A204_06 ~ `Current Country of Residence`)
+
 
 
 # 1	A307_01	Perceived benefits: Saving money
@@ -212,16 +171,6 @@ kruskal.test(`Current Country of Residence`, A204_06) # not stat sig
 # 9	A307_09	Perceived benefits: Improving quality of life
 # 10	A307_10	Perceived benefits: Increasing property value
 
-kruskal.test(`Current Country of Residence` ~ A307_01) # not stat sig
-kruskal.test(`Current Country of Residence`, A307_02) # not stat sig
-kruskal.test(A307_03, `Current Country of Residence`) # stat sig p-value = 0.04685
-kruskal.test(`Current Country of Residence`, A307_04) # stat sig p-value = 0.009415
-kruskal.test(`Current Country of Residence`, A307_05) # not stat sig
-kruskal.test(`Current Country of Residence`, A307_06) # stat sig p-value = 0.03717
-kruskal.test(`Current Country of Residence`, A307_07) # not stat sig
-kruskal.test(`Current Country of Residence`, A307_08) # stat sig p-value = 0.005649
-kruskal.test(`Current Country of Residence`, A307_09) # not stat sign.
-kruskal.test(`Current Country of Residence`, A307_10) # stat sig p-value = 0.0005082
 
 kruskal_test(singleSourceOfTruthAppended,
              formula = A307_01 ~ `Current Country of Residence`) # 0.0272
@@ -269,27 +218,28 @@ kruskal.test(rowMeans(select(RQ2, A307_01:A307_09)) ~ RQ2$`Current Country of Re
 
 
 ########################## RQ_03 ###################################################
+
+library("ggpubr")
+ggboxplot(singleSourceOfTruthAppended, x = "A004", y = "R101", 
+          color = "A004", palette = c("#00AFBB", "#E7B800"),
+          ylab = "Amount of devices", xlab = "Children or no children")
+
+
+ggboxplot(singleSourceOfTruthAppended, x = "Sex", y = "R101", 
+          color = "Sex", palette = c("#00AFBB", "#E7B800"),
+          ylab = "Amount of devices", xlab = "Sex")
+
+
 ##testing wilcox test for children > 0 impact on amount of devices##
-RQ3$A004 <-
-  cut(RQ3$A004, breaks = c(0, 1, Inf)) ## adding levels to children
+singleSourceOfTruthAppended$A004 <-
+  cut(singleSourceOfTruthAppended$A004, breaks = c(0, 1, Inf)) ## adding levels to children
 wilcox.test(R101 ~ A004) ##mann whitney u test
 kruskal.test(R101 ~ A004) ## kruskal wallis test one way anova
 
 RQ3$A007 <- as.factor(RQ3$A007)
 wilcox.test(R101 ~ A007 == "Rent" | A007 == "Own")
 
-##using Chi squared test to check for dependence of usage amount and Children or no children
-test <- read.csv("https://goo.gl/j6lRXD")
-table(test$treatment, test$improvement)
-view(test)
-chisq.test(test$treatment, test$improvement, correct = FALSE)
-chisq.test(R501, A004, correct = FALSE) ##output shows that the two variables are not dependent
-table(A004, R501)
+##H1####
+# testing for amount of devices per property ownership / renting a property 
 
-## checking for dependence of disabling features and having children
-table(singleSourceOfTruthAppended$A004,
-      singleSourceOfTruthAppended$R507)
-attach(RQ3)
-chisq.test(A004, R507, simulate.p.value = TRUE) ##In chisq.test(A004, R507) : Chi-squared approximation may be incorrect
-chisq.test(A004, R510, simulate.p.value = TRUE) ##In chisq.test(A004, R507) : Chi-squared approximation may be incorrect
-chisq.test(A004, R513, simulate.p.value = TRUE) ##In chisq.test(A004, R507) : Chi-squared approximation may be incorrect
+
