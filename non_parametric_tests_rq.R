@@ -91,14 +91,14 @@ kruskal.test(LA01_01, E201_11) # testing for Smart Lights and legislative satisf
 
 
 
-## H1 ##
-# 
-# 2 R216_01	Education about Device D1: Online reviews
-# 3	R216_02	Education about Device D1: Online forums
-# 4	R216_03	Education about Device D1: Print media (e.g., Newspapers, Magazines, etc.)
-# 5	R216_04	Education about Device D1: Friends and Family
-# 6	R216_05	Education about Device D1: Online news sites
-a
+## H1 ####
+
+# 1 R216_01	Education about Device D1: Online reviews
+# 2	R216_02	Education about Device D1: Online forums
+# 3	R216_03	Education about Device D1: Print media (e.g., Newspapers, Magazines, etc.)
+# 4	R216_04	Education about Device D1: Friends and Family
+# 5	R216_05	Education about Device D1: Online news sites
+
 attach(singleSourceOfTruthAppended)
 singleSourceOfTruthAppended$`Current Country of Residence` <-
   as.factor(singleSourceOfTruthAppended$`Current Country of Residence`)
@@ -111,18 +111,6 @@ kruskal.test(smartSpeakerAnswers$`Current Country of Residence`,
              smartSpeakerAnswers$R216_01) # not significant
 kruskal.test(smartLightAnswers$`Current Country of Residence`,
              smartLightAnswers$R216_01) #not significant
-
-#testing dependencies between current country of residence and amount of sources consulted before purchasing a smart home device
-
-levels(smartSpeakerAnswers$`Current Country of Residence`)
-kruskal.test(`Current Country of Residence`, rowMeans(select(
-  singleSourceOfTruthAppended, R216, R218, R220
-))) # not statistically sign.
-
-
-## H1 ####
-#testing for Pre purchase consultation in smart tv / smart lights / smart speaker users
-
 
 
 
@@ -137,9 +125,9 @@ kruskal.test(`Current Country of Residence`, rowMeans(select(
 kruskal_test(singleSourceOfTruthAppended,
              formula = HP02_01 ~ `Current Country of Residence`)#n.s
 kruskal_test(singleSourceOfTruthAppended,
-             formula = HP02_02 ~ `Current Country of Residence`)#s
+             formula = HP02_02 ~ `Current Country of Residence`)#s p = 0.0127
 kruskal_test(singleSourceOfTruthAppended,
-             formula = HP02_03 ~ `Current Country of Residence`)#s
+             formula = HP02_03 ~ `Current Country of Residence`)#s P = 0.0103
 kruskal_test(singleSourceOfTruthAppended,
              formula = HP02_04 ~ `Current Country of Residence`)#s p = 0.0000000901
 kruskal_test(singleSourceOfTruthAppended,
@@ -151,6 +139,8 @@ kruskal_test(singleSourceOfTruthAppended,
 
 
 ##H3####
+#The perception towards Smart Home devices differs internationally.
+
 # 1 A204_01	Manufacturer responsibilitiy: Keeping the Smart Home device software up-to-date
 # 2	A204_02	Manufacturer responsibilitiy: Ensuring my privacy
 # 3	A204_03	Manufacturer responsibilitiy: Protecting my Smart Home ecosystem as a whole
@@ -173,7 +163,13 @@ kruskal_test(singleSourceOfTruthAppended,
 kruskal_test(singleSourceOfTruthAppended,
              formula = A204_06 ~ `Current Country of Residence`)
 
+#testing correlation between keeping smart home device secure and letting the manufacturer update my device remotely
+cor_test(select(singleSourceOfTruthAppended, A204_04, A206_03)) # no correlation cor = 0.14
 
+#testing for correlation between keeping smart home
+cor_test(select(singleSourceOfTruthAppended, A204_04, A206_04)) # no correlation cor = 0.091
+
+# connection between country of residence and smart home device preferences
 
 # 1	A307_01	Perceived benefits: Saving money
 # 2	A307_02	Perceived benefits: Saving energy
@@ -192,7 +188,7 @@ kruskal_test(singleSourceOfTruthAppended,
 kruskal_test(singleSourceOfTruthAppended,
              formula = A307_02 ~ `Current Country of Residence`)
 kruskal_test(singleSourceOfTruthAppended,
-             formula = A307_03 ~ `Current Country of Residence`) #0.0508
+             formula = A307_03 ~ `Current Country of Residence`) #0.0508 # not stat sig
 kruskal_test(singleSourceOfTruthAppended,
              formula = A307_04 ~ `Current Country of Residence`) #0.00268
 kruskal_test(singleSourceOfTruthAppended,
@@ -211,49 +207,49 @@ kruskal_test(singleSourceOfTruthAppended,
 
 
 
-###test for changes in legislature per country
-RQ2$`Current Country of Residence` <-
-  as.factor(RQ2$`Current Country of Residence`)
-kruskal.test(rowMeans(select(ssot_filtered_sosci, LA01_01:LA01_03)) ~ RQ2$`Current Country of Residence`)
-##test for prosections per country
-kruskal.test(rowMeans(select(ssot_filtered_sosci, LA02_01:LA02_03)) ~ RQ2$`Current Country of Residence`)
-
-#test for devices owned by country
-kruskal.test(RQ2$R101 ~ RQ2$`Current Country of Residence`) #not statistically significant
-
-#test for perception
-kruskal.test(rowMeans(select(RQ2, A204_02:A204_02)) ~ RQ2$`Current Country of Residence`)
-
-#test for benefitial features
-kruskal.test(rowMeans(select(RQ2, A307_01:A307_09)) ~ RQ2$`Current Country of Residence`) ##stat. sig.
-
-
-
-
 
 
 ########################## RQ_03 ###################################################
 
 ##H1####
 #plotting sex against amount of devices (purely out of interest)
-ggboxplot(singleSourceOfTruthAppended, x = "Sex", y = "R101", 
-          color = "Sex", palette = c("#00AFBB", "#E7B800"),
-          ylab = "Amount of devices", xlab = "Sex")
+ggboxplot(
+  singleSourceOfTruthAppended,
+  x = "Sex",
+  y = "R101",
+  color = "Sex",
+  palette = c("#00AFBB", "#E7B800"),
+  ylab = "Amount of devices",
+  xlab = "Sex"
+)
 
 
-# testing for amount of devices per property ownership / renting a property 
-ggboxplot(singleSourceOfTruthAppended, x = "A007", y = "R101", 
-          color = "A007", palette = c("#00AFBB", "#E7B800", "#E7F800"),
-          ylab = "Amount of devices", xlab = "Renting or owning")
-          
-wilcox.test(R101 ~ A007 == "Rent" | A007 == "Own") # no statistical significance found 
-kruskal_test(singleSourceOfTruthAppended, formula = R101~ A007) # 0.0701 
+# testing for amount of devices per property ownership / renting a property
+ggboxplot(
+  singleSourceOfTruthAppended,
+  x = "A007",
+  y = "R101",
+  color = "A007",
+  palette = c("#00AFBB", "#E7B800", "#E7F800"),
+  ylab = "Amount of devices",
+  xlab = "Renting or owning"
+)
+
+wilcox.test(R101 ~ A007 == "Rent" |
+              A007 == "Own") # no statistical significance found
+kruskal_test(singleSourceOfTruthAppended, formula = R101 ~ A007) # 0.0701
 
 # testing for amount of children in household
 
-ggboxplot(singleSourceOfTruthAppended, x = "A004", y = "R101", 
-          color = "A004", palette = c("#00AFBB", "#E7B800"),
-          ylab = "Amount of devices", xlab = "Children or no children")
+ggboxplot(
+  singleSourceOfTruthAppended,
+  x = "A004",
+  y = "R101",
+  color = "A004",
+  palette = c("#00AFBB", "#E7B800"),
+  ylab = "Amount of devices",
+  xlab = "Children or no children"
+)
 
 
 
@@ -261,16 +257,20 @@ ggboxplot(singleSourceOfTruthAppended, x = "A004", y = "R101",
 ##testing wilcox test for children > 0 impact on amount of devices##
 singleSourceOfTruthAppended$A004 <-
   cut(singleSourceOfTruthAppended$A004, breaks = c(0, 1, Inf)) ## adding levels to children
-singleSourceOfTruthAppended$A004 <- as.factor(singleSourceOfTruthAppended$A004)
+singleSourceOfTruthAppended$A004 <-
+  as.factor(singleSourceOfTruthAppended$A004)
 
 
-  #plotting having children and not having children against eachother
-  ggboxplot(singleSourceOfTruthAppended, x = "A004", y = "R101", 
-            color = "A004", palette = c("#00AFBB", "#E7B800"),
-            ylab = "Amount of devices", xlab = "Children or no children")
-  
-  wilcox.test(R101,na.omit(A004), alternative = "greater")##mann whitney u test #not significant
-  kruskal.test(R101 ~ (na.omit(A004))) ## for some reason significant TODO: WHY? 
+#plotting having children and not having children against eachother
+ggboxplot(
+  singleSourceOfTruthAppended,
+  x = "A004",
+  y = "R101",
+  color = "A004",
+  palette = c("#00AFBB", "#E7B800"),
+  ylab = "Amount of devices",
+  xlab = "Children or no children"
+)
 
-##  
-  
+wilcox.test(R101, na.omit(A004), alternative = "greater")##mann whitney u test #not significant
+kruskal.test(R101 ~ (na.omit(A004))) ## for some reason significant TODO: WHY?
