@@ -70,19 +70,21 @@ RQ3 <-
 ####H1####
 #Rq1 - H1 LA01_01 - R101
 attach(singleSourceOfTruthAppended)
-kruskal.test(LA01_01, R101) #statistically significant for p-value 0.0004 -> Legislative opinion is connected with amount of devices
 
-#testing for average device risk assessment and legislative satisfaction regarding access by third parties
-kruskal.test(LA01_01, rowMeans(select(
-  singleSourceOfTruthAppended, E201_01:E201_20
-))) #statistically insignificant p-value = 0.64
-kruskal.test(LA01_01, E201_16) # testing for Smart TV and legislative satisfaction # p = 0.007634
-kruskal.test(LA01_01, E201_14) # testing for Smart Speaker and legislative satisfaction # P = 0.001681
-kruskal.test(LA01_01, E201_11) # testing for Smart Lights and legislative satisfaction # P = 0.08259
+#testing for unwanted access to data with amount of different devices owned. 
+kruskal_test(singleSourceOfTruthAppended, LA01_01~R101) # statistically significant for value p = 0.000395
 
 
 
+#testing for  device risk assessment for our most popular devices and legislative satisfaction regarding access by third parties
+kruskal_test(singleSourceOfTruthAppended,LA01_01 ~ E201_16) # testing for Smart TV and legislative satisfaction # p = 0.007634
+kruskal_test(singleSourceOfTruthAppended,LA01_01 ~ E201_14) # testing for Smart speaker and legislative satisfaction # p = 0.00168
+kruskal_test(singleSourceOfTruthAppended,LA01_01 ~ E201_11) # testing for Smart Lights and legislative satisfaction # p = 0.0826
 
+kruskal_test(s)
+
+cor_test(select(singleSourceOfTruthAppended,LA01_01,A204_02))
+plot(select(singleSourceOfTruthAppended,LA01_01,A204_02))
 ########################## RQ_02 ###################################################
 # RQ2: How does the cultural context impact Smart Home device adoption and use?
 # H1: The purchasing trends of buying a Smart Home device differs internationally.
@@ -204,9 +206,35 @@ kruskal_test(singleSourceOfTruthAppended,
 kruskal_test(singleSourceOfTruthAppended,
              formula = A307_10 ~ `Current Country of Residence`) #0.0000274
 
+# testing for country by perceived device risk
 
+# 1	E201_01	Device risk: Smart Coffee Maker
+# 2	E201_02	Device risk: Smart Dishwasher
+# 3	E201_03	Device risk: Smart Door Lock
+# 4	E201_04	Device risk: Smart Doorbell
+# 5	E201_05	Device risk: Smart Electricity Meter
+# 6	E201_06	Device risk: Smart Electrical Outlet
+# 7	E201_07	Device risk: Smart Fridge
+# 8	E201_08	Device risk: Smart Gardening Equipment
+# 9	E201_09	Device risk: Smart Heating/Cooling System
+# 10	E201_10	Device risk: Smart Home Monitoring System
+# 11	E201_11	Device risk: Smart Lightbulb
+# 12	E201_12	Device risk: Smart Oven
+# 13	E201_13	Device risk: Smart Robot
+# 14	E201_14	Device risk: Smart Speaker
+# 15	E201_15	Device risk: Smart Stove
+# 16	E201_16	Device risk: Smart TV
+# 17	E201_17	Device risk: Smart Thermostat
+# 18	E201_18	Device risk: Smart Toy
+# 19	E201_19	Device risk: Smart Vacuum Cleaner
+# 20	E201_20	Device risk: Smart Washing Machine
 
-
+kruskal_test(singleSourceOfTruthAppended,
+             formula = E201_11 ~ `Current Country of Residence`) # smart lights
+kruskal_test(singleSourceOfTruthAppended,
+             formula = E201_14 ~ `Current Country of Residence`) # smart speaker
+kruskal_test(singleSourceOfTruthAppended,
+             formula = E201_16 ~ `Current Country of Residence`) # smart TV - significantly different for countries p = 0.0000555
 
 
 ########################## RQ_03 ###################################################
@@ -274,3 +302,22 @@ ggboxplot(
 
 wilcox.test(R101, na.omit(A004), alternative = "greater")##mann whitney u test #not significant
 kruskal.test(R101 ~ (na.omit(A004))) ## for some reason significant TODO: WHY?
+
+wilcox_test(singleSourceOfTruthAppended, R101~A004) #p = 0.888 
+
+#testing for children affecting the type of usage the user is comfortable with 
+
+# 1 E205_01	Usage type: Voice commands via a Smart Speaker
+# 2	E205_02	Usage type: Voice commands via a Smartphone Voice Assistant
+# 3	E205_03	Usage type: Smartphone App for the Device
+# 4	E205_04	Usage type: Smartphone Widgets or Shortcuts
+# 5	E205_05	Usage type: Sensors inside the Home (e.g., Motion Sensors, Light Sensors, etc.)
+# 6	E205_06	Usage type: Sensors outside the Home (e.g., Motion Sensors, Light Sensors, etc.)
+# 7	E205_07	Usage type: Automatic Operation based on Device Programming
+
+wilcox_test(singleSourceOfTruthAppended, E205_01 ~ A004) #ns
+wilcox_test(singleSourceOfTruthAppended, E205_02 ~ A004) #ns
+wilcox_test(singleSourceOfTruthAppended, E205_05 ~ A004) #ns
+wilcox_test(singleSourceOfTruthAppended, E205_06 ~ A004) #ns 
+
+
