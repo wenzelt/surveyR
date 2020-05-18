@@ -219,27 +219,41 @@ kruskal.test(rowMeans(select(RQ2, A307_01:A307_09)) ~ RQ2$`Current Country of Re
 
 ########################## RQ_03 ###################################################
 
-library("ggpubr")
-ggboxplot(singleSourceOfTruthAppended, x = "A004", y = "R101", 
-          color = "A004", palette = c("#00AFBB", "#E7B800"),
-          ylab = "Amount of devices", xlab = "Children or no children")
-
-
+##H1####
+#plotting sex against amount of devices (purely out of interest)
 ggboxplot(singleSourceOfTruthAppended, x = "Sex", y = "R101", 
           color = "Sex", palette = c("#00AFBB", "#E7B800"),
           ylab = "Amount of devices", xlab = "Sex")
 
 
+# testing for amount of devices per property ownership / renting a property 
+ggboxplot(singleSourceOfTruthAppended, x = "A007", y = "R101", 
+          color = "A007", palette = c("#00AFBB", "#E7B800", "#E7F800"),
+          ylab = "Amount of devices", xlab = "Renting or owning")
+          
+wilcox.test(R101 ~ A007 == "Rent" | A007 == "Own") # no statistical significance found 
+kruskal_test(singleSourceOfTruthAppended, formula = R101~ A007) # 0.0701 
+
+# testing for amount of children in household
+
+ggboxplot(singleSourceOfTruthAppended, x = "A004", y = "R101", 
+          color = "A004", palette = c("#00AFBB", "#E7B800"),
+          ylab = "Amount of devices", xlab = "Children or no children")
+
+
+
+##H3####
 ##testing wilcox test for children > 0 impact on amount of devices##
 singleSourceOfTruthAppended$A004 <-
   cut(singleSourceOfTruthAppended$A004, breaks = c(0, 1, Inf)) ## adding levels to children
-wilcox.test(R101 ~ A004) ##mann whitney u test
-kruskal.test(R101 ~ A004) ## kruskal wallis test one way anova
+singleSourceOfTruthAppended$A004 <- as.factor(singleSourceOfTruthAppended$A004)
 
-RQ3$A007 <- as.factor(RQ3$A007)
-wilcox.test(R101 ~ A007 == "Rent" | A007 == "Own")
 
-##H1####
-# testing for amount of devices per property ownership / renting a property 
-
+  #plotting having children and not having children against eachother
+  ggboxplot(singleSourceOfTruthAppended, x = "A004", y = "R101", 
+            color = "A004", palette = c("#00AFBB", "#E7B800"),
+            ylab = "Amount of devices", xlab = "Children or no children")
+  
+  wilcox.test(R101,na.omit(A004), alternative = "greater")##mann whitney u test #not significant
+  kruskal.test(R101 ~ (na.omit(A004))) ## for some reason significant TODO: WHY? 
 
