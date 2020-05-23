@@ -73,18 +73,19 @@ attach(singleSourceOfTruthAppended)
 
 #testing for unwanted access to data with amount of different devices owned. 
 kruskal_test(singleSourceOfTruthAppended, LA01_01~R101) # statistically significant for value p = 0.000395
-
-
-
+# check correlation for these 
+  
 #testing for  device risk assessment for our most popular devices and legislative satisfaction regarding access by third parties
-kruskal_test(singleSourceOfTruthAppended,LA01_01 ~ E201_16) # testing for Smart TV and legislative satisfaction # p = 0.007634
+kruskal_test(singleSourceOfTruthAppended,E201_14 ~ E201_16) # testing for Smart TV and legislative satisfaction # p = 0.007634
 kruskal_test(singleSourceOfTruthAppended,LA01_01 ~ E201_14) # testing for Smart speaker and legislative satisfaction # p = 0.00168
 kruskal_test(singleSourceOfTruthAppended,LA01_01 ~ E201_11) # testing for Smart Lights and legislative satisfaction # p = 0.0826
 
-kruskal_test(s)
-
-cor_test(select(singleSourceOfTruthAppended,LA01_01,A204_02))
+cor_test(select(singleSourceOfTruthAppended,LA01_01,A204_03))
 plot(select(singleSourceOfTruthAppended,LA01_01,A204_02))
+
+kruskal_test(singleSourceOfTruthAppended,LA01_01 ~ A204_03) #Protecting my Smart Home ecosystem as a whole
+kruskal_test(singleSourceOfTruthAppended,LA01_01 ~ A204_04) #Keeping the Smart Home device secure
+
 ########################## RQ_02 ###################################################
 # RQ2: How does the cultural context impact Smart Home device adoption and use?
 # H1: The purchasing trends of buying a Smart Home device differs internationally.
@@ -106,7 +107,7 @@ singleSourceOfTruthAppended$`Current Country of Residence` <-
   as.factor(singleSourceOfTruthAppended$`Current Country of Residence`)
 
 ## testing dependencies between current country of residence and consulting online reviews for their smart devices
-kruskal.test(`Current Country of Residence`, R216_01) #not significant
+kruskal.test(`Current Country of Residence`, R216_05) # significant
 kruskal.test(smartTvAnswers$`Current Country of Residence`,
              smartTvAnswers$R216_01) #not significant
 kruskal.test(smartSpeakerAnswers$`Current Country of Residence`,
@@ -159,7 +160,7 @@ kruskal_test(singleSourceOfTruthAppended,
 kruskal_test(singleSourceOfTruthAppended,
              formula = A204_03 ~ `Current Country of Residence`) #0.0436
 kruskal_test(singleSourceOfTruthAppended,
-             formula = A204_04 ~ `Current Country of Residence`) #0.00227
+             formula = A204_04 ~ `Current Country of Residence`) #0.00227 #dach - us / us - uk  / dach - uk correct p values for pairwise testing 
 kruskal_test(singleSourceOfTruthAppended,
              formula = A204_05 ~ `Current Country of Residence`)
 kruskal_test(singleSourceOfTruthAppended,
@@ -196,7 +197,7 @@ kruskal_test(singleSourceOfTruthAppended,
 kruskal_test(singleSourceOfTruthAppended,
              formula = A307_05 ~ `Current Country of Residence`) #0.0125
 kruskal_test(singleSourceOfTruthAppended,
-             formula = A307_06 ~ `Current Country of Residence`) #0.000141
+             formula = A307_06 ~ `Current Country of Residence`) #0.000141 -- adding pairwise testing -- p.adjust(p, method = "bonferroni", n = length(p))
 kruskal_test(singleSourceOfTruthAppended,
              formula = A307_07 ~ `Current Country of Residence`) #0.00867
 kruskal_test(singleSourceOfTruthAppended,
@@ -235,7 +236,7 @@ kruskal_test(singleSourceOfTruthAppended,
              formula = E201_14 ~ `Current Country of Residence`) # smart speaker
 kruskal_test(singleSourceOfTruthAppended,
              formula = E201_16 ~ `Current Country of Residence`) # smart TV - significantly different for countries p = 0.0000555
-
+# --- plot means by country to find out which is different and higher / lower 
 
 ########################## RQ_03 ###################################################
 
@@ -253,6 +254,7 @@ ggboxplot(
 
 
 # testing for amount of devices per property ownership / renting a property
+ 
 ggboxplot(
   singleSourceOfTruthAppended,
   x = "A007",
@@ -300,12 +302,13 @@ ggboxplot(
   xlab = "Children or no children"
 )
 
+# check after removing the outlier
 wilcox.test(R101, na.omit(A004), alternative = "greater")##mann whitney u test #not significant
 kruskal.test(R101 ~ (na.omit(A004))) ## for some reason significant TODO: WHY?
 
 wilcox_test(singleSourceOfTruthAppended, R101~A004) #p = 0.888 
 
-#testing for children affecting the type of usage the user is comfortable with 
+ #testing for children affecting the type of usage the user is comfortable with 
 
 # 1 E205_01	Usage type: Voice commands via a Smart Speaker
 # 2	E205_02	Usage type: Voice commands via a Smartphone Voice Assistant
