@@ -17,4 +17,3 @@ cleanSD <- function(column){
   filtered = subset(column, column < upper & column >lower)
   return(filtered)
 }
-
