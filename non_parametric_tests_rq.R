@@ -12,85 +12,12 @@ library(rstatix)
 library(readxl)
 
 
-singleSourceOfTruthAppended <-
+singleSourceOfTruthAppended_old <-
   read_csv("singleSourceOfTruthAppended.csv")
+weirdGuys <- subset(singleSourceOfTruthAppended_old, is.na(`Current Country of Residence`))
+save(weirdGuys,file = "weirdGuys.csv")
 singleSourceOfTruthAppended <- read_xlsx("singleSourceOfTruthAppended_P.xlsx")
-
-############################### RQ_01 ##############################################################
-##fresh start to analyses###
-
-# RQ1: What is the effect of the applied regulatory framework on Smart Home device usage and adoption?
-
-# H1 Strong legislative protection increases adoption of Smart Home devices.
-# H2 Strong legislative protection increases the usage of Smart Home devices.
-# H3 The lack of appropriate legislative protection influences the perception of Smart Home device in users positively
-
-# Choosing which part of LA01 to use for analysis with corresponding variables
-# LA01_01	Legislatory Framework: unwanted access by third parties. *** selected
-# LA01_02	Legislatory Framework: unwanted sharing with third parties.
-# LA01_03	Legislatory Framework: unwanted processing and analysis by third parties.
-
-####H1####
-#Rq1 - H1 LA01_01 - R101
-attach(singleSourceOfTruthAppended)
-
-#testing for unwanted access to data with amount of different devices owned.
-kruskal_test(singleSourceOfTruthAppended, LA01_01 ~ R101) # statistically significant for value p = 0.000395
-kruskal_test(subset(singleSourceOfTruthAppended, `Current Country of Residence` == "United States"), LA01_01 ~ R101) 
-kruskal_test(subset(singleSourceOfTruthAppended, `Current Country of Residence` == "United Kingdom"), LA01_01 ~ R101) 
-kruskal_test(subset(singleSourceOfTruthAppended, `Current Country of Residence` == "DACH"), LA01_01 ~ R101) # statistically significant for value p = 0.00687
-
-
-cor_test(select(singleSourceOfTruthAppended, LA01_01,E201_11, E201_14,E201_16))
-#   var1    var2       cor statistic        p conf.low conf.high method 
-# 2 LA01_01 E201_11 -0.085     -1.79 7.34e- 2   -0.177   0.00809 Pearson #  n.s
-# 3 LA01_01 E201_14 -0.17      -3.63 3.20e- 4   -0.259  -0.0783  Pearson #  s
-# 4 LA01_01 E201_16 -0.17      -3.62 3.25e- 4   -0.259  -0.0781  Pearson #  s
-
-
-# check correlation for these
-cor_test(select(singleSourceOfTruthAppended, E201_11, E201_14,E201_16))
-#   var1    var2      cor statistic        p conf.low conf.high method 
-# 2 E201_11 E201_14  0.31      6.84 2.61e-11    0.223     0.392 Pearson
-# 3 E201_11 E201_16  0.39      8.76 4.08e-17    0.303     0.462 Pearson
-# 4 E201_14 E201_11  0.31      6.84 2.61e-11    0.223     0.392 Pearson
-# 6 E201_14 E201_16  0.51     12.3  4.51e-30    0.432     0.571 Pearson
-# 7 E201_16 E201_11  0.39      8.76 4.08e-17    0.303     0.462 Pearson
-# 8 E201_16 E201_14  0.51     12.3  4.51e-30    0.432     0.571 Pearson
-
-#testing for  device risk assessment for our most popular devices and legislative satisfaction regarding access by third parties
-kruskal_test(singleSourceOfTruthAppended, E201_14 ~ E201_16) # testing for Smart TV and legislative satisfaction # p = 0.007634
-kruskal_test(singleSourceOfTruthAppended, LA01_01 ~ E201_14) # testing for Smart speaker and legislative satisfaction # p = 0.00168
-kruskal_test(singleSourceOfTruthAppended, LA01_01 ~ E201_11) # testing for Smart Lights and legislative satisfaction # p = 0.0826
-
-cor_test(select(singleSourceOfTruthAppended, LA01_01, A204_03))
-plot(select(singleSourceOfTruthAppended, LA01_01, A204_02))
-
-kruskal_test(singleSourceOfTruthAppended, LA01_01 ~ A204_03) #Protecting my Smart Home ecosystem as a whole
-kruskal_test(singleSourceOfTruthAppended, LA01_01 ~ A204_04) #Keeping the Smart Home device secure
-
-# creating table usage device ownership 
-u <- select(singleSourceOfTruthAppended,participant_id, R232_01,R232_02,R232_03, R233_01, R233_02 ,R233_03 ,R501, R503, R505)
-d1 <- select(subset(u,R233_01 == 1), participant_id, R232_01, R501)
-d2 <- select(subset(u,R233_02 == 1), participant_id, R232_02, R503)
-d3 <- select(subset(u,R233_03 == 1), participant_id, R232_03, R505)
-colnames(d1) <- c("participant_id","Device_Owned", "Usage")
-colnames(d2) <- c("participant_id","Device_Owned", "Usage")
-colnames(d3) <- c("participant_id","Device_Owned", "Usage")
-d <- rbind(d1,d2,d3)
-d <- subset(d, Usage != "Don't know")
-d$Usage <- factor(d$Usage, levels = c("0 times","1-5 times","6-10 times","11-20 times","21-30 times","30+ times"))
-
-###merge on participant_id their legislative opinion
-
-d <- merge(select(singleSourceOfTruthAppended,LA01_01,participant_id), d, by = "participant_id" )
-dSmartTV <- subset(d,Device_Owned == "Smart TV")
-dSmartSpeaker <- subset(d,Device_Owned == "Smart Speaker")
-dSmartLights <- subset(d,Device_Owned == "Smart Lightbulb")
-dOther <- subset(d,Device_Owned != "Smart TV" & Device_Owned != "Smart Lightbulb" & Device_Owned != "Smart Speaker")
-
-#testing correlation of legislative opinion with usage 
-cor.test(d$LA01_01,as.numeric(d$Usage))
+singleSourceOfTruthAppended <- subset(singleSourceOfTruthAppended, `Current Country of Residence` != "NA")
 
 
 ########################## RQ_02 ###################################################
@@ -202,8 +129,8 @@ kruskal_test(
   formula = A204_04 ~ `Current Country of Residence`
 )#0.448 n-s
 
-countryIncreaseProperty = select(singleSourceOfTruthAppended,`Current Country of Residence`, A204_04)
-aggregate(countryIncreaseProperty[, 2], list(countryIncreaseProperty$`Current Country of Residence`), mean)
+countryPerception = select(singleSourceOfTruthAppended,`Current Country of Residence`, A204_04)
+aggregate(countryPerception[, 2], list(countryPerception$`Current Country of Residence`), mean)
 # Group.1  A204_04
 # 1           DACH 3.940741
 # 2 United Kingdom 4.535484
