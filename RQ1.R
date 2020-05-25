@@ -68,18 +68,6 @@ kruskal_test(
 
 
 
-#testing correlation between access to privacy and device risk assessment
-cor_test(select(
-  singleSourceOfTruthAppended,
-  LA01_01,
-  E201_11,
-  E201_14,
-  E201_16
-))
-#   var1    var2       cor statistic        p conf.low conf.high method
-# 2 LA01_01 E201_11 -0.092     -1.93 5.46e- 2   -0.185   0.00181 Pearson
-# 3 LA01_01 E201_14 -0.17      -3.59 3.64e- 4   -0.260  -0.0774  Pearson
-# 4 LA01_01 E201_16 -0.17      -3.58 3.79e- 4   -0.260  -0.0769  Pearson
 
 
 
@@ -153,9 +141,34 @@ disabled_features <-  select(singleSourceOfTruthAppended, participant_id,R507,R5
 disabled_features$choice <- ifelse(disabled_features$R507 == "Yes" | R510 == "Yes" | R513 == "Yes", 1, 0)
 
 wilcox.test(disabled_features$LA01_01, disabled_features$choice) #p-value < 2.2e-16
-aggregate(disabled_features[], list(disabled_features$choice), mean)
 aggregate(LA01_01~choice, data=disabled_features, mean)
+# choice  LA01_01
+# 1      0 3.331658
+# 2      1 3.216216
+
 ggboxplot(disabled_features, x = "choice", y = "LA01_01", 
           color = "choice", palette = c("#00AFBB", "#E7B800"),
           order = c(0, 1),
           ylab = "LA01_01", xlab = "choice")
+
+
+####H3####
+
+#testing correlation between access to privacy and device risk assessment for popular Devices 
+cor_test(select(
+  singleSourceOfTruthAppended,
+  LA01_01,
+  E201_11,
+  E201_14,
+  E201_16
+))
+
+#   var1    var2       cor statistic        p conf.low conf.high method
+# 2 LA01_01 E201_11 -0.092     -1.93 5.46e- 2   -0.185   0.00181 Pearson
+# 3 LA01_01 E201_14 -0.17      -3.59 3.64e- 4   -0.260  -0.0774  Pearson
+# 4 LA01_01 E201_16 -0.17      -3.58 3.79e- 4   -0.260  -0.0769  Pearson
+
+
+v <- rowMeans(select(singleSourceOfTruthAppended, E201_01:E201_20))
+cor.test(singleSourceOfTruthAppended$LA01_01,v) # p-value = 0.0005891 cor = -0.1641262 
+
