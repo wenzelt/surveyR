@@ -38,14 +38,15 @@ singleSourceOfTruthAppended$`Current Country of Residence` <-
   as.factor(singleSourceOfTruthAppended$`Current Country of Residence`)
 
 ## testing dependencies between current country of residence and consulting online reviews for their smart devices
-kruskal.test(`Current Country of Residence`, R216_05) # significant
-kruskal.test(smartTvAnswers$`Current Country of Residence`,
-             smartTvAnswers$R216_01) #not significant
-kruskal.test(smartSpeakerAnswers$`Current Country of Residence`,
-             smartSpeakerAnswers$R216_01) # not significant
-kruskal.test(smartLightAnswers$`Current Country of Residence`,
-             smartLightAnswers$R216_01) #not significant
-
+cR216 <-
+  select(singleSourceOfTruthAppended,
+         `Current Country of Residence`,
+         R216_01:R216_06)
+kruskal_test(cR216, formula = R216_01 ~ `Current Country of Residence`)
+kruskal_test(cR216, formula = R216_02 ~ `Current Country of Residence`)
+kruskal_test(cR216, formula = R216_03 ~ `Current Country of Residence`)
+kruskal_test(cR216, formula = R216_04 ~ `Current Country of Residence`)
+kruskal_test(cR216, formula = R216_05 ~ `Current Country of Residence`) #online news sites and online forums are significantly different per region
 
 
 # 1	HP02_01	Market tools: Low prices
@@ -69,7 +70,78 @@ kruskal_test(singleSourceOfTruthAppended,
 
 
 ##H2####
+u <-
+  select(
+    singleSourceOfTruthAppended,
+    participant_id,
+    `Current Country of Residence`,
+    R501,
+    R503,
+    R505
+  )
 
+d1 <-
+  select(subset(u, R233_01 == 1),
+         participant_id,
+         `Current Country of Residence`,
+         R501)
+d2 <-
+  select(subset(u, R233_02 == 1),
+         participant_id,
+         `Current Country of Residence`,
+         R503)
+d3 <-
+  select(subset(u, R233_03 == 1),
+         participant_id,
+         `Current Country of Residence`,
+         R505)
+colnames(d1) <-
+  c("participant_id", "Current Country of Residence", "Usage")
+colnames(d2) <-
+  c("participant_id", "Current Country of Residence", "Usage")
+colnames(d3) <-
+  c("participant_id", "Current Country of Residence", "Usage")
+d <- rbind(d1, d2, d3)
+d <- subset(d, Usage != "Don't know")
+d$Usage <-
+  factor(
+    d$Usage,
+    levels = c(
+      "0 times",
+      "1-5 times",
+      "6-10 times",
+      "11-20 times",
+      "21-30 times",
+      "30+ times"
+    )
+  )
+#usage and current country of residence shows no connection
+kruskal_test(d, formula = Usage ~ `Current Country of Residence`) #ns no effect on usage by region could be measured
+
+#disabled features and residence
+disabled_features_country <-
+  select(
+    singleSourceOfTruthAppended,
+    participant_id,
+    R507,
+    R510,
+    R513,
+    `Current Country of Residence`
+  )
+disabled_features_country$choice <-
+  ifelse(disabled_features$R507 == "Yes" |
+           R510 == "Yes" | R513 == "Yes", 1, 0)
+chisq.test(
+  disabled_features_country$`Current Country of Residence`,
+  disabled_features_country$choice
+) #ns no effect on usage by region could be measured
+kruskal.test(
+  disabled_features_country$`Current Country of Residence`,
+  disabled_features_country$choice
+) #ns no effect on usage by region could be measured
+
+
+#usage type by current country of residence
 
 
 ##H3####
@@ -82,19 +154,32 @@ kruskal_test(singleSourceOfTruthAppended,
 # 5	A204_05	Manufacturer responsibilitiy: Fixing a hardware failure
 # 6	A204_06	Manufacturer responsibilitiy: Fixing a software failure
 
-p<- c(
-  kruskal_test(singleSourceOfTruthAppended,
-               formula = A204_01 ~ `Current Country of Residence`)[5],
-  kruskal_test(singleSourceOfTruthAppended,
-               formula = A204_02 ~ `Current Country of Residence`)[5],
-  kruskal_test(singleSourceOfTruthAppended,
-               formula = A204_03 ~ `Current Country of Residence`)[5],
-  kruskal_test(singleSourceOfTruthAppended,
-               formula = A204_04 ~ `Current Country of Residence`)[5],#p-adj: 0.01362 #dach - us / us - uk  / dach - uk correct p values for pairwise testing
-  kruskal_test(singleSourceOfTruthAppended,
-               formula = A204_05 ~ `Current Country of Residence`)[5],
-  kruskal_test(singleSourceOfTruthAppended,
-               formula = A204_06 ~ `Current Country of Residence`)[5]
+p <- c(
+  kruskal_test(
+    singleSourceOfTruthAppended,
+    formula = A204_01 ~ `Current Country of Residence`
+  )[5],
+  kruskal_test(
+    singleSourceOfTruthAppended,
+    formula = A204_02 ~ `Current Country of Residence`
+  )[5],
+  kruskal_test(
+    singleSourceOfTruthAppended,
+    formula = A204_03 ~ `Current Country of Residence`
+  )[5],
+  kruskal_test(
+    singleSourceOfTruthAppended,
+    formula = A204_04 ~ `Current Country of Residence`
+  )[5],
+  #p-adj: 0.01362 #dach - us / us - uk  / dach - uk correct p values for pairwise testing
+  kruskal_test(
+    singleSourceOfTruthAppended,
+    formula = A204_05 ~ `Current Country of Residence`
+  )[5],
+  kruskal_test(
+    singleSourceOfTruthAppended,
+    formula = A204_06 ~ `Current Country of Residence`
+  )[5]
 )
 p.adjust(p, method = "bonferroni", n = length(p))
 #1.00000 1.00000 0.26160 0.01362 0.38100 1.00000
@@ -126,8 +211,12 @@ kruskal_test(
   formula = A204_04 ~ `Current Country of Residence`
 )#0.448 n-s
 
-countryPerception = select(singleSourceOfTruthAppended,`Current Country of Residence`, A204_04)
-aggregate(countryPerception[, 2], list(countryPerception$`Current Country of Residence`), mean)
+countryPerception = select(singleSourceOfTruthAppended,
+                           `Current Country of Residence`,
+                           A204_04)
+aggregate(countryPerception[, 2],
+          list(countryPerception$`Current Country of Residence`),
+          mean)
 # Group.1  A204_04
 # 1           DACH 3.940741
 # 2 United Kingdom 4.535484
@@ -159,7 +248,7 @@ p <- c(
     singleSourceOfTruthAppended,
     formula = A307_01 ~ `Current Country of Residence`
   )[5],
-  # 0.0272
+  # 0.272
   kruskal_test(
     singleSourceOfTruthAppended,
     formula = A307_02 ~ `Current Country of Residence`
@@ -168,32 +257,32 @@ p <- c(
     singleSourceOfTruthAppended,
     formula = A307_03 ~ `Current Country of Residence`
   )[5],
-  #0.0508 # not stat sig
+  #0.508 # not stat sig
   kruskal_test(
     singleSourceOfTruthAppended,
     formula = A307_04 ~ `Current Country of Residence`
   )[5],
-  #0.00268
+  #0.0268
   kruskal_test(
     singleSourceOfTruthAppended,
     formula = A307_05 ~ `Current Country of Residence`
   )[5],
-  #0.0125
+  #0.125
   kruskal_test(
     singleSourceOfTruthAppended,
     formula = A307_06 ~ `Current Country of Residence`
   )[5],
-  #0.000141 -- adding pairwise testing -- p.adjust(p, method = "bonferroni", n = length(p))
+  #0.00141 -- adding pairwise testing -- p.adjust(p, method = "bonferroni", n = length(p))
   kruskal_test(
     singleSourceOfTruthAppended,
     formula = A307_07 ~ `Current Country of Residence`
   )[5],
-  #0.00867
+  #0.0867
   kruskal_test(
     singleSourceOfTruthAppended,
     formula = A307_08 ~ `Current Country of Residence`
   )[5],
-  #0.000615
+  #0.00615
   kruskal_test(
     singleSourceOfTruthAppended,
     formula = A307_09 ~ `Current Country of Residence`
@@ -202,12 +291,205 @@ p <- c(
     singleSourceOfTruthAppended,
     formula = A307_10 ~ `Current Country of Residence`
   )[5]
-) #0.0000274
+) #0.000274
 p <- unlist(p, use.names = FALSE)
 p.adjust(p, method = "bonferroni", n = length(p))
+# 1       2        3        4        5        6        7        8        9        10
 #0.272000 1.000000 0.508000 0.026800 0.125000 0.001410 0.086700 0.006150 1.000000 0.000274
 
+# 1	A307_01	Perceived benefits: Saving money
+# 2	A307_02	Perceived benefits: Saving energy
+# 3	A307_03	Perceived benefits: Increasing convenience
+# 4	A307_04	Perceived benefits: Enhancing leisure activities
+# 5	A307_05	Perceived benefits: Providing peace of mind
+# 6	A307_06	Perceived benefits: Providing comfort
+# 7	A307_07	Perceived benefits: Increasing safety
+# 8	A307_08	Perceived benefits: Providing care
+# 9	A307_09	Perceived benefits: Improving quality of life
+# 10	A307_10	Perceived benefits: Increasing property value
+
+
+#-------------------------------------------------------------------------------
+#testing for smart home device preference country ~ enhancing leisure activities
+kruskal_test(
+  subset(
+    singleSourceOfTruthAppended,
+    `Current Country of Residence` == "DACH" |
+      `Current Country of Residence` == "United Kingdom"
+  ),
+  formula = A307_04 ~ `Current Country of Residence`
+)#0.0367
+kruskal_test(
+  subset(
+    singleSourceOfTruthAppended,
+    `Current Country of Residence` == "DACH" |
+      `Current Country of Residence` == "United States"
+  ),
+  formula = A307_04 ~ `Current Country of Residence`
+)#0.00000354
+kruskal_test(
+  subset(
+    singleSourceOfTruthAppended,
+    `Current Country of Residence` == "United Kingdom" |
+      `Current Country of Residence` == "United States"
+  ),
+  formula = A307_04 ~ `Current Country of Residence`
+)#0.0126
+
+countryIncreaseProperty = select(singleSourceOfTruthAppended,
+                                 `Current Country of Residence`,
+                                 A307_04)
+aggregate(
+  countryIncreaseProperty[, 2],
+  list(countryIncreaseProperty$`Current Country of Residence`),
+  mean
+)
+# 1	A307_01	Perceived benefits: Saving money
+# 2	A307_02	Perceived benefits: Saving energy
+# 3	A307_03	Perceived benefits: Increasing convenience
+# 4	A307_04	Perceived benefits: Enhancing leisure activities
+# 5	A307_05	Perceived benefits: Providing peace of mind
+# 6	A307_06	Perceived benefits: Providing comfort
+# 7	A307_07	Perceived benefits: Increasing safety
+# 8	A307_08	Perceived benefits: Providing care
+# 9	A307_09	Perceived benefits: Improving quality of life
+# 10	A307_10	Perceived benefits: Increasing property value
+
+#-------------------------------------------------------------------------------
+#testing for smart home device preference country ~ providing comfort
+kruskal_test(
+  subset(
+    singleSourceOfTruthAppended,
+    `Current Country of Residence` == "DACH" |
+      `Current Country of Residence` == "United Kingdom"
+  ),
+  formula = A307_06 ~ `Current Country of Residence`
+)#0.0367
+kruskal_test(
+  subset(
+    singleSourceOfTruthAppended,
+    `Current Country of Residence` == "DACH" |
+      `Current Country of Residence` == "United States"
+  ),
+  formula = A307_06 ~ `Current Country of Residence`
+)#0.00000354
+kruskal_test(
+  subset(
+    singleSourceOfTruthAppended,
+    `Current Country of Residence` == "United Kingdom" |
+      `Current Country of Residence` == "United States"
+  ),
+  formula = A307_06 ~ `Current Country of Residence`
+)#0.0126
+
+countryIncreaseProperty = select(singleSourceOfTruthAppended,
+                                 `Current Country of Residence`,
+                                 A307_06)
+aggregate(
+  countryIncreaseProperty[, 2],
+  list(countryIncreaseProperty$`Current Country of Residence`),
+  mean
+)
+
+# 1	A307_01	Perceived benefits: Saving money
+# 2	A307_02	Perceived benefits: Saving energy
+# 3	A307_03	Perceived benefits: Increasing convenience
+# 4	A307_04	Perceived benefits: Enhancing leisure activities
+# 5	A307_05	Perceived benefits: Providing peace of mind
+# 6	A307_06	Perceived benefits: Providing comfort
+# 7	A307_07	Perceived benefits: Increasing safety
+# 8	A307_08	Perceived benefits: Providing care
+# 9	A307_09	Perceived benefits: Improving quality of life
+# 10	A307_10	Perceived benefits: Increasing property value
+
+#------------------------------------------------------------------------------------
+#testing for smart home device preference country ~ increasing safety
+kruskal_test(
+  subset(
+    singleSourceOfTruthAppended,
+    `Current Country of Residence` == "DACH" |
+      `Current Country of Residence` == "United Kingdom"
+  ),
+  formula = A307_07 ~ `Current Country of Residence`
+)#0.0367
+kruskal_test(
+  subset(
+    singleSourceOfTruthAppended,
+    `Current Country of Residence` == "DACH" |
+      `Current Country of Residence` == "United States"
+  ),
+  formula = A307_07 ~ `Current Country of Residence`
+)#0.00000354
+kruskal_test(
+  subset(
+    singleSourceOfTruthAppended,
+    `Current Country of Residence` == "United Kingdom" |
+      `Current Country of Residence` == "United States"
+  ),
+  formula = A307_07 ~ `Current Country of Residence`
+)#0.0126
+
+countryIncreaseProperty = select(singleSourceOfTruthAppended,
+                                 `Current Country of Residence`,
+                                 A307_07)
+aggregate(
+  countryIncreaseProperty[, 2],
+  list(countryIncreaseProperty$`Current Country of Residence`),
+  mean
+)
+
+# 1	A307_01	Perceived benefits: Saving money
+# 2	A307_02	Perceived benefits: Saving energy
+# 3	A307_03	Perceived benefits: Increasing convenience
+# 4	A307_04	Perceived benefits: Enhancing leisure activities
+# 5	A307_05	Perceived benefits: Providing peace of mind
+# 6	A307_06	Perceived benefits: Providing comfort
+# 7	A307_07	Perceived benefits: Increasing safety
+# 8	A307_08	Perceived benefits: Providing care
+# 9	A307_09	Perceived benefits: Improving quality of life
+# 10	A307_10	Perceived benefits: Increasing property value
+
+
+#------------------------------------------------------------------------------------
+#testing for smart home device preference country ~ providing care
+kruskal_test(
+  subset(
+    singleSourceOfTruthAppended,
+    `Current Country of Residence` == "DACH" |
+      `Current Country of Residence` == "United Kingdom"
+  ),
+  formula = A307_08 ~ `Current Country of Residence`
+)#0.0367
+kruskal_test(
+  subset(
+    singleSourceOfTruthAppended,
+    `Current Country of Residence` == "DACH" |
+      `Current Country of Residence` == "United States"
+  ),
+  formula = A307_08 ~ `Current Country of Residence`
+)#0.00000354
+kruskal_test(
+  subset(
+    singleSourceOfTruthAppended,
+    `Current Country of Residence` == "United Kingdom" |
+      `Current Country of Residence` == "United States"
+  ),
+  formula = A307_08 ~ `Current Country of Residence`
+)#0.0126
+
+countryIncreaseProperty = select(singleSourceOfTruthAppended,
+                                 `Current Country of Residence`,
+                                 A307_08)
+aggregate(
+  countryIncreaseProperty[, 2],
+  list(countryIncreaseProperty$`Current Country of Residence`),
+  mean
+)
+
+#------------------------------------------------------------------------------------
+
 #starting pairwise testing per country
+# Country and adding to the property value
 kruskal_test(
   subset(
     singleSourceOfTruthAppended,
@@ -233,10 +515,16 @@ kruskal_test(
   formula = A307_10 ~ `Current Country of Residence`
 )#0.0126
 
-countryIncreaseProperty = select(singleSourceOfTruthAppended,`Current Country of Residence`, A307_10)
-aggregate(countryIncreaseProperty[, 2], list(countryIncreaseProperty$`Current Country of Residence`), mean)
+countryIncreaseProperty = select(singleSourceOfTruthAppended,
+                                 `Current Country of Residence`,
+                                 A307_10)
+aggregate(
+  countryIncreaseProperty[, 2],
+  list(countryIncreaseProperty$`Current Country of Residence`),
+  mean
+)
 
-
+#-------------------------------------------------------------------------------
 # testing for country by perceived device risk
 
 # 1	E201_01	Device risk: Smart Coffee Maker

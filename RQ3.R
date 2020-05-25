@@ -14,10 +14,15 @@ library(readxl)
 
 singleSourceOfTruthAppended_old <-
   read_csv("singleSourceOfTruthAppended.csv")
-weirdGuys <- subset(singleSourceOfTruthAppended_old, is.na(`Current Country of Residence`))
-save(weirdGuys,file = "weirdGuys.csv")
-singleSourceOfTruthAppended <- read_xlsx("singleSourceOfTruthAppended_P.xlsx")
-singleSourceOfTruthAppended <- subset(singleSourceOfTruthAppended, `Current Country of Residence` != "NA")
+weirdGuys <-
+  subset(singleSourceOfTruthAppended_old,
+         is.na(`Current Country of Residence`))
+save(weirdGuys, file = "weirdGuys.csv")
+singleSourceOfTruthAppended <-
+  read_xlsx("singleSourceOfTruthAppended_P.xlsx")
+singleSourceOfTruthAppended <-
+  subset(singleSourceOfTruthAppended,
+         `Current Country of Residence` != "NA")
 
 
 ########################## RQ_03 ###################################################
@@ -47,7 +52,8 @@ ggboxplot(
   xlab = "Renting or owning"
 )
 
-wilcox.test(R101 ~ A007 == "Rent" | A007 == "Own") # no statistical significance found
+wilcox.test(R101 ~ A007 == "Rent" |
+              A007 == "Own") # no statistical significance found
 kruskal_test(singleSourceOfTruthAppended, formula = R101 ~ A007) # 0.0701
 
 # testing for amount of children in household
@@ -61,7 +67,9 @@ ggboxplot(
   ylab = "Amount of devices",
   xlab = "Children or no children"
 )
+##H2####
 
+usageDemographicsChildren <- select(singleSourceOfTruthAppended,)
 
 
 ##H3####
