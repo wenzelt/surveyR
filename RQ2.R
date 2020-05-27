@@ -42,6 +42,8 @@ cR216 <-
   select(singleSourceOfTruthAppended,
          `Current Country of Residence`,
          R216_01:R216_06)
+kruskal_test(singleSourceOfTruthAppended, formula = R216 ~ `Current Country of Residence`)
+
 kruskal_test(cR216, formula = R216_01 ~ `Current Country of Residence`)
 kruskal_test(cR216, formula = R216_02 ~ `Current Country of Residence`)
 kruskal_test(cR216, formula = R216_03 ~ `Current Country of Residence`)
@@ -75,6 +77,12 @@ u <-
     singleSourceOfTruthAppended,
     participant_id,
     `Current Country of Residence`,
+    R232_01,
+    R232_02,
+    R232_03,
+    R233_01,
+    R233_02 ,
+    R233_03 ,
     R501,
     R503,
     R505
@@ -83,24 +91,24 @@ u <-
 d1 <-
   select(subset(u, R233_01 == 1),
          participant_id,
-         `Current Country of Residence`,
+         `Current Country of Residence`,R232_01,
          R501)
 d2 <-
   select(subset(u, R233_02 == 1),
          participant_id,
-         `Current Country of Residence`,
+         `Current Country of Residence`,R232_02,
          R503)
 d3 <-
   select(subset(u, R233_03 == 1),
          participant_id,
-         `Current Country of Residence`,
+         `Current Country of Residence`,R232_03,
          R505)
 colnames(d1) <-
-  c("participant_id", "Current Country of Residence", "Usage")
+  c("participant_id", "Current Country of Residence","Device", "Usage")
 colnames(d2) <-
-  c("participant_id", "Current Country of Residence", "Usage")
+  c("participant_id", "Current Country of Residence","Device", "Usage")
 colnames(d3) <-
-  c("participant_id", "Current Country of Residence", "Usage")
+  c("participant_id", "Current Country of Residence", "Device","Usage")
 d <- rbind(d1, d2, d3)
 d <- subset(d, Usage != "Don't know")
 d$Usage <-
@@ -117,6 +125,12 @@ d$Usage <-
   )
 #usage and current country of residence shows no connection
 kruskal_test(d, formula = Usage ~ `Current Country of Residence`) #ns no effect on usage by region could be measured
+kruskal_test(subset(d, Device == "Smart TV"), formula = Usage ~ `Current Country of Residence`) #ns no effect on usage by region could be measured
+kruskal_test(subset(d, Device == "Smart Speaker"), formula = Usage ~ `Current Country of Residence`) #ns no effect on usage by region could be measured
+kruskal_test(subset(d, Device == "Smart Lightbulb"), formula = Usage ~ `Current Country of Residence`) #ns no effect on usage by region could be measured
+
+
+##
 
 #disabled features and residence
 disabled_features_country <-
@@ -129,7 +143,7 @@ disabled_features_country <-
     `Current Country of Residence`
   )
 disabled_features_country$choice <-
-  ifelse(disabled_features$R507 == "Yes" |
+  ifelse(disabled_features_country$R507 == "Yes" |
            R510 == "Yes" | R513 == "Yes", 1, 0)
 chisq.test(
   disabled_features_country$`Current Country of Residence`,

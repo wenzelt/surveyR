@@ -1,3 +1,4 @@
+
 list.of.packages <- c("ggplot2", "tidyverse", "dplyr", "ggpubr")
 new.packages <-
   list.of.packages[!(list.of.packages %in% installed.packages()[, "Package"])]
@@ -66,7 +67,7 @@ kruskal_test(
   LA01_01 ~ R101
 ) # s
 
-
+cor.test(singleSourceOfTruthAppended$LA01_01, singleSourceOfTruthAppended$R101)
 
 
 
