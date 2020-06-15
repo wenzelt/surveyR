@@ -4,6 +4,8 @@ new.packages <-
 if (length(new.packages))
   install.packages(new.packages)
 
+library(FSA)
+library(dunn.test)
 library(tidyverse)
 library(dplyr)
 library(ggplot2)
