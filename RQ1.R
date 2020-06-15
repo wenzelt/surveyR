@@ -106,6 +106,8 @@ d$Usage <-
 
 ###merge on participant_id their legislative opinion
 
+######
+#LA01_01 unwanted access by third parties.
 d <-
   merge(select(singleSourceOfTruthAppended, LA01_01, participant_id),
         d,
@@ -120,12 +122,57 @@ dOther <-
       Device_Owned != "Smart Lightbulb" &
       Device_Owned != "Smart Speaker"
   )
+######
+#LA01_02 unwanted sharing with third parties.
+d2 <-
+  merge(select(singleSourceOfTruthAppended, LA01_02, participant_id),
+        d2,
+        by = "participant_id")
+d2SmartTV <- subset(d2, Device_Owned == "Smart TV")
+d2SmartSpeaker <- subset(d2, Device_Owned == "Smart Speaker")
+d2SmartLights <- subset(d2, Device_Owned == "Smart Lightbulb")
+d2Other <-
+  subset(
+    d2,
+    Device_Owned != "Smart TV" &
+      Device_Owned != "Smart Lightbulb" &
+      Device_Owned != "Smart Speaker"
+  )
+
+######
+#LA01_03 unwanted processing and analysis by third parties.
+d3 <-
+  merge(select(singleSourceOfTruthAppended, LA01_03, participant_id),
+        d3,
+        by = "participant_id")
+d3SmartTV <- subset(d3, Device_Owned == "Smart TV")
+d3SmartSpeaker <- subset(d3, Device_Owned == "Smart Speaker")
+d3SmartLights <- subset(d3, Device_Owned == "Smart Lightbulb")
+d3Other <-
+  subset(
+    d3,
+    Device_Owned != "Smart TV" &
+      Device_Owned != "Smart Lightbulb" &
+      Device_Owned != "Smart Speaker"
+  )
+######
 
 #testing correlation of legislative opinion with usage
-cor.test(d$LA01_01, as.numeric(d$Usage))
-cor.test(dSmartTV$LA01_01, as.numeric(dSmartTV$Usage))#p-value = 0.0539 cor = 0.1256503
-cor.test(dSmartSpeaker$LA01_01, as.numeric(dSmartSpeaker$Usage))#p-value = 0.001758 cor = 0.2611931
-cor.test(dSmartLights$LA01_01, as.numeric(dSmartLights$Usage))#p-value = 0.9533 cor = -0.006196514
+cor.test(d$LA01_01, as.numeric(d$Usage)) #p-value = 0.003954 cor =0.1019092 
+cor.test(d2$LA01_02, as.numeric(d2$Usage)) #p-value = 0.0009184 cor =0.1171079 
+cor.test(d3$LA01_03, as.numeric(d3$Usage)) #p-value = 0.0001166 cor =0.1359802 
+
+cor.test(dSmartTV$LA01_01, as.numeric(dSmartTV$Usage))#NS p-value = 0.07521 cor = 0.1170394 
+cor.test(d2SmartTV$LA01_02, as.numeric(d2SmartTV$Usage))#p-value = 0.001254 cor = 0.2105709
+cor.test(d3SmartTV$LA01_03, as.numeric(d3SmartTV$Usage))#p-value = 0.00351 cor = 0.1909176
+
+cor.test(dSmartSpeaker$LA01_01, as.numeric(dSmartSpeaker$Usage))#p-value = 0.00184 cor = 0.2628
+cor.test(d2SmartSpeaker$LA01_02, as.numeric(d2SmartSpeaker$Usage))#p-value = 0.0009839 cor = 0.2774907
+cor.test(d3SmartSpeaker$LA01_03, as.numeric(d3SmartSpeaker$Usage))#p-value = 0.00351 cor = 0.1909176
+
+cor.test(dSmartLights$LA01_01, as.numeric(dSmartLights$Usage))#NS p-value = 0.9616 cor = -0.005112956 
+cor.test(d2SmartLights$LA01_02, as.numeric(d2SmartLights$Usage))#NS p-value = 0.8468cor = -0.02052836 
+cor.test(d3SmartLights$LA01_03, as.numeric(d3SmartLights$Usage))#NS p-value = 0.6602 cor = -0.04670735
 
 ####H2####
 #testing for LA on disabled features:
