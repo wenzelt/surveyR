@@ -1,4 +1,4 @@
-list.of.packages <- c("ggplot2", "tidyverse", "dplyr", "ggpubr")
+list.of.packages <- c("ggplot2", "tidyverse", "dplyr", "ggpubr", "FSA","dunn.test" )
 new.packages <-
   list.of.packages[!(list.of.packages %in% installed.packages()[, "Package"])]
 if (length(new.packages))
@@ -631,3 +631,5 @@ kruskal_test(
 )# smart TV - significantly different for countries p = 0.0000555
 # --- plot means by country to find out which is different and higher / lower
 p.adjust(p, "bonferroni") #1.0000000 0.2760000 0.0001665
+
+dunnTest(E201_16,`Current Country of Residence`, method = "bonferroni")
