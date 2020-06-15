@@ -175,9 +175,13 @@ cor_test(select(
 # 3 LA01_01 E201_14 -0.17      -3.59 3.64e- 4   -0.260  -0.0774  Pearson
 # 4 LA01_01 E201_16 -0.17      -3.58 3.79e- 4   -0.260  -0.0769  Pearson
 
-
-cor.test(LA01_01, A204_03) #Protecting my Smart Home ecosystem as a whole #ns
-cor.test(LA01_01, A204_04) #keeping my device secure #ns
-
 v <- rowMeans(select(singleSourceOfTruthAppended, E201_01:E201_20))
 cor.test(singleSourceOfTruthAppended$LA01_01, v) # p-value = 0.0005891 cor = -0.1641262
+
+#Correlation between LA01 and Manufacturer responsibility
+cor.test(LA01_01, A204_01) #ns
+cor.test(LA01_01, A204_02) #ns
+cor.test(LA01_01, A204_03) #Protecting my Smart Home ecosystem as a whole #ns
+cor.test(LA01_01, A204_04) #keeping my device secure #ns
+cor.test(LA01_01, A204_05) #ns
+cor.test(LA01_01, A204_06) #ns
