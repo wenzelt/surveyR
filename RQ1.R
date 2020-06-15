@@ -38,6 +38,8 @@ attach(singleSourceOfTruthAppended)
 
 #testing for unwanted access to data with amount of different devices owned.
 kruskal_test(singleSourceOfTruthAppended, LA01_01 ~ R101) # statistically significant for value p = 0.00082
+
+###UK US
 kruskal_test(
   subset(
     singleSourceOfTruthAppended,
@@ -46,7 +48,24 @@ kruskal_test(
   ),
   LA01_01 ~ R101
 )#ns
+kruskal_test(
+  subset(
+    singleSourceOfTruthAppended,
+    `Current Country of Residence` == "United Kingdom" |
+      `Current Country of Residence` == "United States"
+  ),
+  LA01_02 ~ R101
+)#s
+kruskal_test(
+  subset(
+    singleSourceOfTruthAppended,
+    `Current Country of Residence` == "United Kingdom" |
+      `Current Country of Residence` == "United States"
+  ),
+  LA01_03 ~ R101
+)#s
 
+###DACH US
 kruskal_test(
   subset(
     singleSourceOfTruthAppended,
@@ -55,8 +74,24 @@ kruskal_test(
   ),
   LA01_01 ~ R101
 )#s
+kruskal_test(
+  subset(
+    singleSourceOfTruthAppended,
+    `Current Country of Residence` == "DACH" |
+      `Current Country of Residence` == "United States"
+  ),
+  LA01_02 ~ R101
+)#s
+kruskal_test(
+  subset(
+    singleSourceOfTruthAppended,
+    `Current Country of Residence` == "DACH" |
+      `Current Country of Residence` == "United States"
+  ),
+  LA01_03 ~ R101
+)#ns
 
-
+###UK DACH
 kruskal_test(
   subset(
     singleSourceOfTruthAppended,
@@ -64,7 +99,24 @@ kruskal_test(
       `Current Country of Residence` == "DACH"
   ),
   LA01_01 ~ R101
-) # s
+) #s
+kruskal_test(
+  subset(
+    singleSourceOfTruthAppended,
+    `Current Country of Residence` == "United Kingdom" |
+      `Current Country of Residence` == "DACH"
+  ),
+  LA01_02 ~ R101
+) #s
+kruskal_test(
+  subset(
+    singleSourceOfTruthAppended,
+    `Current Country of Residence` == "United Kingdom" |
+      `Current Country of Residence` == "DACH"
+  ),
+  LA01_03 ~ R101
+) #s
+
 
 cor.test(singleSourceOfTruthAppended$LA01_01, singleSourceOfTruthAppended$R101)
 
@@ -105,6 +157,38 @@ d$Usage <-
   )
 
 ###merge on participant_id their legislative opinion
+
+####H2####
+#testing for LA on disabled features:
+
+disabled_features <-
+  select(singleSourceOfTruthAppended,
+         participant_id,
+         R507,
+         R510,
+         R513,
+         LA01_01)
+disabled_features$choice <-
+  ifelse(disabled_features$R507 == "Yes" |
+           R510 == "Yes" | R513 == "Yes", 1, 0)
+
+wilcox.test(disabled_features$LA01_01, disabled_features$choice) #p-value < 2.2e-16
+aggregate(LA01_01 ~ choice, data = disabled_features, mean)
+# choice  LA01_01
+# 1      0 3.331658
+# 2      1 3.216216
+
+ggboxplot(
+  disabled_features,
+  x = "choice",
+  y = "LA01_01",
+  color = "choice",
+  palette = c("#00AFBB", "#E7B800"),
+  order = c(0, 1),
+  ylab = "LA01_01",
+  xlab = "choice"
+)
+
 
 ######
 #LA01_01 unwanted access by third parties.
@@ -163,48 +247,16 @@ cor.test(d2$LA01_02, as.numeric(d2$Usage)) #p-value = 0.0009184 cor =0.1171079
 cor.test(d3$LA01_03, as.numeric(d3$Usage)) #p-value = 0.0001166 cor =0.1359802 
 
 cor.test(dSmartTV$LA01_01, as.numeric(dSmartTV$Usage))#NS p-value = 0.07521 cor = 0.1170394 
-cor.test(d2SmartTV$LA01_02, as.numeric(d2SmartTV$Usage))#p-value = 0.001254 cor = 0.2105709
+  cor.test(d2SmartTV$LA01_02, as.numeric(d2SmartTV$Usage))#p-value = 0.001254 cor = 0.2105709
 cor.test(d3SmartTV$LA01_03, as.numeric(d3SmartTV$Usage))#p-value = 0.00351 cor = 0.1909176
 
 cor.test(dSmartSpeaker$LA01_01, as.numeric(dSmartSpeaker$Usage))#p-value = 0.00184 cor = 0.2628
-cor.test(d2SmartSpeaker$LA01_02, as.numeric(d2SmartSpeaker$Usage))#p-value = 0.0009839 cor = 0.2774907
-cor.test(d3SmartSpeaker$LA01_03, as.numeric(d3SmartSpeaker$Usage))#p-value = 0.00351 cor = 0.1909176
+cor.test(d2SmartSpeaker$LA01_02, as.numeric(d2SmartSpeaker$Usage))#p-value = 0.00974 cor = 0.2193522 
+cor.test(d3SmartSpeaker$LA01_03, as.numeric(d3SmartSpeaker$Usage))#p-value = 0.0009839 cor = 0.2774907
 
 cor.test(dSmartLights$LA01_01, as.numeric(dSmartLights$Usage))#NS p-value = 0.9616 cor = -0.005112956 
-cor.test(d2SmartLights$LA01_02, as.numeric(d2SmartLights$Usage))#NS p-value = 0.8468cor = -0.02052836 
+cor.test(d2SmartLights$LA01_02, as.numeric(d2SmartLights$Usage))#NS p-value = 0.8468 cor = -0.02052836 
 cor.test(d3SmartLights$LA01_03, as.numeric(d3SmartLights$Usage))#NS p-value = 0.6602 cor = -0.04670735
-
-####H2####
-#testing for LA on disabled features:
-
-disabled_features <-
-  select(singleSourceOfTruthAppended,
-         participant_id,
-         R507,
-         R510,
-         R513,
-         LA01_01)
-disabled_features$choice <-
-  ifelse(disabled_features$R507 == "Yes" |
-           R510 == "Yes" | R513 == "Yes", 1, 0)
-
-wilcox.test(disabled_features$LA01_01, disabled_features$choice) #p-value < 2.2e-16
-aggregate(LA01_01 ~ choice, data = disabled_features, mean)
-# choice  LA01_01
-# 1      0 3.331658
-# 2      1 3.216216
-
-ggboxplot(
-  disabled_features,
-  x = "choice",
-  y = "LA01_01",
-  color = "choice",
-  palette = c("#00AFBB", "#E7B800"),
-  order = c(0, 1),
-  ylab = "LA01_01",
-  xlab = "choice"
-)
-
 
 ####H3####
 
