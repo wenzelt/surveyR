@@ -33,22 +33,23 @@ singleSourceOfTruthAppended <-
 # 4	R216_04	Education about Device D1: Friends and Family
 # 5	R216_05	Education about Device D1: Online news sites
 
+singleSourceOfTruthAppended <-
+  read_xlsx("singleSourceOfTruthAppended_P.xlsx")
+singleSourceOfTruthAppended <-
+  subset(singleSourceOfTruthAppended,
+         `Current Country of Residence` != "NA")
+
 attach(singleSourceOfTruthAppended)
 singleSourceOfTruthAppended$`Current Country of Residence` <-
   as.factor(singleSourceOfTruthAppended$`Current Country of Residence`)
 
 ## testing dependencies between current country of residence and consulting online reviews for their smart devices
-cR216 <-
-  select(singleSourceOfTruthAppended,
-         `Current Country of Residence`,
-         R216_01:R216_06)
-kruskal_test(singleSourceOfTruthAppended, formula = R216 ~ `Current Country of Residence`)
 
-kruskal_test(cR216, formula = R216_01 ~ `Current Country of Residence`)
-kruskal_test(cR216, formula = R216_02 ~ `Current Country of Residence`)
-kruskal_test(cR216, formula = R216_03 ~ `Current Country of Residence`)
-kruskal_test(cR216, formula = R216_04 ~ `Current Country of Residence`)
-kruskal_test(cR216, formula = R216_05 ~ `Current Country of Residence`) #online news sites and online forums are significantly different per region
+kruskal_test(singleSourceOfTruthAppended, formula = R216_01 ~ `Current Country of Residence`)
+kruskal_test(singleSourceOfTruthAppended, formula = R216_02 ~ `Current Country of Residence`)
+kruskal_test(singleSourceOfTruthAppended, formula = R216_03 ~ `Current Country of Residence`)
+kruskal_test(singleSourceOfTruthAppended, formula = R216_04 ~ `Current Country of Residence`)
+kruskal_test(singleSourceOfTruthAppended, formula = R216_05 ~ `Current Country of Residence`) #online news sites and online forums are significantly different per region
 
 
 # 1	HP02_01	Market tools: Low prices
@@ -125,12 +126,61 @@ d$Usage <-
   )
 #usage and current country of residence shows no connection
 kruskal_test(d, formula = Usage ~ `Current Country of Residence`) #ns no effect on usage by region could be measured
-kruskal_test(subset(d, Device == "Smart TV"), formula = Usage ~ `Current Country of Residence`) #ns no effect on usage by region could be measured
+kruskal_test(subset(d, Device == "Smart TV"), formula = Usage ~ `Current Country of Residence`) 
 kruskal_test(subset(d, Device == "Smart Speaker"), formula = Usage ~ `Current Country of Residence`) #ns no effect on usage by region could be measured
 kruskal_test(subset(d, Device == "Smart Lightbulb"), formula = Usage ~ `Current Country of Residence`) #ns no effect on usage by region could be measured
-
+kruskal_test(subset(d, Device != "Smart Lightbulb" && Device != "Smart Speaker" && Device != "Smart TV" ), formula = Usage ~ `Current Country of Residence`) #ns no effect on usage by region could be measured
 
 ##
+smartTVUsers <- subset(d,Device == "Smart TV")
+
+kruskal_test(
+  subset(
+    smartTVUsers,
+    `Current Country of Residence` == "United Kingdom" |
+      `Current Country of Residence` == "United States"
+  ),
+  Usage ~ `Current Country of Residence`
+)#ns
+
+
+kruskal_test(
+  subset(
+    smartTVUsers,
+    `Current Country of Residence` == "DACH" |
+      `Current Country of Residence` == "United States"
+  ),
+  Usage ~ `Current Country of Residence`
+)#s
+
+
+kruskal_test(
+  subset(
+    smartTVUsers,
+    `Current Country of Residence` == "United Kingdom" |
+      `Current Country of Residence` == "DACH"
+  ),
+  Usage ~ `Current Country of Residence`
+) # s
+
+##
+sTV_UK <- subset(
+  smartTVUsers,
+  `Current Country of Residence` == "United Kingdom" 
+)##
+sTV_US <- subset(
+  smartTVUsers,
+  `Current Country of Residence` == "United States" 
+)
+sTV_DACH <- subset(
+  smartTVUsers,
+  `Current Country of Residence` == "DACH" 
+)
+summary(sTV_US)
+summary(sTV_UK)
+summary(sTV_DACH)
+
+mean(as.factor(sTV_DACH$Usage))
 
 #disabled features and residence
 disabled_features_country <-
@@ -332,7 +382,7 @@ kruskal_test(
       `Current Country of Residence` == "United Kingdom"
   ),
   formula = A307_04 ~ `Current Country of Residence`
-)#0.0367
+)
 kruskal_test(
   subset(
     singleSourceOfTruthAppended,
@@ -340,7 +390,7 @@ kruskal_test(
       `Current Country of Residence` == "United States"
   ),
   formula = A307_04 ~ `Current Country of Residence`
-)#0.00000354
+)#
 kruskal_test(
   subset(
     singleSourceOfTruthAppended,
@@ -348,7 +398,7 @@ kruskal_test(
       `Current Country of Residence` == "United States"
   ),
   formula = A307_04 ~ `Current Country of Residence`
-)#0.0126
+)#
 
 countryIncreaseProperty = select(singleSourceOfTruthAppended,
                                  `Current Country of Residence`,

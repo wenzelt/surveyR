@@ -69,12 +69,12 @@ kruskal_test(
 
 cor.test(singleSourceOfTruthAppended$LA01_01, singleSourceOfTruthAppended$R101)
 
-
-
-
-
+cor.test(LA01_01, A204_01) #Protecting my Smart Home ecosystem as a whole #ns
+cor.test(LA01_01, A204_02) #Protecting my Smart Home ecosystem as a whole #ns
 cor.test(LA01_01, A204_03) #Protecting my Smart Home ecosystem as a whole #ns
 cor.test(LA01_01, A204_04) #keeping my device secure #ns
+cor.test(LA01_01, A204_05) #Protecting my Smart Home ecosystem as a whole #ns
+cor.test(LA01_01, A204_06) #Protecting my Smart Home ecosystem as a whole #ns
 
 # creating table usage device ownership
 u <-
