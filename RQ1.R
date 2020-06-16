@@ -81,6 +81,8 @@ kruskal_test(
   ),
   LA01_01 ~ R101
 ) # s
+
+
 cor.test(singleSourceOfTruthAppended$LA01_01,
          singleSourceOfTruthAppended$R101)
 
