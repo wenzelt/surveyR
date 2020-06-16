@@ -1,5 +1,7 @@
 
-list.of.packages <- c("ggplot2", "tidyverse", "dplyr", "ggpubr", "FSA","dunn.test" )
+
+list.of.packages <-
+  c("ggplot2", "tidyverse", "dplyr", "ggpubr", "FSA", "dunn.test")
 new.packages <-
   list.of.packages[!(list.of.packages %in% installed.packages()[, "Package"])]
 if (length(new.packages))
@@ -102,7 +104,8 @@ kruskal_test(
   ),
   LA01_01 ~ R101
 ) # s
-cor.test(singleSourceOfTruthAppended$LA01_01, singleSourceOfTruthAppended$R101)
+cor.test(singleSourceOfTruthAppended$LA01_01,
+         singleSourceOfTruthAppended$R101)
 
 cor.test(LA01_01, A204_01) #Protecting my Smart Home ecosystem as a whole #ns
 cor.test(LA01_01, A204_02) #Protecting my Smart Home ecosystem as a whole #ns
@@ -129,7 +132,8 @@ kruskal_test(
 ) #s
 
 
-cor.test(singleSourceOfTruthAppended$LA01_01, singleSourceOfTruthAppended$R101)
+cor.test(singleSourceOfTruthAppended$LA01_01,
+         singleSourceOfTruthAppended$R101)
 
 # creating table usage device ownership
 u <-
@@ -253,20 +257,20 @@ d3Other <-
 ######
 
 #testing correlation of legislative opinion with usage
-cor.test(d$LA01_01, as.numeric(d$Usage)) #p-value = 0.003954 cor =0.1019092 
-cor.test(d2$LA01_02, as.numeric(d2$Usage)) #p-value = 0.0009184 cor =0.1171079 
-cor.test(d3$LA01_03, as.numeric(d3$Usage)) #p-value = 0.0001166 cor =0.1359802 
+cor.test(d$LA01_01, as.numeric(d$Usage)) #p-value = 0.003954 cor =0.1019092
+cor.test(d2$LA01_02, as.numeric(d2$Usage)) #p-value = 0.0009184 cor =0.1171079
+cor.test(d3$LA01_03, as.numeric(d3$Usage)) #p-value = 0.0001166 cor =0.1359802
 
-cor.test(dSmartTV$LA01_01, as.numeric(dSmartTV$Usage))#NS p-value = 0.07521 cor = 0.1170394 
-  cor.test(d2SmartTV$LA01_02, as.numeric(d2SmartTV$Usage))#p-value = 0.001254 cor = 0.2105709
+cor.test(dSmartTV$LA01_01, as.numeric(dSmartTV$Usage))#NS p-value = 0.07521 cor = 0.1170394
+cor.test(d2SmartTV$LA01_02, as.numeric(d2SmartTV$Usage))#p-value = 0.001254 cor = 0.2105709
 cor.test(d3SmartTV$LA01_03, as.numeric(d3SmartTV$Usage))#p-value = 0.00351 cor = 0.1909176
 
 cor.test(dSmartSpeaker$LA01_01, as.numeric(dSmartSpeaker$Usage))#p-value = 0.00184 cor = 0.2628
-cor.test(d2SmartSpeaker$LA01_02, as.numeric(d2SmartSpeaker$Usage))#p-value = 0.00974 cor = 0.2193522 
+cor.test(d2SmartSpeaker$LA01_02, as.numeric(d2SmartSpeaker$Usage))#p-value = 0.00974 cor = 0.2193522
 cor.test(d3SmartSpeaker$LA01_03, as.numeric(d3SmartSpeaker$Usage))#p-value = 0.0009839 cor = 0.2774907
 
-cor.test(dSmartLights$LA01_01, as.numeric(dSmartLights$Usage))#NS p-value = 0.9616 cor = -0.005112956 
-cor.test(d2SmartLights$LA01_02, as.numeric(d2SmartLights$Usage))#NS p-value = 0.8468 cor = -0.02052836 
+cor.test(dSmartLights$LA01_01, as.numeric(dSmartLights$Usage))#NS p-value = 0.9616 cor = -0.005112956
+cor.test(d2SmartLights$LA01_02, as.numeric(d2SmartLights$Usage))#NS p-value = 0.8468 cor = -0.02052836
 cor.test(d3SmartLights$LA01_03, as.numeric(d3SmartLights$Usage))#NS p-value = 0.6602 cor = -0.04670735
 
 ####H3####
@@ -292,7 +296,7 @@ cor_test(select(
   E201_14,
   E201_16
 ))
-#   var1    var2       cor statistic        p conf.low conf.high method 
+#   var1    var2       cor statistic        p conf.low conf.high method
 #2 LA01_02 E201_11 -0.076     -1.59 1.13e- 1   -0.169    0.0181 Pearson
 #3 LA01_02 E201_14 -0.15      -3.14 1.79e- 3   -0.240   -0.0561 Pearson
 #4 LA01_02 E201_16 -0.18      -3.85 1.34e- 4   -0.271   -0.0896 Pearson
@@ -305,7 +309,7 @@ cor_test(select(
   E201_16
 ))
 
-#  var1    var2       cor statistic        p conf.low conf.high method 
+#  var1    var2       cor statistic        p conf.low conf.high method
 #2 LA01_03 E201_11 -0.074     -1.54 1.25e- 1   -0.166    0.0205 Pearson
 #3 LA01_03 E201_14 -0.13      -2.69 7.51e- 3   -0.219   -0.0344 Pearson
 #4 LA01_03 E201_16 -0.17      -3.54 4.42e- 4   -0.258   -0.0749 Pearson

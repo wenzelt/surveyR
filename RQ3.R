@@ -1,4 +1,5 @@
-list.of.packages <- c("ggplot2", "tidyverse", "dplyr", "ggpubr","readxl")
+list.of.packages <-
+  c("ggplot2", "tidyverse", "dplyr", "ggpubr", "readxl")
 new.packages <-
   list.of.packages[!(list.of.packages %in% installed.packages()[, "Package"])]
 if (length(new.packages))
@@ -124,7 +125,8 @@ wilcox_test(singleSourceOfTruthAppended, formula = A204_05 ~ A004)
 wilcox_test(singleSourceOfTruthAppended, formula = A204_06 ~ A004)
 
 singleSourceOfTruthAppended$A005 <-
-  cut(as.numeric(singleSourceOfTruthAppended$A005), breaks = c(0, 1, Inf)) ## adding levels to children
+  cut(as.numeric(singleSourceOfTruthAppended$A005),
+      breaks = c(0, 1, Inf)) ## adding levels to children
 singleSourceOfTruthAppended$A005 <-
   as.factor(singleSourceOfTruthAppended$A005)
 wilcox_test(singleSourceOfTruthAppended, R101 ~ A005)

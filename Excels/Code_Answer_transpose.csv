@@ -1,0 +1,829 @@
+SERIAL;Serial number (if provided)
+REF;Reference (if provided in link)
+QUESTNNR;Questionnaire that has been used in the interview
+MODE;Interview mode
+LANGUAGE;Language
+STARTED;Time the interview has started (Europe/Berlin)
+CS01;Consent
+CS06;DQ Meaningless Responses
+CS07;DQ Distraction
+CS10;HonestyCheck
+R101;Ownership of devices: Residual option (negative) or number of selected options
+R101_01;Ownership of devices: Smart Coffee Maker
+R101_02;Ownership of devices: Smart Dishwasher
+R101_03;Ownership of devices: Smart Door Lock
+R101_04;Ownership of devices: Smart Doorbell
+R101_05;Ownership of devices: Smart Electricity Meter
+R101_06;Ownership of devices: Smart Electrical Outlet
+R101_07;Ownership of devices: Smart Fridge
+R101_08;Ownership of devices: Smart Gardening Equipment
+R101_09;Ownership of devices: Smart Heating/Cooling System
+R101_10;Ownership of devices: Smart Home Monitoring System
+R101_11;Ownership of devices: Smart Lightbulb
+R101_12;Ownership of devices: Smart Oven
+R101_13;Ownership of devices: Smart Robot
+R101_14;Ownership of devices: Smart Speaker
+R101_15;Ownership of devices: Smart Stove
+R101_16;Ownership of devices: Smart TV
+R101_17;Ownership of devices: Smart Thermostat
+R101_18;Ownership of devices: Smart Toy
+R101_19;Ownership of devices: Smart Vacuum Cleaner
+R101_20;Ownership of devices: Smart Washing Machine
+R102;R101_1: Residual option (negative) or number of selected options
+R102_01;R101_1: Other (please specify)
+R102_01a;R101_1: Other (please specify) (free text)
+R201;Device Price D1
+R202;Device Price D2
+R203;Device Price D3
+R204;Purchase Location D1
+R204_06;Purchase Location D1: Other (please specify)
+R205;Purchase Location D2
+R205_06;Purchase Location D2: Other (please specify)
+R206;Purchase Location D3
+R206_06;Purchase Location D3: Other (please specify)
+R207;Second hand D1
+R208;Second hand D2
+R209;Second hand D3
+R210;Use Case D1: Residual option (negative) or number of selected options
+R210_01;Use Case D1: Increasing convenience
+R210_02;Use Case D1: Saving money
+R210_03;Use Case D1: Reducing power consumption
+R210_04;Use Case D1: Providing safety for household members
+R210_05;Use Case D1: Automating tasks
+R210_06;Use Case D1: Experimenting with latest trends in technology
+R210_07;Use Case D1: Other (please specify)
+R210_07a;Use Case D1: Other (please specify) (free text)
+R211;Use Case D1_N: Residual option (negative) or number of selected options
+R211_01;Use Case D1_N: Increasing convenience
+R211_02;Use Case D1_N: Saving money
+R211_03;Use Case D1_N: Reducing power consumption
+R211_04;Use Case D1_N: Providing safety for household members
+R211_05;Use Case D1_N: Automating tasks
+R211_06;Use Case D1_N: Experimenting with latest trends in technology
+R211_07;Use Case D1_N: Other (please specify)
+R211_07a;Use Case D1_N: Other (please specify) (free text)
+R212;Use Case D2: Residual option (negative) or number of selected options
+R212_01;Use Case D2: Increasing convenience
+R212_02;Use Case D2: Saving money
+R212_03;Use Case D2: Reducing power consumption
+R212_04;Use Case D2: Providing safety for household members
+R212_05;Use Case D2: Automating tasks
+R212_06;Use Case D2: Experimenting with latest trends in technology
+R212_07;Use Case D2: Other (please specify)
+R212_07a;Use Case D2: Other (please specify) (free text)
+R213;Use Case D2_N: Residual option (negative) or number of selected options
+R213_01;Use Case D2_N: Increasing convenience
+R213_02;Use Case D2_N: Saving money
+R213_03;Use Case D2_N: Reducing power consumption
+R213_04;Use Case D2_N: Providing safety for household members
+R213_05;Use Case D2_N: Automating tasks
+R213_06;Use Case D2_N: Experimenting with latest trends in technology
+R213_07;Use Case D2_N: Other (please specify)
+R213_07a;Use Case D2_N: Other (please specify) (free text)
+R214;Use Case D3: Residual option (negative) or number of selected options
+R214_01;Use Case D3: Increasing convenience
+R214_02;Use Case D3: Saving money
+R214_03;Use Case D3: Reducing power consumption
+R214_04;Use Case D3: Providing safety for household members
+R214_05;Use Case D3: Automating tasks
+R214_06;Use Case D3: Experimenting with latest trends in technology
+R214_07;Use Case D3: Other (please specify)
+R214_07a;Use Case D3: Other (please specify) (free text)
+R215;Use Case D3_N: Residual option (negative) or number of selected options
+R215_01;Use Case D3_N: Increasing convenience
+R215_02;Use Case D3_N: Saving money
+R215_03;Use Case D3_N: Reducing power consumption
+R215_04;Use Case D3_N: Providing safety for household members
+R215_05;Use Case D3_N: Automating tasks
+R215_06;Use Case D3_N: Experimenting with latest trends in technology
+R215_07;Use Case D3_N: Other (please specify)
+R215_07a;Use Case D3_N: Other (please specify) (free text)
+R216;Education about Device D1: Residual option (negative) or number of selected options
+R216_01;Education about Device D1: Online reviews
+R216_02;Education about Device D1: Online forums
+R216_03;Education about Device D1: Print media (e.g., Newspapers, Magazines, etc.)
+R216_04;Education about Device D1: Friends and Family
+R216_05;Education about Device D1: Online news sites
+R216_06;Education about Device D1: Other (please specify)
+R216_06a;Education about Device D1: Other (please specify) (free text)
+R217;Education about Device D1_N: Residual option (negative) or number of selected options
+R217_01;Education about Device D1_N: Online reviews
+R217_02;Education about Device D1_N: Online forums
+R217_03;Education about Device D1_N: Print media (e.g., Newspapers, Magazines, etc.)
+R217_04;Education about Device D1_N: Friends and Family
+R217_05;Education about Device D1_N: Online news sites
+R217_06;Education about Device D1_N: Other (please specify)
+R217_06a;Education about Device D1_N: Other (please specify) (free text)
+R218;Education about Device D2: Residual option (negative) or number of selected options
+R218_01;Education about Device D2: Online reviews
+R218_02;Education about Device D2: Online forums
+R218_03;Education about Device D2: Print media (e.g., Newspapers, Magazines, etc.)
+R218_04;Education about Device D2: Friends and Family
+R218_05;Education about Device D2: Online news sites
+R218_06;Education about Device D2: Other (please specify)
+R218_06a;Education about Device D2: Other (please specify) (free text)
+R219;Education about Device D2_N: Residual option (negative) or number of selected options
+R219_01;Education about Device D2_N: Online reviews
+R219_02;Education about Device D2_N: Online forums
+R219_03;Education about Device D2_N: Print media (e.g., Newspapers, Magazines, etc.)
+R219_04;Education about Device D2_N: Friends and Family
+R219_05;Education about Device D2_N: Online news sites
+R219_06;Education about Device D2_N: Other (please specify)
+R219_06a;Education about Device D2_N: Other (please specify) (free text)
+R220;Education about Device D3: Residual option (negative) or number of selected options
+R220_01;Education about Device D3: Online reviews
+R220_02;Education about Device D3: Online forums
+R220_03;Education about Device D3: Print media (e.g., Newspapers, Magazines, etc.)
+R220_04;Education about Device D3: Friends and Family
+R220_05;Education about Device D3: Online news sites
+R220_06;Education about Device D3: Other (please specify)
+R220_06a;Education about Device D3: Other (please specify) (free text)
+R221;Education about Device D3_N: Residual option (negative) or number of selected options
+R221_01;Education about Device D3_N: Online reviews
+R221_02;Education about Device D3_N: Online forums
+R221_03;Education about Device D3_N: Print media (e.g., Newspapers, Magazines, etc.)
+R221_04;Education about Device D3_N: Friends and Family
+R221_05;Education about Device D3_N: Online news sites
+R221_06;Education about Device D3_N: Other (please specify)
+R221_06a;Education about Device D3_N: Other (please specify) (free text)
+R222;Use Case {open} D1
+R222s;Use Case {open} D1 (free text)
+R223;Use Case {open} D2
+R223s;Use Case {open} D2 (free text)
+R224;Use Case {open} D3
+R224s;Use Case {open} D3 (free text)
+R225;Hear about device D1: Residual option (negative) or number of selected options
+R225_01;Hear about device D1: TV
+R225_02;Hear about device D1: Internet
+R225_03;Hear about device D1: Print media (e.g., Newspapers, Magazines, etc.)
+R225_04;Hear about device D1: Friends and Family
+R225_06;Hear about device D1: Brick-and-mortar store
+R225_09;Hear about device D1: Trade show
+R225_10;Hear about device D1: Other (please specify)
+R225_10a;Hear about device D1: Other (please specify) (free text)
+R226;Hear about device D2: Residual option (negative) or number of selected options
+R226_01;Hear about device D2: TV
+R226_02;Hear about device D2: Internet
+R226_03;Hear about device D2: Print media (e.g., Newspapers, Magazines, etc.)
+R226_04;Hear about device D2: Friends and Family
+R226_06;Hear about device D2: Brick-and-mortar store
+R226_09;Hear about device D2: Trade show
+R226_10;Hear about device D2: Other (please specify)
+R226_10a;Hear about device D2: Other (please specify) (free text)
+R227;Hear about device D3: Residual option (negative) or number of selected options
+R227_01;Hear about device D3: TV
+R227_02;Hear about device D3: Internet
+R227_03;Hear about device D3: Print media (e.g., Newspapers, Magazines, etc.)
+d;Hear about device D3: Friends and Family
+R227_06;Hear about device D3: Brick-and-mortar store
+R227_09;Hear about device D3: Trade show
+R227_10;Hear about device D3: Other (please specify)
+R227_10a;Hear about device D3: Other (please specify) (free text)
+R229;Hear about device D2_N: Residual option (negative) or number of selected options
+R229_01;Hear about device D2_N: TV
+R229_02;Hear about device D2_N: Internet
+R229_03;Hear about device D2_N: Print media (e.g., Newspapers, Magazines, etc.)
+R229_04;Hear about device D2_N: Friends and Family
+R229_06;Hear about device D2_N: Brick-and-mortar store
+R229_09;Hear about device D2_N: Trade show
+R229_10;Hear about device D2_N: Other (please specify)
+R229_10a;Hear about device D2_N: Other (please specify) (free text)
+R230;Hear about device D3_N: Residual option (negative) or number of selected options
+R230_01;Hear about device D3_N: TV
+R230_02;Hear about device D3_N: Internet
+R230_03;Hear about device D3_N: Print media (e.g., Newspapers, Magazines, etc.)
+R230_04;Hear about device D3_N: Friends and Family
+R230_06;Hear about device D3_N: Brick-and-mortar store
+R230_09;Hear about device D3_N: Trade show
+R230_10;Hear about device D3_N: Other (please specify)
+R230_10a;Hear about device D3_N: Other (please specify) (free text)
+R232_01;VR101_Devices: Device one_D1
+R232_02;VR101_Devices: Device two_D2
+R232_03;VR101_Devices: Device three_D3
+R233_01;VR101_Devices_ownership: Device one ownership_D1
+R233_02;VR101_Devices_ownership: Device two ownership_D2
+R233_03;VR101_Devices_ownership: Device three ownership_D3
+R301_01;Static Security D1: I believe my %device% possesses adequate security measures to protect my data.
+R301_02;Static Security D1: My %device% has adequate security measures to prevent third-party access to my data.
+R302_01;Static Security D2: I believe my %device% possesses adequate security measures to protect my data.
+R302_02;Static Security D2: My %device% has adequate security measures to prevent third-party access to my data.
+R303_01;Static Security D3: I believe my %device% possesses adequate security measures to protect my data.
+R303_02;Static Security D3: My %device% has adequate security measures to prevent third-party access to my data.
+R304;Device Research D1
+R304_01;Device Research D1: Yes
+R305;Device Research D2
+R305_01;Device Research D2: Yes
+R306;Device Research D3
+R306_01;Device Research D3: Yes
+R401;Purchase date D1
+R402;Purchase date D2
+R403;Purchase date D3
+R501;Usage # D1
+R502;Always on D1
+R503;Usage # D2
+R504;Always on D2
+R505;Usage # D3
+R506;Always on D3
+R507;Disabled feature D1
+R507_01;Disabled feature D1: Yes
+R508_01;Disabled feature D1_N: [01]
+R509;Disabled feature D1_N_1: Residual option (negative) or number of selected options
+R509_01;Disabled feature D1_N_1: Conserving battery life
+R509_02;Disabled feature D1_N_1: Reducing power consumption
+R509_03;Disabled feature D1_N_1: Protecting my privacy
+R509_04;Disabled feature D1_N_1: Reducing security risks
+R509_05;Disabled feature D1_N_1: Enhancing the user experience
+R509_06;Disabled feature D1_N_1: Turning off unneeded or unused feature
+R509_07;Disabled feature D1_N_1: Other (please specify)
+R509_07a;Disabled feature D1_N_1: Other (please specify) (free text)
+R542;Disabled feature D1_N_1_N: Residual option (negative) or number of selected options
+R542_01;Disabled feature D1_N_1_N: Conserving battery life
+R542_02;Disabled feature D1_N_1_N: Reducing power consumption
+R542_03;Disabled feature D1_N_1_N: Protecting my privacy
+R542_04;Disabled feature D1_N_1_N: Reducing security risks
+R542_05;Disabled feature D1_N_1_N: Enhancing the user experience
+R542_06;Disabled feature D1_N_1_N: Turning off unneeded or unused feature
+R542_07;Disabled feature D1_N_1_N: Other (please specify)
+R542_07a;Disabled feature D1_N_1_N: Other (please specify) (free text)
+R510;Disabled feature D2
+R510_01;Disabled feature D2: Yes
+R511_01;Disabled feature D2_N: [01]
+R512;Disabled feature D2_N_1: Residual option (negative) or number of selected options
+R512_01;Disabled feature D2_N_1: Conserving battery life
+R512_02;Disabled feature D2_N_1: Reducing power consumption
+R512_03;Disabled feature D2_N_1: Protecting my privacy
+R512_04;Disabled feature D2_N_1: Reducing security risks
+R512_05;Disabled feature D2_N_1: Enhancing the user experience
+R512_06;Disabled feature D2_N_1: Turning off unneeded or unused feature
+R512_07;Disabled feature D2_N_1: Other (please specify)
+R512_07a;Disabled feature D2_N_1: Other (please specify) (free text)
+R540;Disabled feature D2_N_1_N: Residual option (negative) or number of selected options
+R540_01;Disabled feature D2_N_1_N: Conserving battery life
+R540_02;Disabled feature D2_N_1_N: Reducing power consumption
+R540_03;Disabled feature D2_N_1_N: Protecting my privacy
+R540_04;Disabled feature D2_N_1_N: Reducing security risks
+R540_05;Disabled feature D2_N_1_N: Enhancing the user experience
+R540_06;Disabled feature D2_N_1_N: Turning off unneeded or unused feature
+R540_07;Disabled feature D2_N_1_N: Other (please specify)
+R540_07a;Disabled feature D2_N_1_N: Other (please specify) (free text)
+R513;Disabled feature D3
+R513_01;Disabled feature D3: Yes
+R514_01;Disabled feature D3_N: [01]
+R515;Disabled feature D3_N_1: Residual option (negative) or number of selected options
+R515_01;Disabled feature D3_N_1: Conserving battery life
+R515_02;Disabled feature D3_N_1: Reducing power consumption
+R515_03;Disabled feature D3_N_1: Protecting my privacy
+R515_04;Disabled feature D3_N_1: Reducing security risks
+R515_05;Disabled feature D3_N_1: Enhancing the user experience
+R515_06;Disabled feature D3_N_1: Turning off unneeded or unused feature
+R515_07;Disabled feature D3_N_1: Other (please specify)
+R515_07a;Disabled feature D3_N_1: Other (please specify) (free text)
+R541;Disabled feature D3_N_1_N: Residual option (negative) or number of selected options
+R541_01;Disabled feature D3_N_1_N: Conserving battery life
+R541_02;Disabled feature D3_N_1_N: Reducing power consumption
+R541_03;Disabled feature D3_N_1_N: Protecting my privacy
+R541_04;Disabled feature D3_N_1_N: Reducing security risks
+R541_05;Disabled feature D3_N_1_N: Enhancing the user experience
+R541_06;Disabled feature D3_N_1_N: Turning off unneeded or unused feature
+R541_07;Disabled feature D3_N_1_N: Other (please specify)
+R541_07a;Disabled feature D3_N_1_N: Other (please specify) (free text)
+R516;Device Data Type D1: Residual option (negative) or number of selected options
+R516_01;Device Data Type D1: Location
+R516_02;Device Data Type D1: Routines
+R516_03;Device Data Type D1: Speech (via microphone)
+R516_04;Device Data Type D1: Video (via camera)
+R516_10;Device Data Type D1: Still images (via camera)
+R516_11;Device Data Type D1: Environmental parameters (e.g., temperature, humidity, noise levels, etc.)
+R516_05;Device Data Type D1: Internet activity
+R516_06;Device Data Type D1: Online purchases
+R516_14;Device Data Type D1: Offline purchases
+R516_09;Device Data Type D1: Power consumption
+R516_12;Device Data Type D1: Activities and gestures
+R516_13;Device Data Type D1: Other (please specify:)
+R516_13a;Device Data Type D1: Other (please specify:) (free text)
+R517;Device Data Type D1_N: Residual option (negative) or number of selected options
+R517_01;Device Data Type D1_N: Location
+R517_02;Device Data Type D1_N: Routines
+R517_03;Device Data Type D1_N: Speech (via microphone)
+R517_04;Device Data Type D1_N: Video (via camera)
+R517_10;Device Data Type D1_N: Still images (via camera)
+R517_11;Device Data Type D1_N: Environmental parameters (e.g., temperature, humidity, noise levels, etc.)
+R517_05;Device Data Type D1_N: Internet activity
+R517_06;Device Data Type D1_N: Online purchases
+R517_14;Device Data Type D1_N: Offline purchases
+R517_09;Device Data Type D1_N: Power consumption
+R517_12;Device Data Type D1_N: Activities and gestures
+R517_13;Device Data Type D1_N: Other (please specify:)
+R517_13a;Device Data Type D1_N: Other (please specify:) (free text)
+R518;Device Data Type D2: Residual option (negative) or number of selected options
+R518_01;Device Data Type D2: Location
+R518_02;Device Data Type D2: Routines
+R518_03;Device Data Type D2: Speech (via microphone)
+R518_04;Device Data Type D2: Video (via camera)
+R518_10;Device Data Type D2: Still images (via camera)
+R518_11;Device Data Type D2: Environmental parameters (e.g., temperature, humidity, noise levels, etc.)
+R518_05;Device Data Type D2: Internet activity
+R518_06;Device Data Type D2: Online purchases
+R518_14;Device Data Type D2: Offline purchases
+R518_09;Device Data Type D2: Power consumption
+R518_12;Device Data Type D2: Activities and gestures
+R518_13;Device Data Type D2: Other (please specify:)
+R518_13a;Device Data Type D2: Other (please specify:) (free text)
+R519;Device Data Type D2_N: Residual option (negative) or number of selected options
+R519_01;Device Data Type D2_N: Location
+R519_02;Device Data Type D2_N: Routines
+R519_03;Device Data Type D2_N: Speech (via microphone)
+R519_04;Device Data Type D2_N: Video (via camera)
+R519_10;Device Data Type D2_N: Still images (via camera)
+R519_11;Device Data Type D2_N: Environmental parameters (e.g., temperature, humidity, noise levels, etc.)
+R519_05;Device Data Type D2_N: Internet activity
+R519_06;Device Data Type D2_N: Online purchases
+R519_14;Device Data Type D2_N: Offline purchases
+R519_09;Device Data Type D2_N: Power consumption
+R519_12;Device Data Type D2_N: Activities and gestures
+R519_13;Device Data Type D2_N: Other (please specify:)
+R519_13a;Device Data Type D2_N: Other (please specify:) (free text)
+R520;Device Data Type D3: Residual option (negative) or number of selected options
+R520_01;Device Data Type D3: Location
+R520_02;Device Data Type D3: Routines
+R520_03;Device Data Type D3: Speech (via microphone)
+R520_04;Device Data Type D3: Video (via camera)
+R520_10;Device Data Type D3: Still images (via camera)
+R520_11;Device Data Type D3: Environmental parameters (e.g., temperature, humidity, noise levels, etc.)
+R520_05;Device Data Type D3: Internet activity
+R520_06;Device Data Type D3: Online purchases
+R520_14;Device Data Type D3: Offline purchases
+R520_09;Device Data Type D3: Power consumption
+R520_12;Device Data Type D3: Activities and gestures
+R520_13;Device Data Type D3: Other (please specify:)
+R520_13a;Device Data Type D3: Other (please specify:) (free text)
+R521;Device Data Type D3_N: Residual option (negative) or number of selected options
+R521_01;Device Data Type D3_N: Location
+R521_02;Device Data Type D3_N: Routines
+R521_03;Device Data Type D3_N: Speech (via microphone)
+R521_04;Device Data Type D3_N: Video (via camera)
+R521_10;Device Data Type D3_N: Still images (via camera)
+R521_11;Device Data Type D3_N: Environmental parameters (e.g., temperature, humidity, noise levels, etc.)
+R521_05;Device Data Type D3_N: Internet activity
+R521_06;Device Data Type D3_N: Online purchases
+R521_14;Device Data Type D3_N: Offline purchases
+R521_09;Device Data Type D3_N: Power consumption
+R521_12;Device Data Type D3_N: Activities and gestures
+R521_13;Device Data Type D3_N: Other (please specify:)
+R521_13a;Device Data Type D3_N: Other (please specify:) (free text)
+R522;Device Data Storage D1: Residual option (negative) or number of selected options
+R522_01;Device Data Storage D1: On the Internet router in the home
+R522_02;Device Data Storage D1: On a cloud platform
+R522_03;Device Data Storage D1: Locally on the device itself
+R522_04;Device Data Storage D1: Servers of the Internet Service Provider (ISP)
+R522_06;Device Data Storage D1: Servers of the device manufacturer
+R522_08;Device Data Storage D1: Servers of third parties
+R522_07;Device Data Storage D1: Other (please specify)
+R522_07a;Device Data Storage D1: Other (please specify) (free text)
+R523;Device Data Storage D1_N: Residual option (negative) or number of selected options
+R523_01;Device Data Storage D1_N: On the Internet router in the home
+R523_02;Device Data Storage D1_N: On a cloud platform
+R523_03;Device Data Storage D1_N: Locally on the device itself
+R523_04;Device Data Storage D1_N: Servers of the Internet Service Provider (ISP)
+R523_05;Device Data Storage D1_N: Servers of the device manufacturer
+R523_07;Device Data Storage D1_N: Servers of third parties
+R523_06;Device Data Storage D1_N: Other (please specify)
+R524;Device Data Storage D2: Residual option (negative) or number of selected options
+R524_01;Device Data Storage D2: On the Internet router in the home
+R524_02;Device Data Storage D2: On a cloud platform
+R524_03;Device Data Storage D2: Locally on the device itself
+R524_04;Device Data Storage D2: Servers of the Internet Service Provider (ISP)
+R524_05;Device Data Storage D2: Servers of the device manufacturer
+R524_07;Device Data Storage D2: Servers of third parties
+R524_06;Device Data Storage D2: Other (please specify)
+R524_06a;Device Data Storage D2: Other (please specify) (free text)
+R525;Device Data Storage D2_N: Residual option (negative) or number of selected options
+R525_01;Device Data Storage D2_N: On the Internet router in the home
+R525_02;Device Data Storage D2_N: On a cloud platform
+R525_03;Device Data Storage D2_N: Locally on the device itself
+R525_04;Device Data Storage D2_N: Servers of the Internet Service Provider (ISP)
+R525_05;Device Data Storage D2_N: Servers of the device manufacturer
+R525_07;Device Data Storage D2_N: Servers of third parties
+R525_06;Device Data Storage D2_N: Other (please specify)
+R525_06a;Device Data Storage D2_N: Other (please specify) (free text)
+R526;Device Data Storage D3: Residual option (negative) or number of selected options
+R526_01;Device Data Storage D3: On the Internet router in the home
+R526_02;Device Data Storage D3: On a cloud platform
+R526_03;Device Data Storage D3: Locally on the device itself
+R526_04;Device Data Storage D3: Servers of the Internet Service Provider (ISP)
+R526_05;Device Data Storage D3: Servers of the device manufacturer
+R526_07;Device Data Storage D3: Servers of third parties
+R526_06;Device Data Storage D3: Other (please specify)
+R526_06a;Device Data Storage D3: Other (please specify) (free text)
+R527;Device Data Storage D3_N: Residual option (negative) or number of selected options
+R527_01;Device Data Storage D3_N: On the Internet router in the home
+R527_02;Device Data Storage D3_N: On a cloud platform
+R527_03;Device Data Storage D3_N: Locally on the device itself
+R527_04;Device Data Storage D3_N: Servers of the Internet Service Provider (ISP)
+R527_05;Device Data Storage D3_N: Servers of the device manufacturer
+R527_07;Device Data Storage D3_N: Servers of third parties
+R527_06;Device Data Storage D3_N: Other (please specify)
+R527_06a;Device Data Storage D3_N: Other (please specify) (free text)
+R528;Device Location D1: Residual option (negative) or number of selected options
+R528_14;Device Location D1: Attic
+R528_01;Device Location D1: Balcony
+R528_02;Device Location D1: Basement
+R528_03;Device Location D1: Children's room
+R528_04;Device Location D1: Dining room
+R528_05;Device Location D1: Garage
+R528_06;Device Location D1: Guest bedroom
+R528_07;Device Location D1: Hallway
+R528_08;Device Location D1: Kitchen
+R528_09;Device Location D1: Living room
+R528_10;Device Location D1: Master bedroom
+R528_11;Device Location D1: Patio
+R528_12;Device Location D1: Yard
+R528_13;Device Location D1: Other (please specify)
+R528_13a;Device Location D1: Other (please specify) (free text)
+R529;Device Location D1_N: Residual option (negative) or number of selected options
+R529_14;Device Location D1_N: Attic
+R529_01;Device Location D1_N: Balcony
+R529_02;Device Location D1_N: Basement
+R529_03;Device Location D1_N: Children's room
+R529_04;Device Location D1_N: Dining room
+R529_05;Device Location D1_N: Garage
+R529_06;Device Location D1_N: Guest bedroom
+R529_07;Device Location D1_N: Hallway
+R529_08;Device Location D1_N: Kitchen
+R529_09;Device Location D1_N: Living room
+R529_10;Device Location D1_N: Master bedroom
+R529_11;Device Location D1_N: Patio
+R529_12;Device Location D1_N: Yard
+R529_13;Device Location D1_N: Other (please specify)
+R529_13a;Device Location D1_N: Other (please specify) (free text)
+R530;Device Location D2: Residual option (negative) or number of selected options
+R530_14;Device Location D2: Attic
+R530_01;Device Location D2: Balcony
+R530_02;Device Location D2: Basement
+R530_03;Device Location D2: Children's room
+R530_04;Device Location D2: Dining room
+R530_05;Device Location D2: Garage
+R530_06;Device Location D2: Guest bedroom
+R530_07;Device Location D2: Hallway
+R530_08;Device Location D2: Kitchen
+R530_09;Device Location D2: Living room
+R530_10;Device Location D2: Master bedroom
+R530_11;Device Location D2: Patio
+R530_12;Device Location D2: Yard
+R530_13;Device Location D2: Other (please specify)
+R530_13a;Device Location D2: Other (please specify) (free text)
+R531;Device Location D2_N: Residual option (negative) or number of selected options
+R531_14;Device Location D2_N: Attic
+R531_01;Device Location D2_N: Balcony
+R531_02;Device Location D2_N: Basement
+R531_03;Device Location D2_N: Children's room
+R531_04;Device Location D2_N: Dining room
+R531_05;Device Location D2_N: Garage
+R531_06;Device Location D2_N: Guest bedroom
+R531_07;Device Location D2_N: Hallway
+R531_08;Device Location D2_N: Kitchen
+R531_09;Device Location D2_N: Living room
+R531_10;Device Location D2_N: Master bedroom
+R531_11;Device Location D2_N: Patio
+R531_12;Device Location D2_N: Yard
+R531_13;Device Location D2_N: Other (please specify)
+R531_13a;Device Location D2_N: Other (please specify) (free text)
+R532;Device Location D3: Residual option (negative) or number of selected options
+R532_14;Device Location D3: Attic
+R532_01;Device Location D3: Balcony
+R532_02;Device Location D3: Basement
+R532_03;Device Location D3: Children's room
+R532_04;Device Location D3: Dining room
+R532_05;Device Location D3: Garage
+R532_06;Device Location D3: Guest bedroom
+R532_07;Device Location D3: Hallway
+R532_08;Device Location D3: Kitchen
+R532_09;Device Location D3: Living room
+R532_10;Device Location D3: Master bedroom
+R532_11;Device Location D3: Patio
+R532_12;Device Location D3: Yard
+R532_13;Device Location D3: Other (please specify)
+R532_13a;Device Location D3: Other (please specify) (free text)
+R533;Device Location D3_N: Residual option (negative) or number of selected options
+R533_14;Device Location D3_N: Attic
+R533_01;Device Location D3_N: Balcony
+R533_02;Device Location D3_N: Basement
+R533_03;Device Location D3_N: Children's room
+R533_04;Device Location D3_N: Dining room
+R533_05;Device Location D3_N: Garage
+R533_06;Device Location D3_N: Guest bedroom
+R533_07;Device Location D3_N: Hallway
+R533_08;Device Location D3_N: Kitchen
+R533_09;Device Location D3_N: Living room
+R533_10;Device Location D3_N: Master bedroom
+R533_11;Device Location D3_N: Patio
+R533_12;Device Location D3_N: Yard
+R533_13;Device Location D3_N: Other (please specify)
+R533_13a;Device Location D3_N: Other (please specify) (free text)
+R534;Human interaction D1: Residual option (negative) or number of selected options
+R534_01;Human interaction D1: Voice Assistant
+R534_02;Human interaction D1: App on my phone
+R534_03;Human interaction D1: Physical buttons on the device
+R534_04;Human interaction D1: Screen on the device
+R534_05;Human interaction D1: Internet based service connected to the device
+R534_06;Human interaction D1: Home Internet router
+R534_09;Human interaction D1: Other (please specify)
+R534_09a;Human interaction D1: Other (please specify) (free text)
+R535;Human interaction D1_N: Residual option (negative) or number of selected options
+R535_01;Human interaction D1_N: Voice Assistant
+R535_02;Human interaction D1_N: App on my phone
+R535_03;Human interaction D1_N: Physical buttons on the device
+R535_04;Human interaction D1_N: Screen on the device
+R535_05;Human interaction D1_N: Internet based service connected to the device
+R535_06;Human interaction D1_N: Home Internet router
+R535_09;Human interaction D1_N: Other (please specify)
+R535_09a;Human interaction D1_N: Other (please specify) (free text)
+R536;Human interaction D2: Residual option (negative) or number of selected options
+R536_01;Human interaction D2: Voice Assistant
+R536_02;Human interaction D2: App on my phone
+R536_03;Human interaction D2: Physical buttons on the device
+R536_04;Human interaction D2: Screen on the device
+R536_05;Human interaction D2: Internet based service connected to the device
+R536_06;Human interaction D2: Home Internet router
+R536_07;Human interaction D2: Other (please specify)
+R536_07a;Human interaction D2: Other (please specify) (free text)
+R537;Human interaction D2_N: Residual option (negative) or number of selected options
+R537_01;Human interaction D2_N: Voice Assistant
+R537_02;Human interaction D2_N: App on my phone
+R537_03;Human interaction D2_N: Physical buttons on the device
+R537_04;Human interaction D2_N: Screen on the device
+R537_05;Human interaction D2_N: Internet based service connected to the device
+R537_06;Human interaction D2_N: Home Internet router
+R537_07;Human interaction D2_N: Other (please specify)
+R537_07a;Human interaction D2_N: Other (please specify) (free text)
+R538;Human interaction D3: Residual option (negative) or number of selected options
+R538_01;Human interaction D3: Voice Assistant
+R538_02;Human interaction D3: App on my phone
+R538_03;Human interaction D3: Physical buttons on the device
+R538_04;Human interaction D3: Screen on the device
+R538_05;Human interaction D3: Internet based service connected to the device
+R538_06;Human interaction D3: Home Internet router
+R538_07;Human interaction D3: Other (please specify)
+R538_07a;Human interaction D3: Other (please specify) (free text)
+R539;Human interaction D3_N: Residual option (negative) or number of selected options
+R539_01;Human interaction D3_N: Voice Assistant
+R539_02;Human interaction D3_N: App on my phone
+R539_03;Human interaction D3_N: Physical buttons on the device
+R539_04;Human interaction D3_N: Screen on the device
+R539_05;Human interaction D3_N: Internet based service connected to the device
+R539_06;Human interaction D3_N: Home Internet router
+R539_07;Human interaction D3_N: Other (please specify)
+R539_07a;Human interaction D3_N: Other (please specify) (free text)
+A101_01;Status Quo: I am aware of the kinds of data collected by my Smart Home device.
+A101_02;Status Quo: Smart Home device data has monetary value.
+A101_03;Status Quo: Smart Home device data is collected by companies.
+A101_04;Status Quo: Smart Home device data is gathered regularly by a Smart Home device.
+A101_05;Status Quo: Smart Home device data is sent continuously over the Internet.
+A101_06;Status Quo: Smart Home device data is a resource for corporations.
+A101_07;Status Quo: Smart Home device data is stored remotely.
+A102_01;Awareness: I am aware of where my Smart Home device stores data.
+A102_02;Awareness: I am aware that my Smart Home device data is analyzed to know about my preferences and practices.
+A102_03;Awareness: I am aware of the parties who analyze my Smart Home device data.
+A103_01;Preference: I would like my Smart Home device data to be stored in my home.
+A103_02;Preference: I would like my Smart Home device data to be stored outside my home.
+A103_03;Preference: I would like my Smart Home device data to be processed and analyzed within my home.
+A103_04;Preference: I would like my Smart Home device data to be processed and analyzed outside of my home.
+A204_01;Manufacturer responsibilitiy: Keeping the Smart Home device software up-to-date
+A204_02;Manufacturer responsibilitiy: Ensuring my privacy
+A204_03;Manufacturer responsibilitiy: Protecting my Smart Home ecosystem as a whole
+A204_04;Manufacturer responsibilitiy: Keeping the Smart Home device secure
+A204_05;Manufacturer responsibilitiy: Fixing a hardware failure
+A204_06;Manufacturer responsibilitiy: Fixing a software failure
+A206_01;Statement agreement: My Smart Home device should update itself.
+A206_02;Statement agreement: The manufacturer of my Smart Home device should provide regular security updates.
+A206_03;Statement agreement: The servers of my Smart Home device manufacturer should be equipped with adequate data security.
+A206_04;Statement agreement: The manufacturer of my Smart Home device should remotely manage my Smart Home device.
+A206_05;Statement agreement: I regularly make sure that my Smart Home devices are kept up-to date.
+A206_06;Statement agreement: I receive a timely notice when the manufacturer stops supporting my Smart Home device.
+A206_07;Statement agreement: I am unsure if my Smart Home device receives security updates.
+A206_08;Statement agreement: My Smart Home device should receive updates as long as I use it.
+A302;Feature benefit: Residual option (negative) or number of selected options
+A302_01;Feature benefit: Coffee Maker
+A302_02;Feature benefit: Dishwasher
+A302_03;Feature benefit: Door Lock
+A302_04;Feature benefit: Doorbell
+A302_05;Feature benefit: Electricity Meter
+A302_06;Feature benefit: Electrical Outlet
+A302_07;Feature benefit: Fridge
+A302_08;Feature benefit: Gardening Equipment
+A302_09;Feature benefit: Heating/Cooling System
+A302_10;Feature benefit: Home Monitoring System
+A302_11;Feature benefit: Lightbulb
+A302_12;Feature benefit: Oven
+A302_13;Feature benefit: Speaker
+A302_14;Feature benefit: Stove
+A302_15;Feature benefit: TV
+A302_16;Feature benefit: Thermostat
+A302_17;Feature benefit: Toy
+A302_18;Feature benefit: Vacuum Cleaner
+A302_19;Feature benefit: Washing Machine
+A302_20;Feature benefit: Other (please specify)
+A302_20a;Feature benefit: Other (please specify) (free text)
+A303;Problematic feature: Residual option (negative) or number of selected options
+A303_01;Problematic feature: Coffee Maker
+A303_02;Problematic feature: Dishwasher
+A303_03;Problematic feature: Door Lock
+A303_04;Problematic feature: Doorbell
+A303_05;Problematic feature: Electricity Meter
+A303_06;Problematic feature: Electrical Outlet
+A303_07;Problematic feature: Fridge
+A303_08;Problematic feature: Gardening Equipment
+A303_09;Problematic feature: Heating/Cooling System
+A303_10;Problematic feature: Home Monitoring System
+A303_11;Problematic feature: Lightbulb
+A303_12;Problematic feature: Oven
+A303_13;Problematic feature: Speaker
+A303_14;Problematic feature: Stove
+A303_15;Problematic feature: TV
+A303_16;Problematic feature: Thermostat
+A303_17;Problematic feature: Toy
+A303_18;Problematic feature: Vacuum Cleaner
+A303_19;Problematic feature: Washing Machine
+A303_20;Problematic feature: Other (please specify)
+A303_20a;Problematic feature: Other (please specify) (free text)
+A305_01;Perceived purpose: Playing media content (e.g., videos, music, etc.)
+A305_03;Perceived purpose: Controlling appliances (e.g., lights, coffee maker, stove, oven, etc.)
+A305_04;Perceived purpose: Adjusting internal climate (e.g., temperature, air quality, etc.)
+A305_05;Perceived purpose: Managing power consumption
+A305_06;Perceived purpose: Detecting malfunctions
+A305_07;Perceived purpose: Monitoring health
+A305_08;Perceived purpose: Improving safety
+A305_09;Perceived purpose: Enabling more communication modes (voice, text, email, etc.)
+A306_01;Perceived purpose Other: [01]
+A307_01;Perceived benefits: Saving money
+A307_02;Perceived benefits: Saving energy
+A307_03;Perceived benefits: Increasing convenience
+A307_04;Perceived benefits: Enhancing leisure activities
+A307_05;Perceived benefits: Providing peace of mind
+A307_06;Perceived benefits: Providing comfort
+A307_07;Perceived benefits: Increasing safety
+A307_08;Perceived benefits: Providing care
+A307_09;Perceived benefits: Improving quality of life
+A307_10;Perceived benefits: Increasing property value
+A308_01;Perceived benefits Other: [01]
+A309_01;Topic familiarity: Controlling appliances (e.g., lights, coffee maker, stove, oven, etc.)
+A309_02;Topic familiarity: Controlling home monitoring systems
+A309_03;Topic familiarity: Communicating with the inside of the home (e.g. calling Smart Home devices within the home)
+A309_04;Topic familiarity: Communicating with the outside of the home (e.g. using a video doorbell or home monitoring system installed on the outside of the home)
+A309_05;Topic familiarity: Automating tasks
+A311_01;Topic familiarity Other: [01]
+A310_01;Overall_Familiarity_1: [No Description] 01
+A312_01;Overall_Familiarity_2: [No Description] 01
+E201_01;Device risk: Smart Coffee Maker
+E201_02;Device risk: Smart Dishwasher
+E201_03;Device risk: Smart Door Lock
+E201_04;Device risk: Smart Doorbell
+E201_05;Device risk: Smart Electricity Meter
+E201_06;Device risk: Smart Electrical Outlet
+E201_07;Device risk: Smart Fridge
+E201_08;Device risk: Smart Gardening Equipment
+E201_09;Device risk: Smart Heating/Cooling System
+E201_10;Device risk: Smart Home Monitoring System
+E201_11;Device risk: Smart Lightbulb
+E201_12;Device risk: Smart Oven
+E201_13;Device risk: Smart Robot
+E201_14;Device risk: Smart Speaker
+E201_15;Device risk: Smart Stove
+E201_16;Device risk: Smart TV
+E201_17;Device risk: Smart Thermostat
+E201_18;Device risk: Smart Toy
+E201_19;Device risk: Smart Vacuum Cleaner
+E201_20;Device risk: Smart Washing Machine
+E203;No integration: Residual option (negative) or number of selected options
+E203_01;No integration: I wish to preserve the privacy of the adults in my household.
+E203_02;No integration: I wish to preserve the privacy of my children.
+E203_03;No integration: I wish to preserve the privacy of my guests.
+E203_04;No integration: I wish to preserve the privacy of my pets.
+E203_05;No integration: I perceive no benefit from using Smart Home devices.
+E203_06;No integration: I find Smart Home devices too expensive.
+E203_07;No integration: I do not have a domestic Internet connection suitable for the use of Smart Home devices.
+E203_08;No integration: Other (please specify)
+E203_08a;No integration: Other (please specify) (free text)
+E202_01;Device risk Other: [01]
+E204_01;Usage location: While you are at home.
+E204_02;Usage location: While you are away from home.
+E204_03;Usage location: From someone elseâ€™s device or equipment.
+E204_04;Usage location: From your own device or equipment.
+E205_01;Usage type: Voice commands via a Smart Speaker
+E205_02;Usage type: Voice commands via a Smartphone Voice Assistant
+E205_03;Usage type: Smartphone App for the Device
+E205_04;Usage type: Smartphone Widgets or Shortcuts
+E205_05;Usage type: Sensors inside the Home (e.g., Motion Sensors, Light Sensors, etc.)
+E205_06;Usage type: Sensors outside the Home (e.g., Motion Sensors, Light Sensors, etc.)
+E205_07;Usage type: Automatic Operation based on Device Programming
+E206_01;Usage type other: Other (please specify)
+HP01;Pre-purchase consultation: Residual option (negative) or number of selected options
+HP01_01;Pre-purchase consultation: Friends and Family
+HP01_02;Pre-purchase consultation: Internet message boards
+HP01_03;Pre-purchase consultation: Print media (e.g., Newspapers, Magazines, etc.)
+HP01_04;Pre-purchase consultation: Online reviews
+HP01_05;Pre-purchase consultation: Other (please specify)
+HP02_01;Market tools: Low prices
+HP02_02;Market tools: Bundled offers (e.g., including other devices with purchase of one or more devices)
+HP02_03;Market tools: Trials (e.g., 30-day free use of a service)
+HP02_04;Market tools: Periodic sales
+HP02_05;Market tools: Discounts (e.g., coupons)
+HP03_01;Comfortableness: Budget online store from your own country
+HP03_03;Comfortableness: Online store from another country
+HP03_02;Comfortableness: Brick-and-mortar store other than that of the manufacturer (but not a general purpose or departmental store)
+HP03_04;Comfortableness: Brick-and-mortar general purpose or departmental store
+LA01_01;Legislatory Framework: unwanted access by third parties.
+LA01_02;Legislatory Framework: unwanted sharing with third parties.
+LA01_03;Legislatory Framework: unwanted processing and analysis by third parties.
+LA02_01;Prosecution: those who access my data without authorization.
+LA02_02;Prosecution: those who share my data without permission.
+LA02_03;Prosecution: those who do not employ proper safeguards for storing my data.
+S101_01;Sebis: I set my computer screen to lock automatically if I donâ€™t use it for a prolonged period of time.
+S101_02;Sebis: I use a password/passcode to unlock my laptop or tablet.
+S101_03;Sebis: I manually lock my computer screen when I step away from it.
+S101_04;Sebis: I use a PIN or passcode to unlock my mobile phone.
+S101_05;Sebis: When someone sends me a link, I open it without first verifying where it goes.
+S101_06;Sebis: I know what website Iâ€™m visiting based on its look and feel rather than by looking at the URL bar.
+S101_07;Sebis: I submit information to websites without first verifying that it will be sent securely (e.g., SSL, â€œhttps://, â€ù a lock icon).
+S101_13;Sebis: Please choose Never.
+S101_08;Sebis: When browsing websites, I mouseover links to see where they go before clicking them.
+S101_09;Sebis: If I discover a security problem, I continue what I was doing because I assume someone else will fix it.
+S101_10;Sebis: When Iâ€™m prompted about a software update, I install it right away.
+S101_11;Sebis: I try to make sure that the programs I use are up-to-date.
+S101_12;Sebis: I verify that my anti-virus software has been regularly updating itself.
+S102_01;MUIPC: I believe that the location of my Smart Home device is monitored at least part of the time.
+S102_02;MUIPC: I am concerned that Smart Home devices are collecting too much information about me.
+S102_03;MUIPC: I am concerned that apps may monitor my activities on my Smart Home device.
+S102_04;MUIPC: I feel that as a result of my using Smart Home devices, others know about me more than I am comfortable with.
+S102_05;MUIPC: I feel that as a result of my using Smart Home devices, information about me that I consider private is now more readily available to others than I would want.
+S102_06;MUIPC: I feel that as a result of my using Smart Home devices, information about me is out there that, if used, will invade my privacy.
+S102_07;MUIPC: I am concerned that Smart Home devices may use my personal information for other purposes without notifying me or getting my authorization.
+S102_08;MUIPC: When I give personal information to use Smart Home devices, I am concerned that apps may use my information for other purposes.
+S102_09;MUIPC: I am concerned that Smart Home devices may share my personal information with other entities without getting my authorization.
+A001;Age
+A002;Gender
+A003;Education Level
+A003_09;Education Level: Other (please specify)
+A004;Children
+A005;Household size
+A006;Personal Income
+A007;Property ownership
+A007_03;Property ownership: Something else (please specify)
+A010;ProlificID Completion: [01]
+A010_01;Ethnicity: Residual option (negative) or number of selected options
+A010_02;Ethnicity: American Indian or Native American
+A010_03;Ethnicity: Asian
+A010_04;Ethnicity: African
+A010_05;Ethnicity: Hawaiian or Other Pacific Islander
+A010_06;Ethnicity: White/Caucasian
+A010_07;Ethnicity: Hispanic
+A010_07a;Ethnicity: Something else (please specify)
+A011;Ethnicity: Something else (please specify) (free text)
+A011_01;Employment: Residual option (negative) or number of selected options
+A011_02;Employment: Full-time employment
+A011_03;Employment: Part-time employment
+A011_04;Employment: Unemployed looking for work
+A011_05;Employment: Unemployed NOT looking for work
+A011_06;Employment: Homemaker
+A011_07;Employment: Student
+A011_08;Employment: Retired
+A011_08a;Employment: Something else (please specify)
+A012_01;Employment: Something else (please specify) (free text)
+A013_01;Occupation: [01]
+TIME001;Student: [01]
+TIME002;Time spent on page 1
+TIME003;Time spent on page 2
+TIME004;Time spent on page 3
+TIME005;Time spent on page 4
+TIME007;Time spent on page 5
+TIME008;Time spent on page 7
+TIME009;Time spent on page 8
+TIME010;Time spent on page 9
+TIME011;Time spent on page 10
+TIME012;Time spent on page 11
+TIME013;Time spent on page 12
+TIME014;Time spent on page 13
+TIME015;Time spent on page 14
+TIME016;Time spent on page 15
+TIME017;Time spent on page 16
+TIME018;Time spent on page 17
+TIME_SUM;Time spent on page 18
+MAILSENT;
+LASTDATA;
+FINISHED;
+Q_VIEWER;
+LASTPAGE;
+MAXPAGE;
+MISSING;
+MISSREL;
+TIME_RSI;
+DEG_TIME;
+sebis_DeviceSecurement_avg;
+sebis_ProactiveAwareness_avg;
+sebis_UpdatingBehaviour_avg;
+sebis_avg;
+muipc_PerceivedSur_avg;
+muipc_PerceivedIntrusion_avg;
+muipc_PersonalInformation_avg;
+muipc_avg;
+user_type;

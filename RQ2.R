@@ -1,4 +1,5 @@
-list.of.packages <- c("ggplot2", "tidyverse", "dplyr", "ggpubr", "FSA","dunn.test" )
+list.of.packages <-
+  c("ggplot2", "tidyverse", "dplyr", "ggpubr", "FSA", "dunn.test")
 new.packages <-
   list.of.packages[!(list.of.packages %in% installed.packages()[, "Package"])]
 if (length(new.packages))
@@ -47,11 +48,16 @@ singleSourceOfTruthAppended$`Current Country of Residence` <-
 
 ## testing dependencies between current country of residence and consulting online reviews for their smart devices
 
-kruskal_test(singleSourceOfTruthAppended, formula = R216_01 ~ `Current Country of Residence`)
-kruskal_test(singleSourceOfTruthAppended, formula = R216_02 ~ `Current Country of Residence`)
-kruskal_test(singleSourceOfTruthAppended, formula = R216_03 ~ `Current Country of Residence`)
-kruskal_test(singleSourceOfTruthAppended, formula = R216_04 ~ `Current Country of Residence`)
-kruskal_test(singleSourceOfTruthAppended, formula = R216_05 ~ `Current Country of Residence`) #online news sites and online forums are significantly different per region
+kruskal_test(singleSourceOfTruthAppended,
+             formula = R216_01 ~ `Current Country of Residence`)
+kruskal_test(singleSourceOfTruthAppended,
+             formula = R216_02 ~ `Current Country of Residence`)
+kruskal_test(singleSourceOfTruthAppended,
+             formula = R216_03 ~ `Current Country of Residence`)
+kruskal_test(singleSourceOfTruthAppended,
+             formula = R216_04 ~ `Current Country of Residence`)
+kruskal_test(singleSourceOfTruthAppended,
+             formula = R216_05 ~ `Current Country of Residence`) #online news sites and online forums are significantly different per region
 
 
 # 1	HP02_01	Market tools: Low prices
@@ -94,24 +100,36 @@ u <-
 d1 <-
   select(subset(u, R233_01 == 1),
          participant_id,
-         `Current Country of Residence`,R232_01,
+         `Current Country of Residence`,
+         R232_01,
          R501)
 d2 <-
   select(subset(u, R233_02 == 1),
          participant_id,
-         `Current Country of Residence`,R232_02,
+         `Current Country of Residence`,
+         R232_02,
          R503)
 d3 <-
   select(subset(u, R233_03 == 1),
          participant_id,
-         `Current Country of Residence`,R232_03,
+         `Current Country of Residence`,
+         R232_03,
          R505)
 colnames(d1) <-
-  c("participant_id", "Current Country of Residence","Device", "Usage")
+  c("participant_id",
+    "Current Country of Residence",
+    "Device",
+    "Usage")
 colnames(d2) <-
-  c("participant_id", "Current Country of Residence","Device", "Usage")
+  c("participant_id",
+    "Current Country of Residence",
+    "Device",
+    "Usage")
 colnames(d3) <-
-  c("participant_id", "Current Country of Residence", "Device","Usage")
+  c("participant_id",
+    "Current Country of Residence",
+    "Device",
+    "Usage")
 d <- rbind(d1, d2, d3)
 d <- subset(d, Usage != "Don't know")
 d$Usage <-
@@ -128,13 +146,24 @@ d$Usage <-
   )
 #usage and current country of residence shows no connection
 kruskal_test(d, formula = Usage ~ `Current Country of Residence`) #ns no effect on usage by region could be measured
-kruskal_test(subset(d, Device == "Smart TV"), formula = Usage ~ `Current Country of Residence`) 
-kruskal_test(subset(d, Device == "Smart Speaker"), formula = Usage ~ `Current Country of Residence`) #ns no effect on usage by region could be measured
-kruskal_test(subset(d, Device == "Smart Lightbulb"), formula = Usage ~ `Current Country of Residence`) #ns no effect on usage by region could be measured
-kruskal_test(subset(d, Device != "Smart Lightbulb" && Device != "Smart Speaker" && Device != "Smart TV" ), formula = Usage ~ `Current Country of Residence`) #ns no effect on usage by region could be measured
+kruskal_test(subset(d, Device == "Smart TV"),
+             formula = Usage ~ `Current Country of Residence`)
+kruskal_test(subset(d, Device == "Smart Speaker"),
+             formula = Usage ~ `Current Country of Residence`) #ns no effect on usage by region could be measured
+kruskal_test(subset(d, Device == "Smart Lightbulb"),
+             formula = Usage ~ `Current Country of Residence`) #ns no effect on usage by region could be measured
+kruskal_test(
+  subset(
+    d,
+    Device != "Smart Lightbulb" &&
+      Device != "Smart Speaker" &&
+      Device != "Smart TV"
+  ),
+  formula = Usage ~ `Current Country of Residence`
+) #ns no effect on usage by region could be measured
 
 ##
-smartTVUsers <- subset(d,Device == "Smart TV")
+smartTVUsers <- subset(d, Device == "Smart TV")
 
 kruskal_test(
   subset(
@@ -166,18 +195,12 @@ kruskal_test(
 ) # s
 
 ##
-sTV_UK <- subset(
-  smartTVUsers,
-  `Current Country of Residence` == "United Kingdom" 
-)##
-sTV_US <- subset(
-  smartTVUsers,
-  `Current Country of Residence` == "United States" 
-)
-sTV_DACH <- subset(
-  smartTVUsers,
-  `Current Country of Residence` == "DACH" 
-)
+sTV_UK <- subset(smartTVUsers,
+                 `Current Country of Residence` == "United Kingdom")##
+sTV_US <- subset(smartTVUsers,
+                 `Current Country of Residence` == "United States")
+sTV_DACH <- subset(smartTVUsers,
+                   `Current Country of Residence` == "DACH")
 summary(sTV_US)
 summary(sTV_UK)
 summary(sTV_DACH)
@@ -196,7 +219,9 @@ disabled_features_country <-
   )
 disabled_features_country$choice <-
   ifelse(disabled_features_country$R507 == "Yes" |
-           R510 == "Yes" | R513 == "Yes", 1, 0)
+           R510 == "Yes" | R513 == "Yes",
+         1,
+         0)
 chisq.test(
   disabled_features_country$`Current Country of Residence`,
   disabled_features_country$choice
@@ -402,7 +427,7 @@ kruskal_test(
   formula = A307_04 ~ `Current Country of Residence`
 )#
 
-dunnTest(A307_04,`Current Country of Residence`, method = "bonferroni")
+dunnTest(A307_04, `Current Country of Residence`, method = "bonferroni")
 
 countryIncreaseProperty = select(singleSourceOfTruthAppended,
                                  `Current Country of Residence`,
@@ -450,7 +475,7 @@ kruskal_test(
   formula = A307_06 ~ `Current Country of Residence`
 )#0.0126
 
-dunnTest(A307_06,`Current Country of Residence`, method = "bonferroni")
+dunnTest(A307_06, `Current Country of Residence`, method = "bonferroni")
 
 
 countryIncreaseProperty = select(singleSourceOfTruthAppended,
@@ -551,7 +576,7 @@ kruskal_test(
 countryIncreaseProperty = select(singleSourceOfTruthAppended,
                                  `Current Country of Residence`,
                                  A307_08)
-dunnTest(A307_08,`Current Country of Residence`, method = "bonferroni")
+dunnTest(A307_08, `Current Country of Residence`, method = "bonferroni")
 
 aggregate(
   countryIncreaseProperty[, 2],
@@ -591,7 +616,7 @@ kruskal_test(
 countryIncreaseProperty = select(singleSourceOfTruthAppended,
                                  `Current Country of Residence`,
                                  A307_10)
-dunnTest(A307_10,`Current Country of Residence`, method = "bonferroni")
+dunnTest(A307_10, `Current Country of Residence`, method = "bonferroni")
 
 aggregate(
   countryIncreaseProperty[, 2],
@@ -640,7 +665,7 @@ kruskal_test(
   formula = E201_16 ~ `Current Country of Residence`
 )[5]
 )# smart TV - significantly different for countries p = 0.0000555
- # --- plot means by country to find out which is different and higher / lower
+# --- plot means by country to find out which is different and higher / lower
 p.adjust(p, "bonferroni") #1.0000000 0.2760000 0.0001665
 
-dunnTest(E201_16,`Current Country of Residence`, method = "bonferroni")
+dunnTest(E201_16, `Current Country of Residence`, method = "bonferroni")
