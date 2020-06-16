@@ -114,10 +114,8 @@ Editor preferences are available in the [editor config](https://reponame/blob/ma
 
 ## Thanks
 
-Some Text
+Thank you for the patience brought to us by our families and friends for constantly putting up with us. 
 
 ## Copyright and license
-
-Code and documentation copyright 2011-2018 the authors. Code released under the [MIT License](https://reponame/blob/master/LICENSE).
 
 Enjoy :metal:

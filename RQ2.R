@@ -1,24 +1,4 @@
-list.of.packages <-
-  c("ggplot2", "tidyverse", "dplyr", "ggpubr", "FSA", "dunn.test")
-new.packages <-
-  list.of.packages[!(list.of.packages %in% installed.packages()[, "Package"])]
-if (length(new.packages))
-  install.packages(new.packages)
 
-library(FSA)
-library(dunn.test)
-library(tidyverse)
-library(dplyr)
-library(ggplot2)
-library(ggpubr)
-library(rstatix)
-library(readxl)
-
-singleSourceOfTruthAppended <-
-  read_xlsx("singleSourceOfTruthAppended_P.xlsx")
-singleSourceOfTruthAppended <-
-  subset(singleSourceOfTruthAppended,
-         `Current Country of Residence` != "NA")
 
 ########################## RQ_02 ###################################################
 # RQ2: How does the cultural context impact Smart Home device adoption and use?

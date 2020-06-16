@@ -1,30 +1,3 @@
-list.of.packages <-
-  c("ggplot2", "tidyverse", "dplyr", "ggpubr", "readxl")
-new.packages <-
-  list.of.packages[!(list.of.packages %in% installed.packages()[, "Package"])]
-if (length(new.packages))
-  install.packages(new.packages)
-
-library(tidyverse)
-library(dplyr)
-library(ggplot2)
-library(ggpubr)
-library(rstatix)
-library(readxl)
-
-
-singleSourceOfTruthAppended_old <-
-  read_csv("singleSourceOfTruthAppended.csv")
-weirdGuys <-
-  subset(singleSourceOfTruthAppended_old,
-         is.na(`Current Country of Residence`))
-save(weirdGuys, file = "weirdGuys.csv")
-singleSourceOfTruthAppended <-
-  read_xlsx("singleSourceOfTruthAppended_P.xlsx")
-singleSourceOfTruthAppended <-
-  subset(singleSourceOfTruthAppended,
-         `Current Country of Residence` != "NA")
-
 
 ########################## RQ_03 ###################################################
 
