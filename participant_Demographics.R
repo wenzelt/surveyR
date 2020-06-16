@@ -18,10 +18,10 @@ singleSourceOfTruthAppended <-
   subset(singleSourceOfTruthAppended,
          `Current Country of Residence` != "NA")
 
-table(singleSourceOfTruthAppended$Sex)
-table(singleSourceOfTruthAppended$age)
-table(singleSourceOfTruthAppended$A003)#edu
-table(singleSourceOfTruthAppended$A006)
+prop.table(table(singleSourceOfTruthAppended$Sex))
+prop.table(table(singleSourceOfTruthAppended$age))
+prop.table(table(singleSourceOfTruthAppended$A003))#edu
+prop.table(table(singleSourceOfTruthAppended$A006))
 range(rowMeans(select(singleSourceOfTruthAppended, S101_01:S101_12)))
 range(singleSourceOfTruthAppended$sebis_avg)
 range(singleSourceOfTruthAppended$sebis_DeviceSecurement_avg)

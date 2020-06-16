@@ -69,7 +69,6 @@ ggboxplot(
 )
 ##H2####
 
-usageDemographicsChildren <- select(singleSourceOfTruthAppended,)
 
 
 ##H3####
@@ -91,9 +90,7 @@ ggboxplot(
   xlab = "Children or no children"
 )
 
-# check after removing the outlier
-wilcox.test(R101, na.omit(A004), alternative = "greater")##mann whitney u test #not significant
-kruskal.test(R101 ~ (na.omit(A004))) ## for some reason significant TODO: WHY?
+wilcox.test(R101, na.omit(A004))##mann whitney u test #not significant
 
 wilcox_test(singleSourceOfTruthAppended, R101 ~ A004) #p = 0.888
 
@@ -111,3 +108,24 @@ wilcox_test(singleSourceOfTruthAppended, E205_01 ~ A004) #ns
 wilcox_test(singleSourceOfTruthAppended, E205_02 ~ A004) #ns
 wilcox_test(singleSourceOfTruthAppended, E205_05 ~ A004) #ns
 wilcox_test(singleSourceOfTruthAppended, E205_06 ~ A004) #ns
+
+
+dunnTest(E205_06, as.factor(A004), method = "bonferroni")
+
+wilcox_test(singleSourceOfTruthAppended, formula = E201_11 ~ A004) # 0.0701
+wilcox_test(singleSourceOfTruthAppended, formula = E201_14 ~ A004) # 0.0701
+wilcox_test(singleSourceOfTruthAppended, formula = E201_16 ~ A004) # 0.0701
+
+wilcox_test(singleSourceOfTruthAppended, formula = A204_01 ~ A004)
+wilcox_test(singleSourceOfTruthAppended, formula = A204_02 ~ A004)
+wilcox_test(singleSourceOfTruthAppended, formula = A204_03 ~ A004)
+wilcox_test(singleSourceOfTruthAppended, formula = A204_04 ~ A004)
+wilcox_test(singleSourceOfTruthAppended, formula = A204_05 ~ A004)
+wilcox_test(singleSourceOfTruthAppended, formula = A204_06 ~ A004)
+
+singleSourceOfTruthAppended$A005 <-
+  cut(as.numeric(singleSourceOfTruthAppended$A005), breaks = c(0, 1, Inf)) ## adding levels to children
+singleSourceOfTruthAppended$A005 <-
+  as.factor(singleSourceOfTruthAppended$A005)
+wilcox_test(singleSourceOfTruthAppended, R101 ~ A005)
+

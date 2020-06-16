@@ -99,9 +99,7 @@ kruskal_test(
       `Current Country of Residence` == "DACH"
   ),
   LA01_01 ~ R101
-<<<<<<< HEAD
 ) # s
-
 cor.test(singleSourceOfTruthAppended$LA01_01, singleSourceOfTruthAppended$R101)
 
 cor.test(LA01_01, A204_01) #Protecting my Smart Home ecosystem as a whole #ns
@@ -110,8 +108,7 @@ cor.test(LA01_01, A204_03) #Protecting my Smart Home ecosystem as a whole #ns
 cor.test(LA01_01, A204_04) #keeping my device secure #ns
 cor.test(LA01_01, A204_05) #Protecting my Smart Home ecosystem as a whole #ns
 cor.test(LA01_01, A204_06) #Protecting my Smart Home ecosystem as a whole #ns
-=======
-) #s
+
 kruskal_test(
   subset(
     singleSourceOfTruthAppended,
@@ -131,7 +128,6 @@ kruskal_test(
 
 
 cor.test(singleSourceOfTruthAppended$LA01_01, singleSourceOfTruthAppended$R101)
->>>>>>> 6015c2d242929d73bbedaf4574cce54c96236304
 
 # creating table usage device ownership
 u <-

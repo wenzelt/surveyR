@@ -402,6 +402,8 @@ kruskal_test(
   formula = A307_04 ~ `Current Country of Residence`
 )#
 
+dunnTest(A307_04,`Current Country of Residence`, method = "bonferroni")
+
 countryIncreaseProperty = select(singleSourceOfTruthAppended,
                                  `Current Country of Residence`,
                                  A307_04)
@@ -447,6 +449,9 @@ kruskal_test(
   ),
   formula = A307_06 ~ `Current Country of Residence`
 )#0.0126
+
+dunnTest(A307_06,`Current Country of Residence`, method = "bonferroni")
+
 
 countryIncreaseProperty = select(singleSourceOfTruthAppended,
                                  `Current Country of Residence`,
@@ -546,6 +551,8 @@ kruskal_test(
 countryIncreaseProperty = select(singleSourceOfTruthAppended,
                                  `Current Country of Residence`,
                                  A307_08)
+dunnTest(A307_08,`Current Country of Residence`, method = "bonferroni")
+
 aggregate(
   countryIncreaseProperty[, 2],
   list(countryIncreaseProperty$`Current Country of Residence`),
@@ -584,6 +591,8 @@ kruskal_test(
 countryIncreaseProperty = select(singleSourceOfTruthAppended,
                                  `Current Country of Residence`,
                                  A307_10)
+dunnTest(A307_10,`Current Country of Residence`, method = "bonferroni")
+
 aggregate(
   countryIncreaseProperty[, 2],
   list(countryIncreaseProperty$`Current Country of Residence`),
@@ -631,7 +640,7 @@ kruskal_test(
   formula = E201_16 ~ `Current Country of Residence`
 )[5]
 )# smart TV - significantly different for countries p = 0.0000555
-# --- plot means by country to find out which is different and higher / lower
+ # --- plot means by country to find out which is different and higher / lower
 p.adjust(p, "bonferroni") #1.0000000 0.2760000 0.0001665
 
 dunnTest(E201_16,`Current Country of Residence`, method = "bonferroni")
