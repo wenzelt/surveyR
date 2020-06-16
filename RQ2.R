@@ -218,6 +218,7 @@ kruskal.test(
 # 5	A204_05	Manufacturer responsibilitiy: Fixing a hardware failure
 # 6	A204_06	Manufacturer responsibilitiy: Fixing a software failure
 
+#####
 p <- c(
   kruskal_test(
     singleSourceOfTruthAppended,
@@ -642,3 +643,17 @@ kruskal_test(
 p.adjust(p, "bonferroni") #1.0000000 0.2760000 0.0001665
 
 dunnTest(E201_16, `Current Country of Residence`, method = "bonferroni")
+
+#####Country mal A307_04
+test = select(singleSourceOfTruthAppended, A307_04,`Current Country of Residence`)
+test$`Current Country of Residence` = factor(test$`Current Country of Residence`,levels = unique(test$`Current Country of Residence`))
+test$A307_04.f = factor(test$A307_04, ordered = T)
+
+str(test)
+summary(test)
+hist(~ A307_04.f | `Current Country of Residence`,
+     data=test,
+     layout=c(1,3))
+kruskal.test(A307_04.f~`Current Country of Residence`, data= test)
+epsilonSquared(x = test$A307_04, g=test$`Current Country of Residence`)
+freemanTheta(x = test$A307_04.f, g=test$`Current Country of Residence`)
