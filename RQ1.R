@@ -111,6 +111,10 @@ kruskal_test(
 
 cor.test(singleSourceOfTruthAppended$LA01_01,
          singleSourceOfTruthAppended$R101)
+cor.test(singleSourceOfTruthAppended$LA01_02,
+         singleSourceOfTruthAppended$R101)
+cor.test(singleSourceOfTruthAppended$LA01_03,
+         singleSourceOfTruthAppended$R101)
 
 # creating table usage device ownership
 u <-
@@ -164,7 +168,10 @@ disabled_features$choice <-
   ifelse(disabled_features$R507 == "Yes" |
            R510 == "Yes" | R513 == "Yes", 1, 0)
 
-wilcox.test(disabled_features$LA01_01, disabled_features$choice) #p-value < 2.2e-16
+wilcox.test(disabled_features$LA01_01, disabled_features$choice,paired=T,) #p-value < 2.2e-16
+
+pairwise.wilcox.test(disabled_features$LA01_01, disabled_features$choice,p.adjust.method ="bonferroni",paired = F)
+
 aggregate(LA01_01 ~ choice, data = disabled_features, mean)
 # choice  LA01_01
 # 1      0 3.331658
@@ -251,7 +258,6 @@ cor.test(d2SmartLights$LA01_02, as.numeric(d2SmartLights$Usage))#NS p-value = 0.
 cor.test(d3SmartLights$LA01_03, as.numeric(d3SmartLights$Usage))#NS p-value = 0.6602 cor = -0.04670735
 
 ####H3####
-
 #testing correlation between access to privacy and device risk assessment for popular Devices
 cor_test(select(
   singleSourceOfTruthAppended,
@@ -292,7 +298,7 @@ cor_test(select(
 #4 LA01_03 E201_16 -0.17      -3.54 4.42e- 4   -0.258   -0.0749 Pearson
 
 v <- rowMeans(select(singleSourceOfTruthAppended, E201_01:E201_20))
-cor.test(singleSourceOfTruthAppended$LA01_01, v) # p-value = 0.0005891 cor = -0.1641262
+cor.test(singleSourceOfTruthAppended$LA01_03, v) # p-value = 0.0005891 cor = -0.1641262
 
 #Correlation between LA01 and Manufacturer responsibility
 cor.test(LA01_01, A204_01) #ns
