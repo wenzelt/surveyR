@@ -23,3 +23,5 @@ singleSourceOfTruthAppended <-
 singleSourceOfTruthAppended <-
   subset(singleSourceOfTruthAppended,
          `Current Country of Residence` != "NA")
+
+attach(singleSourceOfTruthAppended)

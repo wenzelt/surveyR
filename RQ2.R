@@ -16,13 +16,6 @@
 # 4	R216_04	Education about Device D1: Friends and Family
 # 5	R216_05	Education about Device D1: Online news sites
 
-singleSourceOfTruthAppended <-
-  read_xlsx("singleSourceOfTruthAppended_P.xlsx")
-singleSourceOfTruthAppended <-
-  subset(singleSourceOfTruthAppended,
-         `Current Country of Residence` != "NA")
-
-attach(singleSourceOfTruthAppended)
 singleSourceOfTruthAppended$`Current Country of Residence` <-
   as.factor(singleSourceOfTruthAppended$`Current Country of Residence`)
 
@@ -142,6 +135,7 @@ kruskal_test(
   formula = Usage ~ `Current Country of Residence`
 ) #ns no effect on usage by region could be measured
 
+
 ##
 smartTVUsers <- subset(d, Device == "Smart TV")
 
@@ -153,7 +147,6 @@ kruskal_test(
   ),
   Usage ~ `Current Country of Residence`
 )#ns
-
 
 kruskal_test(
   subset(

@@ -16,7 +16,6 @@
 
 ####H1####
 #Rq1 - H1 LA01_01 - R101
-attach(singleSourceOfTruthAppended)
 
 #testing for unwanted access to data with amount of different devices owned.
 kruskal_test(singleSourceOfTruthAppended, LA01_01 ~ R101) # statistically significant for value p = 0.00082
