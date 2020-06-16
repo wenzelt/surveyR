@@ -1,11 +1,13 @@
 
-list.of.packages <- c("ggplot2", "tidyverse", "dplyr", "ggpubr")
+list.of.packages <- c("ggplot2", "tidyverse", "dplyr", "ggpubr", "FSA","dunn.test" )
 new.packages <-
   list.of.packages[!(list.of.packages %in% installed.packages()[, "Package"])]
 if (length(new.packages))
   install.packages(new.packages)
 
 library(tidyverse)
+library(FSA)
+library(dunn.test)
 library(dplyr)
 library(ggplot2)
 library(ggpubr)
@@ -282,6 +284,31 @@ cor_test(select(
 # 2 LA01_01 E201_11 -0.092     -1.93 5.46e- 2   -0.185   0.00181 Pearson
 # 3 LA01_01 E201_14 -0.17      -3.59 3.64e- 4   -0.260  -0.0774  Pearson
 # 4 LA01_01 E201_16 -0.17      -3.58 3.79e- 4   -0.260  -0.0769  Pearson
+
+cor_test(select(
+  singleSourceOfTruthAppended,
+  LA01_02,
+  E201_11,
+  E201_14,
+  E201_16
+))
+#   var1    var2       cor statistic        p conf.low conf.high method 
+#2 LA01_02 E201_11 -0.076     -1.59 1.13e- 1   -0.169    0.0181 Pearson
+#3 LA01_02 E201_14 -0.15      -3.14 1.79e- 3   -0.240   -0.0561 Pearson
+#4 LA01_02 E201_16 -0.18      -3.85 1.34e- 4   -0.271   -0.0896 Pearson
+
+cor_test(select(
+  singleSourceOfTruthAppended,
+  LA01_03,
+  E201_11,
+  E201_14,
+  E201_16
+))
+
+#  var1    var2       cor statistic        p conf.low conf.high method 
+#2 LA01_03 E201_11 -0.074     -1.54 1.25e- 1   -0.166    0.0205 Pearson
+#3 LA01_03 E201_14 -0.13      -2.69 7.51e- 3   -0.219   -0.0344 Pearson
+#4 LA01_03 E201_16 -0.17      -3.54 4.42e- 4   -0.258   -0.0749 Pearson
 
 v <- rowMeans(select(singleSourceOfTruthAppended, E201_01:E201_20))
 cor.test(singleSourceOfTruthAppended$LA01_01, v) # p-value = 0.0005891 cor = -0.1641262

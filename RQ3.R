@@ -129,3 +129,7 @@ singleSourceOfTruthAppended$A005 <-
   as.factor(singleSourceOfTruthAppended$A005)
 wilcox_test(singleSourceOfTruthAppended, R101 ~ A005)
 
+
+wilcox_test(singleSourceOfTruthAppended, formula = E201_11 ~ A005) # 0.0701
+wilcox_test(singleSourceOfTruthAppended, formula = E201_14 ~ A005) # 0.0701
+wilcox_test(singleSourceOfTruthAppended, formula = E201_16 ~ A005)
