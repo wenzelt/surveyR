@@ -170,7 +170,7 @@ disabled_features$choice <-
 
 wilcox.test(disabled_features$LA01_01, disabled_features$choice,paired=T,) #p-value < 2.2e-16
 
-pairwise.wilcox.test(disabled_features$LA01_01, disabled_features$choice,p.adjust.method ="bonferroni",paired = F)
+pairwise.wilcox.test(disabled_features$LA01_01, disabled_features$choice,p.adjust.method ="bonferroni")
 
 aggregate(LA01_01 ~ choice, data = disabled_features, mean)
 # choice  LA01_01
