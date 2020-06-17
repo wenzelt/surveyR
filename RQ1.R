@@ -14,12 +14,22 @@
 # LA01_02	Legislatory Framework: unwanted sharing with third parties.
 # LA01_03	Legislatory Framework: unwanted processing and analysis by third parties.
 
-####H1####
+####H1 Purchase Behaviour####
+
 #Rq1 - H1 LA01_01 - R101
+# R101 equals the amount of owned devices of the user
 
 #testing for unwanted access to data with amount of different devices owned.
 kruskal_test(singleSourceOfTruthAppended, LA01_01 ~ R101) # statistically significant for value p = 0.00082
 
+cor.test(singleSourceOfTruthAppended$LA01_01,
+         singleSourceOfTruthAppended$R101)
+cor.test(singleSourceOfTruthAppended$LA01_02,
+         singleSourceOfTruthAppended$R101)
+cor.test(singleSourceOfTruthAppended$LA01_03,
+         singleSourceOfTruthAppended$R101)
+
+####H2Pairwise comparison, only used for discussion####
 ###UK US
 kruskal_test(
   subset(
@@ -81,17 +91,8 @@ kruskal_test(
   ),
   LA01_01 ~ R101
 ) # s
-
-
 cor.test(singleSourceOfTruthAppended$LA01_01,
          singleSourceOfTruthAppended$R101)
-
-cor.test(LA01_01, A204_01) #Protecting my Smart Home ecosystem as a whole #ns
-cor.test(LA01_01, A204_02) #Protecting my Smart Home ecosystem as a whole #ns
-cor.test(LA01_01, A204_03) #Protecting my Smart Home ecosystem as a whole #ns
-cor.test(LA01_01, A204_04) #keeping my device secure #ns
-cor.test(LA01_01, A204_05) #Protecting my Smart Home ecosystem as a whole #ns
-cor.test(LA01_01, A204_06) #Protecting my Smart Home ecosystem as a whole #ns
 
 kruskal_test(
   subset(
@@ -109,14 +110,6 @@ kruskal_test(
   ),
   LA01_03 ~ R101
 ) #s
-
-
-cor.test(singleSourceOfTruthAppended$LA01_01,
-         singleSourceOfTruthAppended$R101)
-cor.test(singleSourceOfTruthAppended$LA01_02,
-         singleSourceOfTruthAppended$R101)
-cor.test(singleSourceOfTruthAppended$LA01_03,
-         singleSourceOfTruthAppended$R101)
 
 # creating table usage device ownership
 u <-
@@ -277,42 +270,61 @@ cor.test(dSmartLights$LA01_01, as.numeric(dSmartLights$Usage))#NS p-value = 0.96
 cor.test(d2SmartLights$LA01_02, as.numeric(d2SmartLights$Usage))#NS p-value = 0.8468 cor = -0.02052836
 cor.test(d3SmartLights$LA01_03, as.numeric(d3SmartLights$Usage))#NS p-value = 0.6602 cor = -0.04670735
 
-####H3####
-#testing correlation between access to privacy and device risk assessment for popular Devices
+####H3_Perception####
+#E201_01-20 correspond to the perceived risk of a certain device
+#11 Smart Lightbuld; 14 Smart Speaker; 16 Smart TV
+
+v <- rowMeans(select(singleSourceOfTruthAppended, E201_01:E201_20))
+cor.test(singleSourceOfTruthAppended$LA01_01, v) # p-value = 0.0005891 cor = -0.1641262
+cor.test(singleSourceOfTruthAppended$LA01_02, v)
+cor.test(singleSourceOfTruthAppended$LA01_03, v)
+
+####H3_Perception_popular devices####
+#testing correlation between perceived risk for popular Devices
 cor_test(select(
   singleSourceOfTruthAppended,
   LA01_01,
-  LA01_02,
-  LA01_03,
   E201_11,
   E201_14,
   E201_16
 ))
-
+#result:
 #   var1    var2       cor statistic        p conf.low conf.high method
 # 2 LA01_01 E201_11 -0.092     -1.93 5.46e- 2   -0.185   0.00181 Pearson
 # 3 LA01_01 E201_14 -0.17      -3.59 3.64e- 4   -0.260  -0.0774  Pearson
 # 4 LA01_01 E201_16 -0.17      -3.58 3.79e- 4   -0.260  -0.0769  Pearson
-
-
+cor_test(select(
+  singleSourceOfTruthAppended,
+  LA01_02,
+  E201_11,
+  E201_14,
+  E201_16
+))
+#result:
 #   var1    var2       cor statistic        p conf.low conf.high method
 #2 LA01_02 E201_11 -0.076     -1.59 1.13e- 1   -0.169    0.0181 Pearson
 #3 LA01_02 E201_14 -0.15      -3.14 1.79e- 3   -0.240   -0.0561 Pearson
 #4 LA01_02 E201_16 -0.18      -3.85 1.34e- 4   -0.271   -0.0896 Pearson
 
-
+cor_test(select(
+  singleSourceOfTruthAppended,
+  LA01_03,
+  E201_11,
+  E201_14,
+  E201_16
+))
+#result:
 #  var1    var2       cor statistic        p conf.low conf.high method
 #2 LA01_03 E201_11 -0.074     -1.54 1.25e- 1   -0.166    0.0205 Pearson
 #3 LA01_03 E201_14 -0.13      -2.69 7.51e- 3   -0.219   -0.0344 Pearson
 #4 LA01_03 E201_16 -0.17      -3.54 4.42e- 4   -0.258   -0.0749 Pearson
 
-v <- rowMeans(select(singleSourceOfTruthAppended, E201_01:E201_20))
-cor.test(singleSourceOfTruthAppended$LA01_03, v) # p-value = 0.0005891 cor = -0.1641262
-
+####H3_Perceived Responsibility####
 #Correlation between LA01 and Manufacturer responsibility
-cor.test(LA01_01, A204_01) #ns
-cor.test(LA01_01, A204_02) #ns
+#Likert-scale from 0-me to 7-manufacturer
+cor.test(LA01_01, A204_01) #Keeping the Smart Home device software up-to-date
+cor.test(LA01_01, A204_02) #Ensuring my privacy
 cor.test(LA01_01, A204_03) #Protecting my Smart Home ecosystem as a whole #ns
 cor.test(LA01_01, A204_04) #keeping my device secure #ns
-cor.test(LA01_01, A204_05) #ns
-cor.test(LA01_01, A204_06) #ns
+cor.test(LA01_01, A204_05) #Fixing a hardware failure
+cor.test(LA01_01, A204_06) #Fixing a software failure
