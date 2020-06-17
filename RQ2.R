@@ -20,18 +20,11 @@ singleSourceOfTruthAppended$`Current Country of Residence` <-
   as.factor(singleSourceOfTruthAppended$`Current Country of Residence`)
 
 ## testing dependencies between current country of residence and consulting online reviews for their smart devices
-
-kruskal_test(singleSourceOfTruthAppended,
-             formula = R216_01 ~ `Current Country of Residence`)
-kruskal_test(singleSourceOfTruthAppended,
-             formula = R216_02 ~ `Current Country of Residence`)
-kruskal_test(singleSourceOfTruthAppended,
-             formula = R216_03 ~ `Current Country of Residence`)
-kruskal_test(singleSourceOfTruthAppended,
-             formula = R216_04 ~ `Current Country of Residence`)
-kruskal_test(singleSourceOfTruthAppended,
-             formula = R216_05 ~ `Current Country of Residence`) #online news sites and online forums are significantly different per region
-
+chisq.test(R216_01,`Current Country of Residence`)
+chisq.test(R216_02,`Current Country of Residence`)
+chisq.test(R216_03,`Current Country of Residence`)
+chisq.test(R216_04,`Current Country of Residence`)
+chisq.test(R216_05,`Current Country of Residence`)
 
 # 1	HP02_01	Market tools: Low prices
 # 2	HP02_02	Market tools: Bundled offers (e.g., including other devices with purchase of one or more devices)
@@ -138,6 +131,13 @@ kruskal_test(
 
 ##
 smartTVUsers <- subset(d, Device == "Smart TV")
+DT = dunnTest(x=as.numeric(smartTVUsers$Usage),g=smartTVUsers$`Current Country of Residence`, method = "bonferroni")
+epsilonSquared(x=as.numeric(smartTVUsers$Usage),g=smartTVUsers$`Current Country of Residence`)
+#compact letter display: 
+PT = DT$res
+cldList(P.adj ~ Comparison,
+        data = PT,
+        threshold = 0.05)
 
 kruskal_test(
   subset(
@@ -218,6 +218,7 @@ kruskal.test(
 # 5	A204_05	Manufacturer responsibilitiy: Fixing a hardware failure
 # 6	A204_06	Manufacturer responsibilitiy: Fixing a software failure
 
+#####
 p <- c(
   kruskal_test(
     singleSourceOfTruthAppended,
@@ -250,30 +251,9 @@ p.adjust(p, method = "bonferroni", n = length(p))
 
 #pairwise testing for A204_04
 #starting pairwise testing per country
-kruskal_test(
-  subset(
-    singleSourceOfTruthAppended,
-    `Current Country of Residence` == "DACH" |
-      `Current Country of Residence` == "United Kingdom"
-  ),
-  formula = A204_04 ~ `Current Country of Residence`
-)#0.00582
-kruskal_test(
-  subset(
-    singleSourceOfTruthAppended,
-    `Current Country of Residence` == "DACH" |
-      `Current Country of Residence` == "United States"
-  ),
-  formula = A204_04 ~ `Current Country of Residence`
-)#0.00125
-kruskal_test(
-  subset(
-    singleSourceOfTruthAppended,
-    `Current Country of Residence` == "United Kingdom" |
-      `Current Country of Residence` == "United States"
-  ),
-  formula = A204_04 ~ `Current Country of Residence`
-)#0.448 n-s
+
+dunnTest(A204_04, `Current Country of Residence`, method = "bonferroni")
+
 
 countryPerception = select(singleSourceOfTruthAppended,
                            `Current Country of Residence`,
@@ -285,10 +265,6 @@ aggregate(countryPerception[, 2],
 # 1           DACH 3.940741
 # 2 United Kingdom 4.535484
 # 3  United States 4.675862
-
-
-
-
 
 
 
@@ -375,31 +351,6 @@ p.adjust(p, method = "bonferroni", n = length(p))
 
 #-------------------------------------------------------------------------------
 #testing for smart home device preference country ~ enhancing leisure activities
-kruskal_test(
-  subset(
-    singleSourceOfTruthAppended,
-    `Current Country of Residence` == "DACH" |
-      `Current Country of Residence` == "United Kingdom"
-  ),
-  formula = A307_04 ~ `Current Country of Residence`
-)
-kruskal_test(
-  subset(
-    singleSourceOfTruthAppended,
-    `Current Country of Residence` == "DACH" |
-      `Current Country of Residence` == "United States"
-  ),
-  formula = A307_04 ~ `Current Country of Residence`
-)#
-kruskal_test(
-  subset(
-    singleSourceOfTruthAppended,
-    `Current Country of Residence` == "United Kingdom" |
-      `Current Country of Residence` == "United States"
-  ),
-  formula = A307_04 ~ `Current Country of Residence`
-)#
-
 dunnTest(A307_04, `Current Country of Residence`, method = "bonferroni")
 
 countryIncreaseProperty = select(singleSourceOfTruthAppended,
@@ -423,32 +374,18 @@ aggregate(
 
 #-------------------------------------------------------------------------------
 #testing for smart home device preference country ~ providing comfort
-kruskal_test(
-  subset(
-    singleSourceOfTruthAppended,
-    `Current Country of Residence` == "DACH" |
-      `Current Country of Residence` == "United Kingdom"
-  ),
-  formula = A307_06 ~ `Current Country of Residence`
-)#0.0367
-kruskal_test(
-  subset(
-    singleSourceOfTruthAppended,
-    `Current Country of Residence` == "DACH" |
-      `Current Country of Residence` == "United States"
-  ),
-  formula = A307_06 ~ `Current Country of Residence`
-)#0.00000354
-kruskal_test(
-  subset(
-    singleSourceOfTruthAppended,
-    `Current Country of Residence` == "United Kingdom" |
-      `Current Country of Residence` == "United States"
-  ),
-  formula = A307_06 ~ `Current Country of Residence`
-)#0.0126
+
 
 dunnTest(A307_06, `Current Country of Residence`, method = "bonferroni")
+test = subset(
+  singleSourceOfTruthAppended,
+  `Current Country of Residence` == "DACH" |
+    `Current Country of Residence` == "United Kingdom"
+)
+epsilonSquared(test$A307_06, test$`Current Country of Residence`)
+freemanTheta(test$A307_06, test$`Current Country of Residence`)
+
+
 
 
 countryIncreaseProperty = select(singleSourceOfTruthAppended,
@@ -473,30 +410,8 @@ aggregate(
 
 #------------------------------------------------------------------------------------
 #testing for smart home device preference country ~ increasing safety
-kruskal_test(
-  subset(
-    singleSourceOfTruthAppended,
-    `Current Country of Residence` == "DACH" |
-      `Current Country of Residence` == "United Kingdom"
-  ),
-  formula = A307_07 ~ `Current Country of Residence`
-)#0.0367
-kruskal_test(
-  subset(
-    singleSourceOfTruthAppended,
-    `Current Country of Residence` == "DACH" |
-      `Current Country of Residence` == "United States"
-  ),
-  formula = A307_07 ~ `Current Country of Residence`
-)#0.00000354
-kruskal_test(
-  subset(
-    singleSourceOfTruthAppended,
-    `Current Country of Residence` == "United Kingdom" |
-      `Current Country of Residence` == "United States"
-  ),
-  formula = A307_07 ~ `Current Country of Residence`
-)#0.0126
+
+dunnTest(A307_07, `Current Country of Residence`, method = "bonferroni")
 
 countryIncreaseProperty = select(singleSourceOfTruthAppended,
                                  `Current Country of Residence`,
@@ -521,36 +436,13 @@ aggregate(
 
 #------------------------------------------------------------------------------------
 #testing for smart home device preference country ~ providing care
-kruskal_test(
-  subset(
-    singleSourceOfTruthAppended,
-    `Current Country of Residence` == "DACH" |
-      `Current Country of Residence` == "United Kingdom"
-  ),
-  formula = A307_08 ~ `Current Country of Residence`
-)#0.0367
-kruskal_test(
-  subset(
-    singleSourceOfTruthAppended,
-    `Current Country of Residence` == "DACH" |
-      `Current Country of Residence` == "United States"
-  ),
-  formula = A307_08 ~ `Current Country of Residence`
-)#0.00000354
-kruskal_test(
-  subset(
-    singleSourceOfTruthAppended,
-    `Current Country of Residence` == "United Kingdom" |
-      `Current Country of Residence` == "United States"
-  ),
-  formula = A307_08 ~ `Current Country of Residence`
-)#0.0126
 
+
+
+dunnTest(A307_08, `Current Country of Residence`, method = "bonferroni")
 countryIncreaseProperty = select(singleSourceOfTruthAppended,
                                  `Current Country of Residence`,
                                  A307_08)
-dunnTest(A307_08, `Current Country of Residence`, method = "bonferroni")
-
 aggregate(
   countryIncreaseProperty[, 2],
   list(countryIncreaseProperty$`Current Country of Residence`),
@@ -561,36 +453,12 @@ aggregate(
 
 #starting pairwise testing per country
 # Country and adding to the property value
-kruskal_test(
-  subset(
-    singleSourceOfTruthAppended,
-    `Current Country of Residence` == "DACH" |
-      `Current Country of Residence` == "United Kingdom"
-  ),
-  formula = A307_10 ~ `Current Country of Residence`
-)#0.0367
-kruskal_test(
-  subset(
-    singleSourceOfTruthAppended,
-    `Current Country of Residence` == "DACH" |
-      `Current Country of Residence` == "United States"
-  ),
-  formula = A307_10 ~ `Current Country of Residence`
-)#0.00000354
-kruskal_test(
-  subset(
-    singleSourceOfTruthAppended,
-    `Current Country of Residence` == "United Kingdom" |
-      `Current Country of Residence` == "United States"
-  ),
-  formula = A307_10 ~ `Current Country of Residence`
-)#0.0126
 
+
+dunnTest(A307_10, `Current Country of Residence`, method = "bonferroni")
 countryIncreaseProperty = select(singleSourceOfTruthAppended,
                                  `Current Country of Residence`,
                                  A307_10)
-dunnTest(A307_10, `Current Country of Residence`, method = "bonferroni")
-
 aggregate(
   countryIncreaseProperty[, 2],
   list(countryIncreaseProperty$`Current Country of Residence`),
@@ -642,3 +510,17 @@ kruskal_test(
 p.adjust(p, "bonferroni") #1.0000000 0.2760000 0.0001665
 
 dunnTest(E201_16, `Current Country of Residence`, method = "bonferroni")
+
+#####Country mal A307_04
+test = select(singleSourceOfTruthAppended, A307_04,`Current Country of Residence`)
+test$`Current Country of Residence` = factor(test$`Current Country of Residence`,levels = unique(test$`Current Country of Residence`))
+test$A307_04.f = factor(test$A307_04, ordered = T)
+
+str(test)
+summary(test)
+hist(~ A307_04.f | `Current Country of Residence`,
+     data=test,
+     layout=c(1,3))
+kruskal.test(A307_04.f~`Current Country of Residence`, data= test)
+epsilonSquared(x = test$A307_04, g=test$`Current Country of Residence`)
+freemanTheta(x = test$A307_04.f, g=test$`Current Country of Residence`)
