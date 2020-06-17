@@ -20,18 +20,11 @@ singleSourceOfTruthAppended$`Current Country of Residence` <-
   as.factor(singleSourceOfTruthAppended$`Current Country of Residence`)
 
 ## testing dependencies between current country of residence and consulting online reviews for their smart devices
-
-kruskal_test(singleSourceOfTruthAppended,
-             formula = R216_01 ~ `Current Country of Residence`)
-kruskal_test(singleSourceOfTruthAppended,
-             formula = R216_02 ~ `Current Country of Residence`)
-kruskal_test(singleSourceOfTruthAppended,
-             formula = R216_03 ~ `Current Country of Residence`)
-kruskal_test(singleSourceOfTruthAppended,
-             formula = R216_04 ~ `Current Country of Residence`)
-kruskal_test(singleSourceOfTruthAppended,
-             formula = R216_05 ~ `Current Country of Residence`) #online news sites and online forums are significantly different per region
-
+chisq.test(R216_01,`Current Country of Residence`)
+chisq.test(R216_02,`Current Country of Residence`)
+chisq.test(R216_03,`Current Country of Residence`)
+chisq.test(R216_04,`Current Country of Residence`)
+chisq.test(R216_05,`Current Country of Residence`)
 
 # 1	HP02_01	Market tools: Low prices
 # 2	HP02_02	Market tools: Bundled offers (e.g., including other devices with purchase of one or more devices)
@@ -138,8 +131,13 @@ kruskal_test(
 
 ##
 smartTVUsers <- subset(d, Device == "Smart TV")
-dunnTest(x=as.numeric(smartTVUsers$Usage),g=smartTVUsers$`Current Country of Residence`)
+DT = dunnTest(x=as.numeric(smartTVUsers$Usage),g=smartTVUsers$`Current Country of Residence`, method = "bonferroni")
 epsilonSquared(x=as.numeric(smartTVUsers$Usage),g=smartTVUsers$`Current Country of Residence`)
+#compact letter display: 
+PT = DT$res
+cldList(P.adj ~ Comparison,
+        data = PT,
+        threshold = 0.05)
 
 kruskal_test(
   subset(
