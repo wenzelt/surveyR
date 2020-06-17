@@ -138,6 +138,8 @@ kruskal_test(
 
 ##
 smartTVUsers <- subset(d, Device == "Smart TV")
+dunnTest(x=as.numeric(smartTVUsers$Usage),g=smartTVUsers$`Current Country of Residence`)
+epsilonSquared(x=as.numeric(smartTVUsers$Usage),g=smartTVUsers$`Current Country of Residence`)
 
 kruskal_test(
   subset(
@@ -265,10 +267,6 @@ aggregate(countryPerception[, 2],
 # 1           DACH 3.940741
 # 2 United Kingdom 4.535484
 # 3  United States 4.675862
-
-
-
-
 
 
 

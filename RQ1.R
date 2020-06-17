@@ -161,13 +161,20 @@ disabled_features <-
          R507,
          R510,
          R513,
-         LA01_01)
+         LA01_01,LA01_02,LA01_03,)
 disabled_features$choice <-
   ifelse(disabled_features$R507 == "Yes" |
            R510 == "Yes" | R513 == "Yes", 1, 0)
 
 wilcox.test(disabled_features$LA01_01, disabled_features$choice) #p-value < 2.2e-16
+wilcox.test(disabled_features$LA01_02, disabled_features$choice) #p-value < 2.2e-16
+wilcox.test(disabled_features$LA01_03, disabled_features$choice) #p-value < 2.2e-16
+
 aggregate(LA01_01 ~ choice, data = disabled_features, mean)
+aggregate(LA01_02 ~ choice, data = disabled_features, mean)
+aggregate(LA01_03 ~ choice, data = disabled_features, mean)
+
+
 # choice  LA01_01
 # 1      0 3.331658
 # 2      1 3.216216
@@ -181,6 +188,26 @@ ggboxplot(
   order = c(0, 1),
   ylab = "LA01_01",
   xlab = "choice"
+)
+ggboxplot(
+  disabled_features,
+  x = "choice",
+  y = "LA01_02",
+  color = "choice",
+  palette = c("#00AFBB", "#E7B800"),
+  order = c(0, 1),
+  ylab = "LA01_01",
+  xlab = "choice"
+)
+ggboxplot(
+  disabled_features,
+  x = "choice",
+  y = "LA01_03",
+  color = "choice",
+  palette = c("#00AFBB", "#E7B800"),
+  order = c(0, 1),
+  ylab = "Agreement to unwanted processing",
+  xlab = "Disabled features"
 )
 
 
@@ -258,6 +285,8 @@ cor.test(d3SmartLights$LA01_03, as.numeric(d3SmartLights$Usage))#NS p-value = 0.
 cor_test(select(
   singleSourceOfTruthAppended,
   LA01_01,
+  LA01_02,
+  LA01_03,
   E201_11,
   E201_14,
   E201_16
@@ -268,25 +297,12 @@ cor_test(select(
 # 3 LA01_01 E201_14 -0.17      -3.59 3.64e- 4   -0.260  -0.0774  Pearson
 # 4 LA01_01 E201_16 -0.17      -3.58 3.79e- 4   -0.260  -0.0769  Pearson
 
-cor_test(select(
-  singleSourceOfTruthAppended,
-  LA01_02,
-  E201_11,
-  E201_14,
-  E201_16
-))
+
 #   var1    var2       cor statistic        p conf.low conf.high method
 #2 LA01_02 E201_11 -0.076     -1.59 1.13e- 1   -0.169    0.0181 Pearson
 #3 LA01_02 E201_14 -0.15      -3.14 1.79e- 3   -0.240   -0.0561 Pearson
 #4 LA01_02 E201_16 -0.18      -3.85 1.34e- 4   -0.271   -0.0896 Pearson
 
-cor_test(select(
-  singleSourceOfTruthAppended,
-  LA01_03,
-  E201_11,
-  E201_14,
-  E201_16
-))
 
 #  var1    var2       cor statistic        p conf.low conf.high method
 #2 LA01_03 E201_11 -0.074     -1.54 1.25e- 1   -0.166    0.0205 Pearson
