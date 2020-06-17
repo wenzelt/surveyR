@@ -14,7 +14,7 @@
 # LA01_02	Legislatory Framework: unwanted sharing with third parties.
 # LA01_03	Legislatory Framework: unwanted processing and analysis by third parties.
 
-####H1 Purchase Behaviour####
+####H1_Purchase Behaviour####
 
 #Rq1 - H1 LA01_01 - R101
 # R101 equals the amount of owned devices of the user
@@ -29,7 +29,7 @@ cor.test(singleSourceOfTruthAppended$LA01_02,
 cor.test(singleSourceOfTruthAppended$LA01_03,
          singleSourceOfTruthAppended$R101)
 
-####H2Pairwise comparison, only used for discussion####
+####H2_Pairwise comparison, only used for discussion####
 ###UK US
 kruskal_test(
   subset(
