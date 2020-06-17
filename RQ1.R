@@ -170,15 +170,12 @@ disabled_features$choice <-
   ifelse(disabled_features$R507 == "Yes" |
            R510 == "Yes" | R513 == "Yes", 1, 0)
 
-<<<<<<< HEAD
+
 wilcox.test(disabled_features$LA01_01, disabled_features$choice,paired=T,) #p-value < 2.2e-16
 
-pairwise.wilcox.test(disabled_features$LA01_01, disabled_features$choice,p.adjust.method ="bonferroni")
-=======
 wilcox.test(disabled_features$LA01_01, disabled_features$choice) #p-value < 2.2e-16
 wilcox.test(disabled_features$LA01_02, disabled_features$choice) #p-value < 2.2e-16
 wilcox.test(disabled_features$LA01_03, disabled_features$choice) #p-value < 2.2e-16
->>>>>>> 91eaf49349040823ce27dc50452923857ee902c0
 
 aggregate(LA01_01 ~ choice, data = disabled_features, mean)
 aggregate(LA01_02 ~ choice, data = disabled_features, mean)
