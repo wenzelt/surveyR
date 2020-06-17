@@ -154,10 +154,9 @@ d$Usage <-
     )
   )
 
-###merge on participant_id their legislative opinion
+#merge on participant_id their legislative opinion
 
-####H2####
-#testing for LA on disabled features:
+####H2_Disabled Features####
 
 disabled_features <-
   select(singleSourceOfTruthAppended,
@@ -170,9 +169,6 @@ disabled_features$choice <-
   ifelse(disabled_features$R507 == "Yes" |
            R510 == "Yes" | R513 == "Yes", 1, 0)
 
-
-wilcox.test(disabled_features$LA01_01, disabled_features$choice,paired=T,) #p-value < 2.2e-16
-
 wilcox.test(disabled_features$LA01_01, disabled_features$choice) #p-value < 2.2e-16
 wilcox.test(disabled_features$LA01_02, disabled_features$choice) #p-value < 2.2e-16
 wilcox.test(disabled_features$LA01_03, disabled_features$choice) #p-value < 2.2e-16
@@ -182,10 +178,7 @@ aggregate(LA01_02 ~ choice, data = disabled_features, mean)
 aggregate(LA01_03 ~ choice, data = disabled_features, mean)
 
 
-# choice  LA01_01
-# 1      0 3.331658
-# 2      1 3.216216
-
+#plotting results
 ggboxplot(
   disabled_features,
   x = "choice",
@@ -218,7 +211,9 @@ ggboxplot(
 )
 
 
-######
+####H2_Device_usage_TV,Speaker,Light####
+
+#Creating sub-sets for tests
 #LA01_01 unwanted access by third parties.
 d <-
   merge(select(singleSourceOfTruthAppended, LA01_01, participant_id),
@@ -234,7 +229,6 @@ dOther <-
       Device_Owned != "Smart Lightbulb" &
       Device_Owned != "Smart Speaker"
   )
-######
 #LA01_02 unwanted sharing with third parties.
 d2 <-
   merge(select(singleSourceOfTruthAppended, LA01_02, participant_id),
@@ -250,8 +244,6 @@ d2Other <-
       Device_Owned != "Smart Lightbulb" &
       Device_Owned != "Smart Speaker"
   )
-
-######
 #LA01_03 unwanted processing and analysis by third parties.
 d3 <-
   merge(select(singleSourceOfTruthAppended, LA01_03, participant_id),
@@ -267,7 +259,6 @@ d3Other <-
       Device_Owned != "Smart Lightbulb" &
       Device_Owned != "Smart Speaker"
   )
-######
 
 #testing correlation of legislative opinion with usage
 cor.test(d$LA01_01, as.numeric(d$Usage)) #p-value = 0.003954 cor =0.1019092
