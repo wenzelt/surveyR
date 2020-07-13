@@ -1,5 +1,14 @@
 
 ########################## RQ_03 ###################################################
+##PREP####
+
+singleSourceOfTruthAppended$A005 <-
+  cut(as.numeric(singleSourceOfTruthAppended$A005),
+      breaks = c(0, 1, Inf)) ## adding levels to children
+singleSourceOfTruthAppended$A005 <-
+  as.factor(singleSourceOfTruthAppended$A005)
+wilcox_test(singleSourceOfTruthAppended, R101 ~ A005)
+
 
 ##H1####
 #plotting sex against amount of devices (purely out of interest)
@@ -58,12 +67,6 @@ wilcox_test(singleSourceOfTruthAppended, formula = A204_04 ~ A004)
 wilcox_test(singleSourceOfTruthAppended, formula = A204_05 ~ A004)
 wilcox_test(singleSourceOfTruthAppended, formula = A204_06 ~ A004)
 
-singleSourceOfTruthAppended$A005 <-
-  cut(as.numeric(singleSourceOfTruthAppended$A005),
-      breaks = c(0, 1, Inf)) ## adding levels to children
-singleSourceOfTruthAppended$A005 <-
-  as.factor(singleSourceOfTruthAppended$A005)
-wilcox_test(singleSourceOfTruthAppended, R101 ~ A005)
 
 
 wilcox_test(singleSourceOfTruthAppended, formula = E201_11 ~ A005) # 0.0701
