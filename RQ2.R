@@ -524,3 +524,39 @@ hist(~ A307_04.f | `Current Country of Residence`,
 kruskal.test(A307_04.f~`Current Country of Residence`, data= test)
 epsilonSquared(x = test$A307_04, g=test$`Current Country of Residence`)
 freemanTheta(x = test$A307_04.f, g=test$`Current Country of Residence`)
+
+#starting pairwise testing per country
+# Country and adding to the property value
+kruskal_test(
+  subset(
+    singleSourceOfTruthAppended,
+    `Current Country of Residence` == "DACH" |
+      `Current Country of Residence` == "United Kingdom"
+  ),
+  formula = E201_16 ~ `Current Country of Residence`
+)#0.0367
+kruskal_test(
+  subset(
+    singleSourceOfTruthAppended,
+    `Current Country of Residence` == "DACH" |
+      `Current Country of Residence` == "United States"
+  ),
+  formula = E201_16 ~ `Current Country of Residence`
+)#0.00000354
+kruskal_test(
+  subset(
+    singleSourceOfTruthAppended,
+    `Current Country of Residence` == "United Kingdom" |
+      `Current Country of Residence` == "United States"
+  ),
+  formula = E201_16 ~ `Current Country of Residence`
+)#0.0126
+
+countryIncreaseProperty = select(singleSourceOfTruthAppended,
+                                 `Current Country of Residence`,
+                                 E201_16)
+aggregate(
+  countryIncreaseProperty[, 2],
+  list(countryIncreaseProperty$`Current Country of Residence`),
+  mean
+)
