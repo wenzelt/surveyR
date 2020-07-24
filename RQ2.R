@@ -7,7 +7,6 @@
 # H3: The perception towards Smart Home devices differs internationally.
 
 
-
 ## H1 ####
 
 # 1 R216_01	Education about Device D1: Online reviews
@@ -44,6 +43,7 @@ kruskal_test(singleSourceOfTruthAppended,
              formula = HP02_04 ~ `Current Country of Residence`)#s p = 0.0000000901
 kruskal_test(singleSourceOfTruthAppended,
              formula = HP02_05 ~ `Current Country of Residence`)#n.s
+
 
 
 ##H2####
@@ -110,6 +110,7 @@ d$Usage <-
       "30+ times"
     )
   )
+
 #usage and current country of residence shows no connection
 kruskal_test(d, formula = Usage ~ `Current Country of Residence`) #ns no effect on usage by region could be measured
 kruskal_test(subset(d, Device == "Smart TV"),
@@ -131,7 +132,7 @@ kruskal_test(
 
 ##
 smartTVUsers <- subset(d, Device == "Smart TV")
-DT = dunnTest(x=as.numeric(smartTVUsers$Usage),g=smartTVUsers$`Current Country of Residence`, method = "bonferroni")
+dunnTest(x=as.numeric(smartTVUsers$Usage),g=smartTVUsers$`Current Country of Residence`, method = "bonferroni")
 epsilonSquared(x=as.numeric(smartTVUsers$Usage),g=smartTVUsers$`Current Country of Residence`)
 #compact letter display: 
 PT = DT$res
@@ -217,8 +218,7 @@ kruskal.test(
 # 4	A204_04	Manufacturer responsibilitiy: Keeping the Smart Home device secure
 # 5	A204_05	Manufacturer responsibilitiy: Fixing a hardware failure
 # 6	A204_06	Manufacturer responsibilitiy: Fixing a software failure
-
-#####
+##
 p <- c(
   kruskal_test(
     singleSourceOfTruthAppended,
@@ -253,6 +253,7 @@ p.adjust(p, method = "bonferroni", n = length(p))
 #starting pairwise testing per country
 
 dunnTest(A204_04, `Current Country of Residence`, method = "bonferroni")
+epsilonSquared(x=as.numeric(A204_04),g=`Current Country of Residence`)
 
 
 countryPerception = select(singleSourceOfTruthAppended,
@@ -261,13 +262,11 @@ countryPerception = select(singleSourceOfTruthAppended,
 aggregate(countryPerception[, 2],
           list(countryPerception$`Current Country of Residence`),
           mean)
+
 # Group.1  A204_04
 # 1           DACH 3.940741
 # 2 United Kingdom 4.535484
 # 3  United States 4.675862
-
-
-
 
 # connection between country of residence and smart home device preferences
 
@@ -356,6 +355,8 @@ dunnTest(A307_04, `Current Country of Residence`, method = "bonferroni")
 countryIncreaseProperty = select(singleSourceOfTruthAppended,
                                  `Current Country of Residence`,
                                  A307_04)
+epsilonSquared(x=as.numeric(smartTVUsers$Usage),g=smartTVUsers$`Current Country of Residence`)
+
 aggregate(
   countryIncreaseProperty[, 2],
   list(countryIncreaseProperty$`Current Country of Residence`),
@@ -391,6 +392,7 @@ freemanTheta(test$A307_06, test$`Current Country of Residence`)
 countryIncreaseProperty = select(singleSourceOfTruthAppended,
                                  `Current Country of Residence`,
                                  A307_06)
+
 aggregate(
   countryIncreaseProperty[, 2],
   list(countryIncreaseProperty$`Current Country of Residence`),
@@ -456,6 +458,7 @@ aggregate(
 
 
 dunnTest(A307_10, `Current Country of Residence`, method = "bonferroni")
+epsilonSquared(x=as.numeric(A307_10),g=`Current Country of Residence`)
 countryIncreaseProperty = select(singleSourceOfTruthAppended,
                                  `Current Country of Residence`,
                                  A307_10)
@@ -510,6 +513,7 @@ kruskal_test(
 p.adjust(p, "bonferroni") #1.0000000 0.2760000 0.0001665
 
 dunnTest(E201_16, `Current Country of Residence`, method = "bonferroni")
+
 
 #####Country mal A307_04
 test = select(singleSourceOfTruthAppended, A307_04,`Current Country of Residence`)

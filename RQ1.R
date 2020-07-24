@@ -158,9 +158,7 @@ disabled_features <-
          R510,
          R513,
          LA01_01,LA01_02,LA01_03,)
-disabled_features$choice <-
-  ifelse(disabled_features$R507 == "Yes" |
-           R510 == "Yes" | R513 == "Yes", 1, 0)
+disabled_features$choice <-ifelse(disabled_features$R507 == "Yes" | R510 == "Yes" | R513 == "Yes", 1, 0)
 
 wilcox.test(disabled_features$LA01_01, disabled_features$choice) #p-value < 2.2e-16
 wilcox.test(disabled_features$LA01_02, disabled_features$choice) #p-value < 2.2e-16
