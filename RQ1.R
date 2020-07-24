@@ -21,7 +21,10 @@
 
 #testing for unwanted access to data with amount of different devices owned.
 kruskal_test(singleSourceOfTruthAppended, LA01_01 ~ R101) # statistically significant for value p = 0.00082
+kruskal_test(singleSourceOfTruthAppended, LA_Mean ~ R101)
 
+cor.test(singleSourceOfTruthAppended$LA_Mean,singleSourceOfTruthAppended$R101)
+#variance of devices correlates with the Legislative satisfaction lightly 
 cor.test(singleSourceOfTruthAppended$LA01_01,
          singleSourceOfTruthAppended$R101)
 cor.test(singleSourceOfTruthAppended$LA01_02,
@@ -30,6 +33,11 @@ cor.test(singleSourceOfTruthAppended$LA01_03,
          singleSourceOfTruthAppended$R101)
 
 ####H2_Pairwise comparison, only used for discussion####
+
+kruskal_test(rbind(Participants_UK,Participants_US), LA_Mean ~ R101)
+kruskal_test(rbind(Participants_DACH,Participants_US), LA_Mean ~ R101)
+kruskal_test(rbind(Participants_DACH,Participants_UK), LA_Mean ~ R101)
+
 ###UK US
 kruskal_test(
   subset(
@@ -126,12 +134,12 @@ u <-
     R503,
     R505
   )
-d1 <- select(subset(u, R233_01 == 1), participant_id, R232_01, R501)
-d2 <- select(subset(u, R233_02 == 1), participant_id, R232_02, R503)
-d3 <- select(subset(u, R233_03 == 1), participant_id, R232_03, R505)
-colnames(d1) <- c("participant_id", "Device_Owned", "Usage")
-colnames(d2) <- c("participant_id", "Device_Owned", "Usage")
-colnames(d3) <- c("participant_id", "Device_Owned", "Usage")
+d1 <- select(subset(singleSourceOfTruthAppended, R233_01 == 1), participant_id, R232_01, R501, LA_Mean)
+d2 <- select(subset(singleSourceOfTruthAppended, R233_02 == 1), participant_id, R232_02, R503, LA_Mean)
+d3 <- select(subset(singleSourceOfTruthAppended, R233_03 == 1), participant_id, R232_03, R505, LA_Mean)
+colnames(d1) <- c("participant_id", "Device_Owned", "Usage", "LA_Mean")
+colnames(d2) <- c("participant_id", "Device_Owned", "Usage", "LA_Mean")
+colnames(d3) <- c("participant_id", "Device_Owned", "Usage", "LA_Mean")
 d <- rbind(d1, d2, d3)
 d <- subset(d, Usage != "Don't know")
 d$Usage <-
@@ -146,8 +154,10 @@ d$Usage <-
       "30+ times"
     )
   )
-
-#merge on participant_id their legislative opinion
+require(data.table)
+cor.test(d$LA_Mean, as.numeric(d$Usage))
+dt <- data.table(d)
+dtCor <- dt[, .(mCor = cor(as.numeric(LA_Mean),as.numeric(Usage))), by=Device_Owned]
 
 ####H2_Disabled Features####
 
@@ -203,6 +213,14 @@ ggboxplot(
 
 
 ####H2_Device_usage_TV,Speaker,Light####
+
+require(dplyr)
+dtInteresting <- filter(dt, Device_Owned == "Smart TV" | Device_Owned == "Smart Lightbulb" | Device_Owned == "Smart Speaker")
+dt = group_by(dtInteresting, Device_Owned)
+dplyr::summarize(dt, cor(LA_Mean, as.numeric(Usage)))
+
+
+
 
 #Creating sub-sets for tests
 #LA01_01 unwanted access by third parties.
