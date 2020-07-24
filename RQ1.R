@@ -214,9 +214,17 @@ ggboxplot(
 
 #Device Usage x LA_Mean 
 require(dplyr)
+require(plyr)
+library(plyr)
 dtInteresting <- filter(dt, Device_Owned == "Smart TV" | Device_Owned == "Smart Lightbulb" | Device_Owned == "Smart Speaker")
 dt = group_by(dtInteresting, Device_Owned)
 dplyr::summarize(dt, cor(LA_Mean, as.numeric(Usage)))
+ddply(dt, "Device_Owned", summarise, corr=cor(LA_Mean, as.numeric(Usage), method = "spearman"))
+
+cor.test(dtInteresting$LA_Mean, as.numeric(dtInteresting$Usage),method = "pearson")
+cor.test(subset(dtInteresting,Device_Owned == "Smart TV")$LA_Mean, as.numeric(subset(dtInteresting,Device_Owned == "Smart TV")$Usage),method = "pearson")
+cor.test(subset(dtInteresting,Device_Owned == "Smart Speaker")$LA_Mean, as.numeric(subset(dtInteresting,Device_Owned == "Smart Speaker")$Usage),method = "pearson")
+cor.test(subset(dtInteresting,Device_Owned == "Smart Lightbulb")$LA_Mean, as.numeric(subset(dtInteresting,Device_Owned == "Smart Lightbulb")$Usage),method = "pearson")
 
 #Creating sub-sets for tests
 #LA01_01 unwanted access by third parties.
