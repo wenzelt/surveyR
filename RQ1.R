@@ -20,10 +20,7 @@
 # R101 equals the amount of owned devices of the user
 
 #testing for unwanted access to data with amount of different devices owned.
-kruskal_test(singleSourceOfTruthAppended, LA01_01 ~ R101) # statistically significant for value p = 0.00082
-kruskal_test(singleSourceOfTruthAppended, LA_Mean ~ R101)
 
-cor.test(singleSourceOfTruthAppended$LA_Mean,singleSourceOfTruthAppended$R101)
 #variance of devices correlates with the Legislative satisfaction lightly 
 cor.test(singleSourceOfTruthAppended$LA01_01,
          singleSourceOfTruthAppended$R101)
@@ -31,6 +28,7 @@ cor.test(singleSourceOfTruthAppended$LA01_02,
          singleSourceOfTruthAppended$R101)
 cor.test(singleSourceOfTruthAppended$LA01_03,
          singleSourceOfTruthAppended$R101)
+cor.test(singleSourceOfTruthAppended$LA_Mean,singleSourceOfTruthAppended$R101)
 
 ####H2_Pairwise comparison, only used for discussion####
 
@@ -214,13 +212,11 @@ ggboxplot(
 
 ####H2_Device_usage_TV,Speaker,Light####
 
+#Device Usage x LA_Mean 
 require(dplyr)
 dtInteresting <- filter(dt, Device_Owned == "Smart TV" | Device_Owned == "Smart Lightbulb" | Device_Owned == "Smart Speaker")
 dt = group_by(dtInteresting, Device_Owned)
 dplyr::summarize(dt, cor(LA_Mean, as.numeric(Usage)))
-
-
-
 
 #Creating sub-sets for tests
 #LA01_01 unwanted access by third parties.
@@ -294,8 +290,16 @@ v <- rowMeans(select(singleSourceOfTruthAppended, E201_01:E201_20))
 cor.test(singleSourceOfTruthAppended$LA01_01, v) # p-value = 0.0005891 cor = -0.1641262
 cor.test(singleSourceOfTruthAppended$LA01_02, v)
 cor.test(singleSourceOfTruthAppended$LA01_03, v)
+cor.test(singleSourceOfTruthAppended$LA_Mean, v)
 
 ####H3_Perception_popular devices####
+cor_test(select(
+  singleSourceOfTruthAppended,
+  LA_Mean,
+  E201_11,
+  E201_14,
+  E201_16
+))
 #testing correlation between perceived risk for popular Devices
 cor_test(select(
   singleSourceOfTruthAppended,
