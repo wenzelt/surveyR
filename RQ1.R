@@ -308,6 +308,14 @@ cor_test(select(
   E201_14,
   E201_16
 ))
+LA_E201_Latex <- subset(select(cor_test(select(
+  singleSourceOfTruthAppended,
+  LA_Mean,
+  E201_11,
+  E201_14,
+  E201_16
+)),var1,var2,cor,p,method),var1 == "LA_Mean" & var2 != "LA_Mean")
+
 #testing correlation between perceived risk for popular Devices
 cor_test(select(
   singleSourceOfTruthAppended,
