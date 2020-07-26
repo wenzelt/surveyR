@@ -166,7 +166,7 @@ disabled_features <-
          R510,
          R513,
          LA01_01,LA01_02,LA01_03,)
-disabled_features$choice <-ifelse(disabled_features$R507 == "Yes" | R510 == "Yes" | R513 == "Yes", 1, 0)
+disabled_features$choice <-ifelse(disabled_features$R507 == "Yes" | disabled_features$R510 == "Yes" | disabled_features$R513 == "Yes", 1, 0)
 
 wilcox.test(disabled_features$LA01_01, disabled_features$choice) #p-value < 2.2e-16
 wilcox.test(disabled_features$LA01_02, disabled_features$choice) #p-value < 2.2e-16
@@ -225,70 +225,70 @@ cor.test(dtInteresting$LA_Mean, as.numeric(dtInteresting$Usage),method = "pearso
 cor.test(subset(dtInteresting,Device_Owned == "Smart TV")$LA_Mean, as.numeric(subset(dtInteresting,Device_Owned == "Smart TV")$Usage),method = "pearson")
 cor.test(subset(dtInteresting,Device_Owned == "Smart Speaker")$LA_Mean, as.numeric(subset(dtInteresting,Device_Owned == "Smart Speaker")$Usage),method = "pearson")
 cor.test(subset(dtInteresting,Device_Owned == "Smart Lightbulb")$LA_Mean, as.numeric(subset(dtInteresting,Device_Owned == "Smart Lightbulb")$Usage),method = "pearson")
-
-#Creating sub-sets for tests
-#LA01_01 unwanted access by third parties.
-d <-
-  merge(select(singleSourceOfTruthAppended, LA01_01, participant_id),
-        d,
-        by = "participant_id")
-dSmartTV <- subset(d, Device_Owned == "Smart TV")
-dSmartSpeaker <- subset(d, Device_Owned == "Smart Speaker")
-dSmartLights <- subset(d, Device_Owned == "Smart Lightbulb")
-dOther <-
-  subset(
-    d,
-    Device_Owned != "Smart TV" &
-      Device_Owned != "Smart Lightbulb" &
-      Device_Owned != "Smart Speaker"
-  )
-#LA01_02 unwanted sharing with third parties.
-d2 <-
-  merge(select(singleSourceOfTruthAppended, LA01_02, participant_id),
-        d2,
-        by = "participant_id")
-d2SmartTV <- subset(d2, Device_Owned == "Smart TV")
-d2SmartSpeaker <- subset(d2, Device_Owned == "Smart Speaker")
-d2SmartLights <- subset(d2, Device_Owned == "Smart Lightbulb")
-d2Other <-
-  subset(
-    d2,
-    Device_Owned != "Smart TV" &
-      Device_Owned != "Smart Lightbulb" &
-      Device_Owned != "Smart Speaker"
-  )
-#LA01_03 unwanted processing and analysis by third parties.
-d3 <-
-  merge(select(singleSourceOfTruthAppended, LA01_03, participant_id),
-        d3,
-        by = "participant_id")
-d3SmartTV <- subset(d3, Device_Owned == "Smart TV")
-d3SmartSpeaker <- subset(d3, Device_Owned == "Smart Speaker")
-d3SmartLights <- subset(d3, Device_Owned == "Smart Lightbulb")
-d3Other <-
-  subset(
-    d3,
-    Device_Owned != "Smart TV" &
-      Device_Owned != "Smart Lightbulb" &
-      Device_Owned != "Smart Speaker"
-  )
-
-#testing correlation of legislative opinion with usage
-cor.test(d$LA01_01, as.numeric(d$Usage)) #p-value = 0.003954 cor =0.1019092
-cor.test(d2$LA01_02, as.numeric(d2$Usage)) #p-value = 0.0009184 cor =0.1171079
-cor.test(d3$LA01_03, as.numeric(d3$Usage)) #p-value = 0.0001166 cor =0.1359802
-
-cor.test(dSmartTV$LA01_01, as.numeric(dSmartTV$Usage))#NS p-value = 0.07521 cor = 0.1170394
-cor.test(d2SmartTV$LA01_02, as.numeric(d2SmartTV$Usage))#p-value = 0.001254 cor = 0.2105709
-cor.test(d3SmartTV$LA01_03, as.numeric(d3SmartTV$Usage))#p-value = 0.00351 cor = 0.1909176
-
-cor.test(dSmartSpeaker$LA01_01, as.numeric(dSmartSpeaker$Usage))#p-value = 0.00184 cor = 0.2628
-cor.test(d2SmartSpeaker$LA01_02, as.numeric(d2SmartSpeaker$Usage))#p-value = 0.00974 cor = 0.2193522
-cor.test(d3SmartSpeaker$LA01_03, as.numeric(d3SmartSpeaker$Usage))#p-value = 0.0009839 cor = 0.2774907
-
-cor.test(dSmartLights$LA01_01, as.numeric(dSmartLights$Usage))#NS p-value = 0.9616 cor = -0.005112956
-cor.test(d2SmartLights$LA01_02, as.numeric(d2SmartLights$Usage))#NS p-value = 0.8468 cor = -0.02052836
-cor.test(d3SmartLights$LA01_03, as.numeric(d3SmartLights$Usage))#NS p-value = 0.6602 cor = -0.04670735
+# 
+# #Creating sub-sets for tests
+# #LA01_01 unwanted access by third parties.
+# d <-
+#   merge(select(singleSourceOfTruthAppended, LA01_01, participant_id),
+#         d,
+#         by = "participant_id")
+# dSmartTV <- subset(d, Device_Owned == "Smart TV")
+# dSmartSpeaker <- subset(d, Device_Owned == "Smart Speaker")
+# dSmartLights <- subset(d, Device_Owned == "Smart Lightbulb")
+# dOther <-
+#   subset(
+#     d,
+#     Device_Owned != "Smart TV" &
+#       Device_Owned != "Smart Lightbulb" &
+#       Device_Owned != "Smart Speaker"
+#   )
+# #LA01_02 unwanted sharing with third parties.
+# d2 <-
+#   merge(select(singleSourceOfTruthAppended, LA01_02, participant_id),
+#         d2,
+#         by = "participant_id")
+# d2SmartTV <- subset(d2, Device_Owned == "Smart TV")
+# d2SmartSpeaker <- subset(d2, Device_Owned == "Smart Speaker")
+# d2SmartLights <- subset(d2, Device_Owned == "Smart Lightbulb")
+# d2Other <-
+#   subset(
+#     d2,
+#     Device_Owned != "Smart TV" &
+#       Device_Owned != "Smart Lightbulb" &
+#       Device_Owned != "Smart Speaker"
+#   )
+# #LA01_03 unwanted processing and analysis by third parties.
+# d3 <-
+#   merge(select(singleSourceOfTruthAppended, LA01_03, participant_id),
+#         d3,
+#         by = "participant_id")
+# d3SmartTV <- subset(d3, Device_Owned == "Smart TV")
+# d3SmartSpeaker <- subset(d3, Device_Owned == "Smart Speaker")
+# d3SmartLights <- subset(d3, Device_Owned == "Smart Lightbulb")
+# d3Other <-
+#   subset(
+#     d3,
+#     Device_Owned != "Smart TV" &
+#       Device_Owned != "Smart Lightbulb" &
+#       Device_Owned != "Smart Speaker"
+#   )
+# 
+# #testing correlation of legislative opinion with usage
+# cor.test(d$LA01_01, as.numeric(d$Usage)) #p-value = 0.003954 cor =0.1019092
+# cor.test(d2$LA01_02, as.numeric(d2$Usage)) #p-value = 0.0009184 cor =0.1171079
+# cor.test(d3$LA01_03, as.numeric(d3$Usage)) #p-value = 0.0001166 cor =0.1359802
+# 
+# cor.test(dSmartTV$LA01_01, as.numeric(dSmartTV$Usage))#NS p-value = 0.07521 cor = 0.1170394
+# cor.test(d2SmartTV$LA01_02, as.numeric(d2SmartTV$Usage))#p-value = 0.001254 cor = 0.2105709
+# cor.test(d3SmartTV$LA01_03, as.numeric(d3SmartTV$Usage))#p-value = 0.00351 cor = 0.1909176
+# 
+# cor.test(dSmartSpeaker$LA01_01, as.numeric(dSmartSpeaker$Usage))#p-value = 0.00184 cor = 0.2628
+# cor.test(d2SmartSpeaker$LA01_02, as.numeric(d2SmartSpeaker$Usage))#p-value = 0.00974 cor = 0.2193522
+# cor.test(d3SmartSpeaker$LA01_03, as.numeric(d3SmartSpeaker$Usage))#p-value = 0.0009839 cor = 0.2774907
+# 
+# cor.test(dSmartLights$LA01_01, as.numeric(dSmartLights$Usage))#NS p-value = 0.9616 cor = -0.005112956
+# cor.test(d2SmartLights$LA01_02, as.numeric(d2SmartLights$Usage))#NS p-value = 0.8468 cor = -0.02052836
+# cor.test(d3SmartLights$LA01_03, as.numeric(d3SmartLights$Usage))#NS p-value = 0.6602 cor = -0.04670735
 
 ####H3_Perception####
 #E201_01-20 correspond to the perceived risk of a certain device
@@ -358,12 +358,12 @@ cor_test(select(
 ####H3_Perceived Responsibility####
 #Correlation between LA01 and Manufacturer responsibility
 #Likert-scale from 0-me to 7-manufacturer
-cor.test(LA01_01, A204_01) #Keeping the Smart Home device software up-to-date
-cor.test(LA01_01, A204_02) #Ensuring my privacy
-cor.test(LA01_01, A204_03) #Protecting my Smart Home ecosystem as a whole #ns
-cor.test(LA01_01, A204_04) #keeping my device secure #ns
-cor.test(LA01_01, A204_05) #Fixing a hardware failure
-cor.test(LA01_01, A204_06) #Fixing a software failure
+ #Keeping the Smart Home device software up-to-date
+ #Ensuring my privacy
+ #Protecting my Smart Home ecosystem as a whole #ns
+ #keeping my device secure #ns
+ #Fixing a hardware failure
+ #Fixing a software failure
 
 cor_test(select(singleSourceOfTruthAppended, LA_Mean, A204_01:A204_06))
 LA_A204_Latex <- subset(select(cor_test(select(
