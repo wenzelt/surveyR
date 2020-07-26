@@ -8,7 +8,7 @@
 
 
 ## H1 ####
-
+attach(singleSourceOfTruthAppended)
 # 1 R216_01	Education about Device D1: Online reviews
 # 2	R216_02	Education about Device D1: Online forums
 # 3	R216_03	Education about Device D1: Print media (e.g., Newspapers, Magazines, etc.)
@@ -134,11 +134,7 @@ kruskal_test(
 smartTVUsers <- subset(d, Device == "Smart TV")
 dunnTest(x=as.numeric(smartTVUsers$Usage),g=smartTVUsers$`Current Country of Residence`, method = "bonferroni")
 epsilonSquared(x=as.numeric(smartTVUsers$Usage),g=smartTVUsers$`Current Country of Residence`)
-#compact letter display: 
-PT = DT$res
-cldList(P.adj ~ Comparison,
-        data = PT,
-        threshold = 0.05)
+
 
 kruskal_test(
   subset(
@@ -522,9 +518,9 @@ test$A307_04.f = factor(test$A307_04, ordered = T)
 
 str(test)
 summary(test)
-hist(~ A307_04.f | `Current Country of Residence`,
-     data=test,
-     layout=c(1,3))
+#hist(~ A307_04.f | `Current Country of Residence`,
+#     data=test,
+#     layout=c(1,3))
 kruskal.test(A307_04.f~`Current Country of Residence`, data= test)
 epsilonSquared(x = test$A307_04, g=test$`Current Country of Residence`)
 freemanTheta(x = test$A307_04.f, g=test$`Current Country of Residence`)
@@ -564,3 +560,4 @@ aggregate(
   list(countryIncreaseProperty$`Current Country of Residence`),
   mean
 )
+detach(singleSourceOfTruthAppended)
