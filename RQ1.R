@@ -364,3 +364,10 @@ cor.test(LA01_01, A204_03) #Protecting my Smart Home ecosystem as a whole #ns
 cor.test(LA01_01, A204_04) #keeping my device secure #ns
 cor.test(LA01_01, A204_05) #Fixing a hardware failure
 cor.test(LA01_01, A204_06) #Fixing a software failure
+
+cor_test(select(singleSourceOfTruthAppended, LA_Mean, A204_01:A204_06))
+LA_A204_Latex <- subset(select(cor_test(select(
+  singleSourceOfTruthAppended,
+  LA_Mean,
+  A204_01:A204_06
+)),var1,var2,cor,p,method),var1 == "LA_Mean" & var2 != "LA_Mean")
