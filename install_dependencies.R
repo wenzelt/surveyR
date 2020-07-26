@@ -18,6 +18,7 @@ library(rstatix)
 library(readxl)
 library(psych)
 library(QCA)
+library(xtable)
 
 
 #setwd("~/Documents/surveyR")
