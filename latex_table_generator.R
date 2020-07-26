@@ -1,0 +1,1 @@
+print(xtable(select(Participants_DACH,participant_id,A004), type = "latex"), file = "filename2.tex")

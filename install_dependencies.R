@@ -20,7 +20,7 @@ library(psych)
 library(QCA)
 
 
-setwd("~/Documents/surveyR")
+#setwd("~/Documents/surveyR")
 
 singleSourceOfTruthAppended <-
   read_xlsx("Excels/singleSourceOfTruthAppended_P.xlsx")
