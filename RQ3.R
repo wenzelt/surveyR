@@ -4,13 +4,6 @@
 ##PREP####
 attach(singleSourceOfTruthAppended)
 
-singleSourceOfTruthAppended$A005 <-
-  cut(as.numeric(singleSourceOfTruthAppended$A005),
-      breaks = c(0, 1, Inf)) ## adding levels to children
-singleSourceOfTruthAppended$A005 <-
-  as.factor(singleSourceOfTruthAppended$A005)
-wilcox_test(singleSourceOfTruthAppended, R101 ~ A005)
-
 ##Discussion Data####
 #p Discussion
 # the below test can only be done before splitting into >1 
@@ -65,26 +58,12 @@ ggboxplot(
 )
 
 ##H2####
-orange <- select(singleSourceOfTruthAppended, E205)
-dunnTest(E205, as.factor(A004), method = "bonferroni")
+#orange <- select(singleSourceOfTruthAppended, E205)
+#dunnTest(singleSourceOfTruthAppended$E205, as.factor(A004), method = "bonferroni")
 
 #H2 - Household Size ~ Daily Usage of devices - R501, R503, R505
 # creating table usage device ownership
-u <-
-  select(
-    singleSourceOfTruthAppended,
-    participant_id,
-    A005,
-    R232_01,
-    R232_02,
-    R232_03,
-    R233_01,
-    R233_02 ,
-    R233_03 ,
-    R501,
-    R503,
-    R505
-  )
+
 d1 <- select(subset(singleSourceOfTruthAppended, R233_01 == 1), participant_id, R232_01, R501, A005)
 d2 <- select(subset(singleSourceOfTruthAppended, R233_02 == 1), participant_id, R232_02, R503, A005)
 d3 <- select(subset(singleSourceOfTruthAppended, R233_03 == 1), participant_id, R232_03, R505, A005)
@@ -134,7 +113,7 @@ deviceLocation <-
     participant_id,
     A004
   )
-deviceLocationSmartSpeaker <- merge(deviceLocation,dSmartSpeaker, by="participant_id")
+#deviceLocationSmartSpeaker <- merge(deviceLocation,dSmartSpeaker, by="participant_id")
 
 #H2 - Household size ~ Disabled features - R507, 510, R513 //no little disabled features (n=37)-> low priority
 
