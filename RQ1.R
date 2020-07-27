@@ -152,7 +152,6 @@ d$Usage <-
       "30+ times"
     )
   )
-require(data.table)
 cor.test(d$LA_Mean, as.numeric(d$Usage))
 dt <- data.table(d)
 dtCor <- dt[, .(mCor = cor(as.numeric(LA_Mean),as.numeric(Usage))), by=Device_Owned]

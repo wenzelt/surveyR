@@ -24,6 +24,11 @@ print(
   file = "latex_tables/LA_MEANxA204.tex"
 )
 
+# export USAGE BY DEVICE
+print(
+  xtable(LA_MEAN_USAGE_DEVICE_INTERESTING, type = "latex", caption = "Effect of Legislative stance on the usage on a specific device."),
+  file = "latex_tables/LA_MEAN_USAGE_DEVICE_INTERESTING.tex"
+)
 
 ####RQ2######
 
