@@ -166,29 +166,19 @@ ggboxplot(
 
 #dunnTest(singleSourceOfTruthAppended$A004, as.factor(select(singleSourceOfTruthAppended,E201_01:E201_20)), method = "bonferroni")
 
-wilcox_test(singleSourceOfTruthAppended, formula = E201_11 ~ A004)
-wilcox_effsize(singleSourceOfTruthAppended, formula = E201_11 ~ A004)
-
-wilcox_test(singleSourceOfTruthAppended, formula = E201_14 ~ A004) 
-wilcox_effsize(singleSourceOfTruthAppended, formula = E201_14 ~ A004) 
-
-wilcox_test(singleSourceOfTruthAppended, formula = E201_16 ~ A004) 
-wilcox_effsize(singleSourceOfTruthAppended, formula = E201_16 ~ A004) 
-
-wilcox_test(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
-wilcox_effsize(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
-wilcox_test(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
-wilcox_effsize(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
-wilcox_test(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
-wilcox_effsize(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
-wilcox_test(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
-wilcox_effsize(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
-wilcox_test(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
-wilcox_effsize(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
-wilcox_test(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
-wilcox_effsize(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
-wilcox_test(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
-wilcox_effsize(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
+riskChildren_LATEX <- data.frame(
+  "Usage_type" = c("Smart Lightbulb",
+                   "Smart Speaker",
+                   "Smart TV"
+  ), 
+  "p_value"= c(wilcox_test(singleSourceOfTruthAppended, E201_11 ~ A004)$p,
+               wilcox_test(singleSourceOfTruthAppended, E201_14 ~ A004)$p,
+               wilcox_test(singleSourceOfTruthAppended, E201_16 ~ A004)$p
+  ), 
+  "effect_size" = c(wilcox_effsize(singleSourceOfTruthAppended, formula = E201_11 ~ A004)$effsize,
+                    wilcox_effsize(singleSourceOfTruthAppended, formula = E201_14 ~ A004)$effsize,
+                    wilcox_effsize(singleSourceOfTruthAppended, formula = E201_16 ~ A004)$effsize
+  ))
 
 #Perception of responsibility
 #1 Keeping the Smart Home device software up-to-date
