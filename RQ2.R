@@ -229,6 +229,8 @@ DISABLED_FEATURES_COUNTRY_LATEX_CHI <-
     disabled_features_country$`Current Country of Residence`,
     disabled_features_country$choice
   )
+DISABLED_FEATURES_COUNTRY_LATEX_CHI <- data.frame(cbind(DISABLED_FEATURES_COUNTRY_LATEX_CHI$p.value,DISABLED_FEATURES_COUNTRY_LATEX_CHI$method))
+names(DISABLED_FEATURES_COUNTRY_LATEX_CHI) <- c("p","X^2")
 #ns no effect on usage by region could be measured
 
 

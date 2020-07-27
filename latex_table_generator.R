@@ -77,8 +77,8 @@ print(
 
 # export Usage x CCR Latex Other Devices
 print(
-  xtable(data.frame(cbind(DISABLED_FEATURES_COUNTRY_LATEX_CHI$p.value,DISABLED_FEATURES_COUNTRY_LATEX_CHI$method)), type = "latex", caption = "Chi-Squared Test for significant differences in disabling features in smart home devices by Region of residence."),
-  file = "latex_tables/DISABLED_FEATURES_CCR.tex"
+  xtable(DISABLED_FEATURES_COUNTRY_LATEX_CHI, type = "latex", caption = "Chi-Squared Test for significant differences in disabling features in smart home devices by Region of residence."),
+  file = "latex_tables/DISABLED_FEATURES_COUNTRY_LATEX_CHI.tex"
 )
 
 #Manufacturer Responsibility by country 
@@ -103,3 +103,7 @@ print(
 ####RQ3####
 print(
   xtable(USAGE_A005_LATEX, type = "latex", caption = "Household size correlation with the usage of most used devices."),file = "latex_tables/USAGE_A005_LATEX.tex")
+
+
+print(
+xtable(USAGETYPE_Children_LATEX, type = "latex", caption = "Household size correlation with the usage of most used devices."),file = "latex_tables/USAGETYPE_Children_LATEX.tex")

@@ -220,7 +220,7 @@ wilcox_effsize(singleSourceOfTruthAppended, formula = A204_06 ~ A004)
 # 6	E205_06	Usage type: Sensors outside the Home (e.g., Motion Sensors, Light Sensors, etc.)
 # 7	E205_07	Usage type: Automatic Operation based on Device Programming
 
-usageTypeChildren_LATEX <- data.frame(
+USAGETYPE_Children_LATEX <- data.frame(
   "Usage_type" = c("Voice commands via a Smart Speaker",
                    "Voice commands via a Smartphone Voice Assistant",
                    "Smartphone App for the Device",
