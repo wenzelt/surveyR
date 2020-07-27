@@ -112,6 +112,18 @@ d$Usage <-
   )
 
 #usage and current country of residence shows no connection
+Usage_CCR_LATEX <- dunnTest(x=as.numeric(d$Usage),g=as.factor(d$`Current Country of Residence`), method = "bonferroni")$res
+Usage_CCR_LATEX_SMART_TV <-  dunnTest(x=as.numeric(subset(d, Device == "Smart TV")$Usage),g=as.factor(subset(d, Device == "Smart TV")$`Current Country of Residence`), method = "bonferroni")$res
+Usage_CCR_LATEX_SMART_SPEAKER <-dunnTest(x=as.numeric(subset(d, Device == "Smart Speaker")$Usage),g=as.factor(subset(d, Device == "Smart Speaker")$`Current Country of Residence`), method = "bonferroni")$res
+Usage_CCR_LATEX_SMART_LIGHTBULB <-dunnTest(x=as.numeric(subset(d, Device == "Smart Lightbulb")$Usage),g=as.factor(subset(d, Device == "Smart Lightbulb")$`Current Country of Residence`), method = "bonferroni")$res
+Usage_CCR_LATEX_OTHER <-dunnTest(x=as.numeric(subset(d,Device != "Smart Lightbulb" && Device != "Smart Speaker" && Device != "Smart TV"
+)$Usage),g=as.factor(subset(d,
+  Device != "Smart Lightbulb" &&
+    Device != "Smart Speaker" &&
+    Device != "Smart TV"
+)$`Current Country of Residence`), method = "bonferroni")$res
+
+
 kruskal_test(d, formula = Usage ~ `Current Country of Residence`) #ns no effect on usage by region could be measured
 kruskal_test(subset(d, Device == "Smart TV"),
              formula = Usage ~ `Current Country of Residence`)
