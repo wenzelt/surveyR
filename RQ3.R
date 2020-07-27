@@ -65,7 +65,16 @@ ggboxplot(
 
 wilcox.test(R101 ~ A007 == "Rent" |
               A007 == "Own") # no statistical significance found
-kruskal_test(singleSourceOfTruthAppended, formula = R101 ~ A007) # 0.0701
+kruskal_test(singleSourceOfTruthAppended, formula = R101 ~ A007) 
+
+
+boxplot <- select(singleSourceOfTruthAppended, A007, `Current Country of Residence`)
+p <- boxplot %>%
+  ggplot( aes(x=A007, fill=`Current Country of Residence`)) +
+  geom_histogram( color="#e9ecef", alpha=0.6, position = 'identity') +
+  scale_fill_manual(values=c("#69b3a2", "#404080")) +
+  labs(fill="")
+p
 
 # testing for amount of children in household
 ggboxplot(
@@ -106,6 +115,7 @@ d$Usage <-
 d <- subset(d,A005 != "More than 6")
 
 cor.test(as.numeric(d$A005), as.numeric(d$Usage))
+
 
 #Device Usage x A005
 dtInteresting <- filter(d, Device_Owned == "Smart TV" | Device_Owned == "Smart Lightbulb" | Device_Owned == "Smart Speaker")

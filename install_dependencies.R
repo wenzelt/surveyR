@@ -34,10 +34,8 @@ singleSourceOfTruthAppended <-
 
 
 #corrections in the code 
-singleSourceOfTruthAppended$A004 <-
-  cut(singleSourceOfTruthAppended$A004, breaks = c(0, 1, Inf)) ## adding levels to children
-singleSourceOfTruthAppended$A004 <-
-  as.factor(singleSourceOfTruthAppended$A004)
+singleSourceOfTruthAppended$A004 <-ifelse(singleSourceOfTruthAppended$A004 > 0, 1, 0)
+
 # adding avg of legislation 
 singleSourceOfTruthAppended$LA_Mean <-rowMeans(select(singleSourceOfTruthAppended,LA01_01:LA01_03))
 
