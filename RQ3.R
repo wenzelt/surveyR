@@ -65,26 +65,9 @@ ggboxplot(
 )
 
 ##H2####
-orange <- select(singleSourceOfTruthAppended, E205)
-dunnTest(E205, as.factor(A004), method = "bonferroni")
-
 #H2 - Household Size ~ Daily Usage of devices - R501, R503, R505
 # creating table usage device ownership
-u <-
-  select(
-    singleSourceOfTruthAppended,
-    participant_id,
-    A005,
-    R232_01,
-    R232_02,
-    R232_03,
-    R233_01,
-    R233_02 ,
-    R233_03 ,
-    R501,
-    R503,
-    R505
-  )
+
 d1 <- select(subset(singleSourceOfTruthAppended, R233_01 == 1), participant_id, R232_01, R501, A005)
 d2 <- select(subset(singleSourceOfTruthAppended, R233_02 == 1), participant_id, R232_02, R503, A005)
 d3 <- select(subset(singleSourceOfTruthAppended, R233_03 == 1), participant_id, R232_03, R505, A005)
@@ -105,9 +88,9 @@ d$Usage <-
       "30+ times"
     )
   )
-cor.test(as.numeric(d$A005), as.numeric(d$Usage))
+d <- subset(d,A005 != "More than 6")
 
-dunnTest(as.numeric(d$Usage),d$A005 , method = "bonferroni")
+cor.test(as.numeric(d$A005), as.numeric(d$Usage))
 
 #Device Usage x A005
 dtInteresting <- filter(dt, Device_Owned == "Smart TV" | Device_Owned == "Smart Lightbulb" | Device_Owned == "Smart Speaker")
