@@ -98,3 +98,8 @@ print(
 print(
   xtable(A307_LATEX, type = "latex", caption = "Perceived benefits of smart home devices by region of residence. "),file = "latex_tables/A307_CCR_LATEX.tex", hline.after = c(-1,0,3,6,9,12)
 )
+
+
+####RQ3####
+print(
+  xtable(USAGE_A005_LATEX, type = "latex", caption = "Household size correlation with the usage of most used devices."),file = "latex_tables/USAGE_A005_LATEX.tex")

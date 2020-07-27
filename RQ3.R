@@ -17,6 +17,27 @@ wilcox_test(singleSourceOfTruthAppended, formula = E201_16 ~ A005)
 
 wilcox_test(singleSourceOfTruthAppended, R101 ~ A004) #p = 0.888
 
+
+device_interaction <- select(singleSourceOfTruthAppended, R534_01:R534_06,R536_01:R536_06,R538_01:R538_06)
+i1 <- select(singleSourceOfTruthAppended, R534_01:R534_06)
+i2 <- select(singleSourceOfTruthAppended, R536_01:R536_06)
+i3 <- select(singleSourceOfTruthAppended, R538_01:R538_06)
+
+i1 <- unname(select(singleSourceOfTruthAppended, R534_01:R534_06))
+i2 <- unname(select(singleSourceOfTruthAppended, R536_01:R536_06))
+i3 <- unname(select(singleSourceOfTruthAppended, R538_01:R538_06))
+
+colnames(i1) = c("Voice Assistant", "App on my phone", "Physical buttons on the device", "Screen on the device", "Internet based service connected to the device", "Home Internet router")
+colnames(i2) = c("Voice Assistant", "App on my phone", "Physical buttons on the device", "Screen on the device", "Internet based service connected to the device", "Home Internet router")
+colnames(i3) = c("Voice Assistant", "App on my phone", "Physical buttons on the device", "Screen on the device", "Internet based service connected to the device", "Home Internet router")
+
+
+device_interaction <- rbind(i1,i2,i3)
+prop.table(device_interaction)
+table(device_interaction,exclude = c("False"),useNA = "no")
+truthTable(device_interaction)
+prop.table(table(device_interaction))
+
 ##H1####
 #plotting sex against amount of devices (purely out of interest)
 ggboxplot(
@@ -97,18 +118,14 @@ USAGE_A005_LATEX[4] <- c(cor.test(as.numeric(subset(dtInteresting,Device_Owned =
 colnames(USAGE_A005_LATEX) <- c("Device","Cor", "Method", "P-Value")
 
 
-dtInteresting <- filter(d, Device_Owned == "Smart TV" | Device_Owned == "Smart Lightbulb" | Device_Owned == "Smart Speaker")
-dt = group_by(dtInteresting, Device_Owned)
-dplyr::summarize(select(dt,Device_Owned,A005,Usage), cor(as.numeric(dt$A005), as.numeric(dt$Usage)))
-ddply(dt, "Device_Owned", summarise, corr=cor(as.numeric(dt$A005), as.numeric(dt$Usage), method = "spearman"))
-
-cor.test(as.numeric(dtInteresting$A005), as.numeric(dtInteresting$Usage),method = "pearson")
-cor.test(as.numeric(subset(dtInteresting,Device_Owned == "Smart TV")$A005), as.numeric(subset(dtInteresting,Device_Owned == "Smart TV")$Usage),method = "pearson")
-cor.test(as.numeric(subset(dtInteresting,Device_Owned == "Smart Speaker")$A005), as.numeric(subset(dtInteresting,Device_Owned == "Smart Speaker")$Usage),method = "pearson")
-cor.test(as.numeric(subset(dtInteresting,Device_Owned == "Smart Lightbulb")$A005), as.numeric(subset(dtInteresting,Device_Owned == "Smart Lightbulb")$Usage),method = "pearson")
-
-
 #H2 - Household size ~ Device Interaction - R534, R536, R538
+
+
+
+
+
+
+
 
 #H2 - Household size ~ Device Location - R528, R530, R532 //low priority, no interesting findings expected
 

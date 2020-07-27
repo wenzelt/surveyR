@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2020.7.26)  27 JUL 2020 14:53
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2020.7.26)  27 JUL 2020 17:00
 entering extended mode
 **./Latex_Main.tex
 (Latex_Main.tex
@@ -221,21 +221,22 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 (LA_MEAN_USAGE_DEVICE_INTERESTING.tex) (USAGE_CCR_SMART_TV.tex)
 (USAGE_CCR_SMART_LIGHTBULB.tex) (USAGE_CCR_SMART_SPEAKER.tex)
 (USAGE_CCR_OTHER.tex) (DISABLED_FEATURES_CCR.tex) (A204_04_CCR.tex)
-(E201_SMART_TV_RISK_CCR.tex) (A307_CCR_LATEX.tex) [1
+(E201_SMART_TV_RISK_CCR.tex) (A307_CCR_LATEX.tex) (USAGE_A005_LATEX.tex)
+[1
 
-{C:/Users/Serious Tom/AppData/Local/MiKTeX/pdftex/config/pdftex.map}] [2] [3] (
-Latex_Main.aux) ) 
+{C:/Users/Serious Tom/AppData/Local/MiKTeX/pdftex/config/pdftex.map}]
+[2] [3] (Latex_Main.aux) ) 
 Here is how much of TeX's memory you used:
- 2809 strings out of 481225
- 38601 string characters out of 2915908
- 307316 words of memory out of 3000000
- 18352 multiletter control sequences out of 15000+200000
+ 2812 strings out of 481225
+ 38709 string characters out of 2915908
+ 308316 words of memory out of 3000000
+ 18353 multiletter control sequences out of 15000+200000
  536787 words of font info for 37 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  36i,8n,34p,826b,190s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.
-pfb>
-Output written on Latex_Main.pdf (3 pages, 27893 bytes).
+<C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/
+cm/cmr10.pfb>
+Output written on Latex_Main.pdf (3 pages, 28257 bytes).
 PDF statistics:
  16 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
