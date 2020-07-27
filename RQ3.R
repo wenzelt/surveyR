@@ -59,7 +59,6 @@ ggboxplot(
 
 ##H2####
 
-
 #H2 - Household Size ~ Daily Usage of devices - R501, R503, R505
 # creating table usage device ownership
 
@@ -88,15 +87,25 @@ d <- subset(d,A005 != "More than 6")
 cor.test(as.numeric(d$A005), as.numeric(d$Usage))
 
 #Device Usage x A005
-dtInteresting <- filter(dt, Device_Owned == "Smart TV" | Device_Owned == "Smart Lightbulb" | Device_Owned == "Smart Speaker")
+dtInteresting <- filter(d, Device_Owned == "Smart TV" | Device_Owned == "Smart Lightbulb" | Device_Owned == "Smart Speaker")
 dt = group_by(dtInteresting, Device_Owned)
-dplyr::summarize(dt, cor(as.numeric(d$A005), as.numeric(Usage)))
-ddply(dt, "Device_Owned", summarise, corr=cor(as.numeric(d$A005), as.numeric(Usage), method = "spearman"))
+USAGE_A005_LATEX <- dplyr::summarize(dt, cor(as.numeric(A005), as.numeric(Usage)))
+USAGE_A005_LATEX[3] <- "Pearson"
+USAGE_A005_LATEX[4] <- c(cor.test(as.numeric(subset(dtInteresting,Device_Owned == "Smart Lightbulb")$A005), as.numeric(subset(dtInteresting,Device_Owned == "Smart Lightbulb")$Usage),method = "pearson")$p.value,
+                                         cor.test(as.numeric(subset(dtInteresting,Device_Owned == "Smart Speaker")$A005), as.numeric(subset(dtInteresting,Device_Owned == "Smart Speaker")$Usage),method = "pearson")$p.value,
+                                         cor.test(as.numeric(subset(dtInteresting,Device_Owned == "Smart TV")$A005), as.numeric(subset(dtInteresting,Device_Owned == "Smart TV")$Usage),method = "pearson")$p.value)
+colnames(USAGE_A005_LATEX) <- c("Device","Cor", "Method", "P-Value")
 
-cor.test(dtInteresting$as.numeric(d$A005), as.numeric(dtInteresting$Usage),method = "pearson")
-cor.test(subset(dtInteresting,Device_Owned == "Smart TV")$as.numeric(d$A005), as.numeric(subset(dtInteresting,Device_Owned == "Smart TV")$Usage),method = "pearson")
-cor.test(subset(dtInteresting,Device_Owned == "Smart Speaker")$as.numeric(d$A005), as.numeric(subset(dtInteresting,Device_Owned == "Smart Speaker")$Usage),method = "pearson")
-cor.test(subset(dtInteresting,Device_Owned == "Smart Lightbulb")$as.numeric(d$A005), as.numeric(subset(dtInteresting,Device_Owned == "Smart Lightbulb")$Usage),method = "pearson")
+
+dtInteresting <- filter(d, Device_Owned == "Smart TV" | Device_Owned == "Smart Lightbulb" | Device_Owned == "Smart Speaker")
+dt = group_by(dtInteresting, Device_Owned)
+dplyr::summarize(select(dt,Device_Owned,A005,Usage), cor(as.numeric(dt$A005), as.numeric(dt$Usage)))
+ddply(dt, "Device_Owned", summarise, corr=cor(as.numeric(dt$A005), as.numeric(dt$Usage), method = "spearman"))
+
+cor.test(as.numeric(dtInteresting$A005), as.numeric(dtInteresting$Usage),method = "pearson")
+cor.test(as.numeric(subset(dtInteresting,Device_Owned == "Smart TV")$A005), as.numeric(subset(dtInteresting,Device_Owned == "Smart TV")$Usage),method = "pearson")
+cor.test(as.numeric(subset(dtInteresting,Device_Owned == "Smart Speaker")$A005), as.numeric(subset(dtInteresting,Device_Owned == "Smart Speaker")$Usage),method = "pearson")
+cor.test(as.numeric(subset(dtInteresting,Device_Owned == "Smart Lightbulb")$A005), as.numeric(subset(dtInteresting,Device_Owned == "Smart Lightbulb")$Usage),method = "pearson")
 
 
 #H2 - Household size ~ Device Interaction - R534, R536, R538
