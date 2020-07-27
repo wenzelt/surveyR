@@ -59,6 +59,9 @@ ggboxplot(
 
 ##H2####
 
+#orange <- select(singleSourceOfTruthAppended, E205)
+#dunnTest(singleSourceOfTruthAppended$E205, as.factor(A004), method = "bonferroni")
+
 #H2 - Household Size ~ Daily Usage of devices - R501, R503, R505
 # creating table usage device ownership
 
