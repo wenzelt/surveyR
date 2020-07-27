@@ -164,31 +164,51 @@ ggboxplot(
   xlab = "Children or no children"
 )
 
-
-dunnTest(as.numeric(A004), as.factor(select(singleSourceOfTruthAppended,E201_01:E201_20)), method = "bonferroni")
-
+#dunnTest(singleSourceOfTruthAppended$A004, as.factor(select(singleSourceOfTruthAppended,E201_01:E201_20)), method = "bonferroni")
 
 wilcox_test(singleSourceOfTruthAppended, formula = E201_11 ~ A004)
-wilcox_effsize(singleSourceOfTruthAppended, formula = E201_11 ~ A004)#
+wilcox_effsize(singleSourceOfTruthAppended, formula = E201_11 ~ A004)
 
 wilcox_test(singleSourceOfTruthAppended, formula = E201_14 ~ A004) 
 wilcox_effsize(singleSourceOfTruthAppended, formula = E201_14 ~ A004) 
 
-
 wilcox_test(singleSourceOfTruthAppended, formula = E201_16 ~ A004) 
 wilcox_effsize(singleSourceOfTruthAppended, formula = E201_16 ~ A004) 
 
+wilcox_test(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
+wilcox_effsize(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
+wilcox_test(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
+wilcox_effsize(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
+wilcox_test(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
+wilcox_effsize(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
+wilcox_test(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
+wilcox_effsize(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
+wilcox_test(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
+wilcox_effsize(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
+wilcox_test(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
+wilcox_effsize(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
+wilcox_test(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
+wilcox_effsize(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
 
-#p what is this?
-wilcox_test(singleSourceOfTruthAppended, formula = A204_01 ~ A004) #manufacturer responsbility with child
-wilcox_test(singleSourceOfTruthAppended, formula = A204_02 ~ A004) # A004: Children
-
+#Perception of responsibility
+#1 Keeping the Smart Home device software up-to-date
+#2 Ensuring my privacy
+#3 Protecting my Smart Home ecosystem as a whole
+#4 Keeping the Smart Home device secure
+#5 Fixing a hardware failure
+#6 Fixing a software failure
+wilcox_test(singleSourceOfTruthAppended, formula = A204_01 ~ A004)
+wilcox_effsize(singleSourceOfTruthAppended, formula = A204_01 ~ A004)
+wilcox_test(singleSourceOfTruthAppended, formula = A204_02 ~ A004) 
+wilcox_effsize(singleSourceOfTruthAppended, formula = A204_02 ~ A004)
 wilcox_test(singleSourceOfTruthAppended, formula = A204_03 ~ A004)
-wilcox_effsize(singleSourceOfTruthAppended, formula = A204_03 ~ A004) #manufacturer responsbility with child
-
+wilcox_effsize(singleSourceOfTruthAppended, formula = A204_03 ~ A004)
 wilcox_test(singleSourceOfTruthAppended, formula = A204_04 ~ A004)
+wilcox_effsize(singleSourceOfTruthAppended, formula = A204_04 ~ A004)
 wilcox_test(singleSourceOfTruthAppended, formula = A204_05 ~ A004)
+wilcox_effsize(singleSourceOfTruthAppended, formula = A204_05 ~ A004)
 wilcox_test(singleSourceOfTruthAppended, formula = A204_06 ~ A004)
+wilcox_effsize(singleSourceOfTruthAppended, formula = A204_06 ~ A004)
 
 #testing for children affecting the type of usage the user is comfortable with
 
@@ -200,7 +220,28 @@ wilcox_test(singleSourceOfTruthAppended, formula = A204_06 ~ A004)
 # 6	E205_06	Usage type: Sensors outside the Home (e.g., Motion Sensors, Light Sensors, etc.)
 # 7	E205_07	Usage type: Automatic Operation based on Device Programming
 
-wilcox_test(singleSourceOfTruthAppended, E205_01 ~ A004) #ns
-wilcox_test(singleSourceOfTruthAppended, E205_02 ~ A004) #ns
-wilcox_test(singleSourceOfTruthAppended, E205_05 ~ A004) #ns
-wilcox_test(singleSourceOfTruthAppended, E205_06 ~ A004) #ns
+usageTypeChildren_LATEX <- data.frame(
+  "Usage_type" = c("Voice commands via a Smart Speaker",
+                   "Voice commands via a Smartphone Voice Assistant",
+                   "Smartphone App for the Device",
+                   "Smartphone Widgets or Shortcuts",
+                   "Sensors inside the Home",
+                   "Sensors outside the Home",
+                   "Automatic Operation based on Device Programming"
+  ), 
+  "p_value"= c(wilcox_test(singleSourceOfTruthAppended, E205_01 ~ A004)$p,
+               wilcox_test(singleSourceOfTruthAppended, E205_02 ~ A004)$p,
+               wilcox_test(singleSourceOfTruthAppended, E205_03 ~ A004)$p,
+               wilcox_test(singleSourceOfTruthAppended, E205_04 ~ A004)$p,
+               wilcox_test(singleSourceOfTruthAppended, E205_05 ~ A004)$p,
+               wilcox_test(singleSourceOfTruthAppended, E205_06 ~ A004)$p,
+               wilcox_test(singleSourceOfTruthAppended, E205_07 ~ A004)$p
+    ), 
+  "effect_size" = c(wilcox_effsize(singleSourceOfTruthAppended, formula = E205_01 ~ A004)$effsize,
+                    wilcox_effsize(singleSourceOfTruthAppended, formula = E205_02 ~ A004)$effsize,
+                    wilcox_effsize(singleSourceOfTruthAppended, formula = E205_03 ~ A004)$effsize,
+                    wilcox_effsize(singleSourceOfTruthAppended, formula = E205_04 ~ A004)$effsize,
+                    wilcox_effsize(singleSourceOfTruthAppended, formula = E205_05 ~ A004)$effsize,
+                    wilcox_effsize(singleSourceOfTruthAppended, formula = E205_06 ~ A004)$effsize,
+                    wilcox_effsize(singleSourceOfTruthAppended, formula = E205_07 ~ A004)$effsize
+  ))
