@@ -1,5 +1,6 @@
 
 
+
 ########################## RQ_02 ###################################################
 # RQ2: How does the cultural context impact Smart Home device adoption and use?
 # H1: The purchasing trends of buying a Smart Home device differs internationally.
@@ -19,11 +20,11 @@ singleSourceOfTruthAppended$`Current Country of Residence` <-
   as.factor(singleSourceOfTruthAppended$`Current Country of Residence`)
 
 ## testing dependencies between current country of residence and consulting online reviews for their smart devices
-chisq.test(R216_01,`Current Country of Residence`)
-chisq.test(R216_02,`Current Country of Residence`)
-chisq.test(R216_03,`Current Country of Residence`)
-chisq.test(R216_04,`Current Country of Residence`)
-chisq.test(R216_05,`Current Country of Residence`)
+chisq.test(R216_01, `Current Country of Residence`)
+chisq.test(R216_02, `Current Country of Residence`)
+chisq.test(R216_03, `Current Country of Residence`)
+chisq.test(R216_04, `Current Country of Residence`)
+chisq.test(R216_05, `Current Country of Residence`)
 
 # 1	HP02_01	Market tools: Low prices
 # 2	HP02_02	Market tools: Bundled offers (e.g., including other devices with purchase of one or more devices)
@@ -112,70 +113,76 @@ d$Usage <-
   )
 
 #usage and current country of residence shows no connection
-Usage_CCR_LATEX <- dunnTest(x=as.numeric(d$Usage),g=as.factor(d$`Current Country of Residence`), method = "bonferroni")$res
-Usage_CCR_LATEX_SMART_TV <-  dunnTest(x=as.numeric(subset(d, Device == "Smart TV")$Usage),g=as.factor(subset(d, Device == "Smart TV")$`Current Country of Residence`), method = "bonferroni")$res
-Usage_CCR_LATEX_SMART_SPEAKER <-dunnTest(x=as.numeric(subset(d, Device == "Smart Speaker")$Usage),g=as.factor(subset(d, Device == "Smart Speaker")$`Current Country of Residence`), method = "bonferroni")$res
-Usage_CCR_LATEX_SMART_LIGHTBULB <-dunnTest(x=as.numeric(subset(d, Device == "Smart Lightbulb")$Usage),g=as.factor(subset(d, Device == "Smart Lightbulb")$`Current Country of Residence`), method = "bonferroni")$res
-Usage_CCR_LATEX_OTHER <-dunnTest(x=as.numeric(subset(d,Device != "Smart Lightbulb" && Device != "Smart Speaker" && Device != "Smart TV"
-)$Usage),g=as.factor(subset(d,
-  Device != "Smart Lightbulb" &&
-    Device != "Smart Speaker" &&
-    Device != "Smart TV"
-)$`Current Country of Residence`), method = "bonferroni")$res
+Usage_CCR_LATEX <-
+  dunnTest(
+    x = as.numeric(d$Usage),
+    g = as.factor(d$`Current Country of Residence`),
+    method = "bonferroni"
+  )$res
+Usage_CCR_LATEX_SMART_TV <-
+  dunnTest(
+    x = as.numeric(subset(d, Device == "Smart TV")$Usage),
+    g = as.factor(subset(d, Device == "Smart TV")$`Current Country of Residence`),
+    method = "bonferroni"
+  )$res
+Usage_CCR_LATEX_SMART_SPEAKER <-
+  dunnTest(
+    x = as.numeric(subset(d, Device == "Smart Speaker")$Usage),
+    g = as.factor(
+      subset(d, Device == "Smart Speaker")$`Current Country of Residence`
+    ),
+    method = "bonferroni"
+  )$res
+Usage_CCR_LATEX_SMART_LIGHTBULB <-
+  dunnTest(
+    x = as.numeric(subset(d, Device == "Smart Lightbulb")$Usage),
+    g = as.factor(
+      subset(d, Device == "Smart Lightbulb")$`Current Country of Residence`
+    ),
+    method = "bonferroni"
+  )$res
+Usage_CCR_LATEX_OTHER <-
+  dunnTest(
+    x = as.numeric(
+      subset(
+        d,
+        Device != "Smart Lightbulb" &&
+          Device != "Smart Speaker" && Device != "Smart TV"
+      )$Usage
+    ),
+    g = as.factor(
+      subset(
+        d,
+        Device != "Smart Lightbulb" &&
+          Device != "Smart Speaker" &&
+          Device != "Smart TV"
+      )$`Current Country of Residence`
+    ),
+    method = "bonferroni"
+  )$res
 
+# 
+# kruskal_test(d, formula = Usage ~ `Current Country of Residence`) #ns no effect on usage by region could be measured
+# kruskal_test(subset(d, Device == "Smart TV"),
+#              formula = Usage ~ `Current Country of Residence`)
+# kruskal_test(subset(d, Device == "Smart Speaker"),
+#              formula = Usage ~ `Current Country of Residence`) #ns no effect on usage by region could be measured
+# kruskal_test(subset(d, Device == "Smart Lightbulb"),
+#              formula = Usage ~ `Current Country of Residence`) #ns no effect on usage by region could be measured
+# kruskal_test(
+#   subset(
+#     d,
+#     Device != "Smart Lightbulb" &&
+#       Device != "Smart Speaker" &&
+#       Device != "Smart TV"
+#   ),
+#   formula = Usage ~ `Current Country of Residence`
+# ) #ns no effect on usage by region could be measured
+# 
 
-kruskal_test(d, formula = Usage ~ `Current Country of Residence`) #ns no effect on usage by region could be measured
-kruskal_test(subset(d, Device == "Smart TV"),
-             formula = Usage ~ `Current Country of Residence`)
-kruskal_test(subset(d, Device == "Smart Speaker"),
-             formula = Usage ~ `Current Country of Residence`) #ns no effect on usage by region could be measured
-kruskal_test(subset(d, Device == "Smart Lightbulb"),
-             formula = Usage ~ `Current Country of Residence`) #ns no effect on usage by region could be measured
-kruskal_test(
-  subset(
-    d,
-    Device != "Smart Lightbulb" &&
-      Device != "Smart Speaker" &&
-      Device != "Smart TV"
-  ),
-  formula = Usage ~ `Current Country of Residence`
-) #ns no effect on usage by region could be measured
-
-
-##
 smartTVUsers <- subset(d, Device == "Smart TV")
-dunnTest(x=as.numeric(smartTVUsers$Usage),g=smartTVUsers$`Current Country of Residence`, method = "bonferroni")
-epsilonSquared(x=as.numeric(smartTVUsers$Usage),g=smartTVUsers$`Current Country of Residence`)
-
-
-kruskal_test(
-  subset(
-    smartTVUsers,
-    `Current Country of Residence` == "United Kingdom" |
-      `Current Country of Residence` == "United States"
-  ),
-  Usage ~ `Current Country of Residence`
-)#ns
-
-kruskal_test(
-  subset(
-    smartTVUsers,
-    `Current Country of Residence` == "DACH" |
-      `Current Country of Residence` == "United States"
-  ),
-  Usage ~ `Current Country of Residence`
-)#s
-
-
-kruskal_test(
-  subset(
-    smartTVUsers,
-    `Current Country of Residence` == "United Kingdom" |
-      `Current Country of Residence` == "DACH"
-  ),
-  Usage ~ `Current Country of Residence`
-) # s
-
+epsilonSquared(x = as.numeric(smartTVUsers$Usage),
+               g = smartTVUsers$`Current Country of Residence`)
 ##
 sTV_UK <- subset(smartTVUsers,
                  `Current Country of Residence` == "United Kingdom")##
@@ -201,17 +208,21 @@ disabled_features_country <-
   )
 disabled_features_country$choice <-
   ifelse(disabled_features_country$R507 == "Yes" |
-           R510 == "Yes" | R513 == "Yes",
+           disabled_features_country$R510 == "Yes" | disabled_features_country$R513 == "Yes",
          1,
          0)
+
+test <- merge(disabled_features_country,rbind(sTV_DACH,sTV_UK,sTV_US), by = "participant_id")
+chisq.test(
+  test$`Current Country of Residence.y`,
+  test$choice)
+
+
+DISABLED_FEATURES_COUNTRY_LATEX_CHI <- 
 chisq.test(
   disabled_features_country$`Current Country of Residence`,
-  disabled_features_country$choice
-) #ns no effect on usage by region could be measured
-kruskal.test(
-  disabled_features_country$`Current Country of Residence`,
-  disabled_features_country$choice
-) #ns no effect on usage by region could be measured
+  disabled_features_country$choice)
+#ns no effect on usage by region could be measured
 
 
 #usage type by current country of residence
@@ -261,7 +272,7 @@ p.adjust(p, method = "bonferroni", n = length(p))
 #starting pairwise testing per country
 
 dunnTest(A204_04, `Current Country of Residence`, method = "bonferroni")
-epsilonSquared(x=as.numeric(A204_04),g=`Current Country of Residence`)
+epsilonSquared(x = as.numeric(A204_04), g = `Current Country of Residence`)
 
 
 countryPerception = select(singleSourceOfTruthAppended,
@@ -363,7 +374,8 @@ dunnTest(A307_04, `Current Country of Residence`, method = "bonferroni")
 countryIncreaseProperty = select(singleSourceOfTruthAppended,
                                  `Current Country of Residence`,
                                  A307_04)
-epsilonSquared(x=as.numeric(smartTVUsers$Usage),g=smartTVUsers$`Current Country of Residence`)
+epsilonSquared(x = as.numeric(smartTVUsers$Usage),
+               g = smartTVUsers$`Current Country of Residence`)
 
 aggregate(
   countryIncreaseProperty[, 2],
@@ -466,7 +478,7 @@ aggregate(
 
 
 dunnTest(A307_10, `Current Country of Residence`, method = "bonferroni")
-epsilonSquared(x=as.numeric(A307_10),g=`Current Country of Residence`)
+epsilonSquared(x = as.numeric(A307_10), g = `Current Country of Residence`)
 countryIncreaseProperty = select(singleSourceOfTruthAppended,
                                  `Current Country of Residence`,
                                  A307_10)
@@ -524,8 +536,11 @@ dunnTest(E201_16, `Current Country of Residence`, method = "bonferroni")
 
 
 #####Country mal A307_04
-test = select(singleSourceOfTruthAppended, A307_04,`Current Country of Residence`)
-test$`Current Country of Residence` = factor(test$`Current Country of Residence`,levels = unique(test$`Current Country of Residence`))
+test = select(singleSourceOfTruthAppended,
+              A307_04,
+              `Current Country of Residence`)
+test$`Current Country of Residence` = factor(test$`Current Country of Residence`,
+                                             levels = unique(test$`Current Country of Residence`))
 test$A307_04.f = factor(test$A307_04, ordered = T)
 
 str(test)
@@ -533,9 +548,11 @@ summary(test)
 #hist(~ A307_04.f | `Current Country of Residence`,
 #     data=test,
 #     layout=c(1,3))
-kruskal.test(A307_04.f~`Current Country of Residence`, data= test)
-epsilonSquared(x = test$A307_04, g=test$`Current Country of Residence`)
-freemanTheta(x = test$A307_04.f, g=test$`Current Country of Residence`)
+kruskal.test(A307_04.f ~ `Current Country of Residence`, data = test)
+epsilonSquared(x = test$A307_04,
+               g = test$`Current Country of Residence`)
+freemanTheta(x = test$A307_04.f,
+             g = test$`Current Country of Residence`)
 
 #starting pairwise testing per country
 # Country and adding to the property value
