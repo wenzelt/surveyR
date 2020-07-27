@@ -4,13 +4,6 @@
 ##PREP####
 attach(singleSourceOfTruthAppended)
 
-singleSourceOfTruthAppended$A005 <-
-  cut(as.numeric(singleSourceOfTruthAppended$A005),
-      breaks = c(0, 1, Inf)) ## adding levels to children
-singleSourceOfTruthAppended$A005 <-
-  as.factor(singleSourceOfTruthAppended$A005)
-wilcox_test(singleSourceOfTruthAppended, R101 ~ A005)
-
 ##Discussion Data####
 #p Discussion
 # the below test can only be done before splitting into >1 
@@ -65,6 +58,9 @@ ggboxplot(
 )
 
 ##H2####
+#orange <- select(singleSourceOfTruthAppended, E205)
+#dunnTest(singleSourceOfTruthAppended$E205, as.factor(A004), method = "bonferroni")
+
 #H2 - Household Size ~ Daily Usage of devices - R501, R503, R505
 # creating table usage device ownership
 
@@ -117,7 +113,7 @@ deviceLocation <-
     participant_id,
     A004
   )
-deviceLocationSmartSpeaker <- merge(deviceLocation,dSmartSpeaker, by="participant_id")
+#deviceLocationSmartSpeaker <- merge(deviceLocation,dSmartSpeaker, by="participant_id")
 
 #H2 - Household size ~ Disabled features - R507, 510, R513 //no little disabled features (n=37)-> low priority
 
