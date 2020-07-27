@@ -212,19 +212,22 @@ ggboxplot(
 ####H2_Device_usage_TV,Speaker,Light####
 
 #Device Usage x LA_Mean 
-require(dplyr)
-require(plyr)
-library(plyr)
 dtInteresting <- filter(dt, Device_Owned == "Smart TV" | Device_Owned == "Smart Lightbulb" | Device_Owned == "Smart Speaker")
 dt = group_by(dtInteresting, Device_Owned)
-dplyr::summarize(dt, cor(LA_Mean, as.numeric(Usage)))
-ddply(dt, "Device_Owned", summarise, corr=cor(LA_Mean, as.numeric(Usage), method = "spearman"))
+LA_MEAN_USAGE_DEVICE_INTERESTING <- dplyr::summarize(dt, cor(LA_Mean, as.numeric(Usage)))
+LA_MEAN_USAGE_DEVICE_INTERESTING[3] <- "Pearson"
+LA_MEAN_USAGE_DEVICE_INTERESTING[4] <- c(cor.test(subset(dtInteresting,Device_Owned == "Smart Lightbulb")$LA_Mean, as.numeric(subset(dtInteresting,Device_Owned == "Smart Lightbulb")$Usage),method = "pearson")$p.value,
+                                         cor.test(subset(dtInteresting,Device_Owned == "Smart Speaker")$LA_Mean, as.numeric(subset(dtInteresting,Device_Owned == "Smart Speaker")$Usage),method = "pearson")$p.value,
+                                         cor.test(subset(dtInteresting,Device_Owned == "Smart TV")$LA_Mean, as.numeric(subset(dtInteresting,Device_Owned == "Smart TV")$Usage),method = "pearson")$p.value)
+colnames(LA_MEAN_USAGE_DEVICE_INTERESTING) <- c("Device","Cor", "Method", "P-Value")
+
+ddply(dt, "Device_Owned", summarise, corr=cor(LA_Mean, as.numeric(Usage), method = "pearson"))
 
 cor.test(dtInteresting$LA_Mean, as.numeric(dtInteresting$Usage),method = "pearson")
 cor.test(subset(dtInteresting,Device_Owned == "Smart TV")$LA_Mean, as.numeric(subset(dtInteresting,Device_Owned == "Smart TV")$Usage),method = "pearson")
 cor.test(subset(dtInteresting,Device_Owned == "Smart Speaker")$LA_Mean, as.numeric(subset(dtInteresting,Device_Owned == "Smart Speaker")$Usage),method = "pearson")
 cor.test(subset(dtInteresting,Device_Owned == "Smart Lightbulb")$LA_Mean, as.numeric(subset(dtInteresting,Device_Owned == "Smart Lightbulb")$Usage),method = "pearson")
-# 
+
 # #Creating sub-sets for tests
 # #LA01_01 unwanted access by third parties.
 # d <-
