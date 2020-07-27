@@ -197,18 +197,29 @@ wilcox_effsize(singleSourceOfTruthAppended, formula = E201_01 ~ A004)
 #4 Keeping the Smart Home device secure
 #5 Fixing a hardware failure
 #6 Fixing a software failure
-wilcox_test(singleSourceOfTruthAppended, formula = A204_01 ~ A004)
-wilcox_effsize(singleSourceOfTruthAppended, formula = A204_01 ~ A004)
-wilcox_test(singleSourceOfTruthAppended, formula = A204_02 ~ A004) 
-wilcox_effsize(singleSourceOfTruthAppended, formula = A204_02 ~ A004)
-wilcox_test(singleSourceOfTruthAppended, formula = A204_03 ~ A004)
-wilcox_effsize(singleSourceOfTruthAppended, formula = A204_03 ~ A004)
-wilcox_test(singleSourceOfTruthAppended, formula = A204_04 ~ A004)
-wilcox_effsize(singleSourceOfTruthAppended, formula = A204_04 ~ A004)
-wilcox_test(singleSourceOfTruthAppended, formula = A204_05 ~ A004)
-wilcox_effsize(singleSourceOfTruthAppended, formula = A204_05 ~ A004)
-wilcox_test(singleSourceOfTruthAppended, formula = A204_06 ~ A004)
-wilcox_effsize(singleSourceOfTruthAppended, formula = A204_06 ~ A004)
+
+responsibilityChildren_LATEX <- data.frame(
+  "Usage_type" = c("Keeping the Smart Home device software up-to-date",
+                   "Ensuring my privacy",
+                   "Protecting my Smart Home ecosystem as a whole",
+                   "Keeping the Smart Home device secure",
+                   "Fixing a hardware failure",
+                   "Fixing a software failure"
+  ), 
+  "p_value"= c(wilcox_test(singleSourceOfTruthAppended, A204_01 ~ A004)$p,
+               wilcox_test(singleSourceOfTruthAppended, A204_02 ~ A004)$p,
+               wilcox_test(singleSourceOfTruthAppended, A204_03 ~ A004)$p,
+               wilcox_test(singleSourceOfTruthAppended, A204_04 ~ A004)$p,
+               wilcox_test(singleSourceOfTruthAppended, A204_05 ~ A004)$p,
+               wilcox_test(singleSourceOfTruthAppended, A204_06 ~ A004)$p
+  ), 
+  "effect_size" = c(wilcox_effsize(singleSourceOfTruthAppended, formula = A204_01 ~ A004)$effsize,
+                    wilcox_effsize(singleSourceOfTruthAppended, formula = A204_02 ~ A004)$effsize,
+                    wilcox_effsize(singleSourceOfTruthAppended, formula = A204_03 ~ A004)$effsize,
+                    wilcox_effsize(singleSourceOfTruthAppended, formula = A204_04 ~ A004)$effsize,
+                    wilcox_effsize(singleSourceOfTruthAppended, formula = A204_05 ~ A004)$effsize,
+                    wilcox_effsize(singleSourceOfTruthAppended, formula = A204_06 ~ A004)$effsize
+  ))
 
 #testing for children affecting the type of usage the user is comfortable with
 
