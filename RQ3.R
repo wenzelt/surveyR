@@ -67,7 +67,7 @@ wilcox.test(R101 ~ A007 == "Rent" |
               A007 == "Own") # no statistical significance found
 kruskal_test(singleSourceOfTruthAppended, formula = R101 ~ A007) 
 
-
+# Renting and owning distribution in the US DACH UK 
 boxplot <- select(singleSourceOfTruthAppended, A007, `Current Country of Residence`)
 ggplot(boxplot, aes(y = `Current Country of Residence`)) +
   geom_bar(aes(fill = A007), position = position_stack(reverse = TRUE)) +
@@ -177,7 +177,6 @@ wilcox_effsize(singleSourceOfTruthAppended, formula = E201_14 ~ A004)
 
 wilcox_test(singleSourceOfTruthAppended, formula = E201_16 ~ A004) 
 wilcox_effsize(singleSourceOfTruthAppended, formula = E201_16 ~ A004) 
-
 
 
 #p what is this?
