@@ -2,6 +2,7 @@
 
 ########################## RQ_03 ###################################################
 ##PREP####
+attach(singleSourceOfTruthAppended)
 
 singleSourceOfTruthAppended$A005 <-
   cut(as.numeric(singleSourceOfTruthAppended$A005),
@@ -10,6 +11,18 @@ singleSourceOfTruthAppended$A005 <-
   as.factor(singleSourceOfTruthAppended$A005)
 wilcox_test(singleSourceOfTruthAppended, R101 ~ A005)
 
+##Discussion Data####
+#p Discussion
+# the below test can only be done before splitting into >1 
+cor.test(singleSourceOfTruthAppended$R101, as.numeric(singleSourceOfTruthAppended$A005)) # greater hh size higher variance of devices
+cor.test(singleSourceOfTruthAppended$R101, as.numeric(singleSourceOfTruthAppended$A004)) # more kids does not correlate 
+
+#Discussion
+wilcox_test(singleSourceOfTruthAppended, formula = E201_11 ~ A005) # smart home smart speaker smart tv risk assessment
+wilcox_test(singleSourceOfTruthAppended, formula = E201_14 ~ A005) # household size
+wilcox_test(singleSourceOfTruthAppended, formula = E201_16 ~ A005)
+
+wilcox_test(singleSourceOfTruthAppended, R101 ~ A004) #p = 0.888
 
 ##H1####
 #plotting sex against amount of devices (purely out of interest)
@@ -40,10 +53,6 @@ wilcox.test(R101 ~ A007 == "Rent" |
               A007 == "Own") # no statistical significance found
 kruskal_test(singleSourceOfTruthAppended, formula = R101 ~ A007) # 0.0701
 
-# the below test can only be done before splitting into >1 
-cor.test(singleSourceOfTruthAppended$R101, as.numeric(singleSourceOfTruthAppended$A005)) # greater hh size higher variance of devices
-cor.test(singleSourceOfTruthAppended$R101, as.numeric(singleSourceOfTruthAppended$A004)) # more kids does not correlate 
-
 # testing for amount of children in household
 ggboxplot(
   singleSourceOfTruthAppended,
@@ -55,26 +64,15 @@ ggboxplot(
   xlab = "Children or no children"
 )
 
-
 ##H2####
 orange <- select(singleSourceOfTruthAppended, E205)
 dunnTest(E205, as.factor(A004), method = "bonferroni")
 
-wilcox_test(singleSourceOfTruthAppended, formula = E201_11 ~ A004) 
-wilcox_test(singleSourceOfTruthAppended, formula = E201_14 ~ A004) 
-wilcox_test(singleSourceOfTruthAppended, formula = E201_16 ~ A004) 
+#H2 - Household Size ~ Daily Usage of devices - R501, R503, R505
 
-wilcox_test(singleSourceOfTruthAppended, formula = A204_01 ~ A004) #manufacturer responsbility with child
-wilcox_test(singleSourceOfTruthAppended, formula = A204_02 ~ A004) # A004: Children
-wilcox_test(singleSourceOfTruthAppended, formula = A204_03 ~ A004)
-wilcox_test(singleSourceOfTruthAppended, formula = A204_04 ~ A004)
-wilcox_test(singleSourceOfTruthAppended, formula = A204_05 ~ A004)
-wilcox_test(singleSourceOfTruthAppended, formula = A204_06 ~ A004)
+#H2 - Household size ~ Device Interaction - R534, R536, R538
 
-###
-wilcox_test(singleSourceOfTruthAppended, formula = E201_11 ~ A005) # smart home smart speaker smart tv risk assessment
-wilcox_test(singleSourceOfTruthAppended, formula = E201_14 ~ A005) # household size
-wilcox_test(singleSourceOfTruthAppended, formula = E201_16 ~ A005)
+#H2 - Household size ~ Device Location - R528, R530, R532 //low priority, no interesting findings expected
 
 deviceLocation <-
   select(
@@ -86,6 +84,9 @@ deviceLocation <-
     A004
   )
 deviceLocationSmartSpeaker <- merge(deviceLocation,dSmartSpeaker, by="participant_id")
+
+#H2 - Household size ~ Disabled features - R507, 510, R513 //no little disabled features (n=37)-> low priority
+
 
 #H3####
 ##testing wilcox test for children > 0 impact on amount of devices##
@@ -103,7 +104,17 @@ ggboxplot(
 
 wilcox.test(R101, na.omit(A004))##mann whitney u test #not significant
 
-wilcox_test(singleSourceOfTruthAppended, R101 ~ A004) #p = 0.888
+wilcox_test(singleSourceOfTruthAppended, formula = E201_11 ~ A004) 
+wilcox_test(singleSourceOfTruthAppended, formula = E201_14 ~ A004) 
+wilcox_test(singleSourceOfTruthAppended, formula = E201_16 ~ A004) 
+
+#p what is this?
+wilcox_test(singleSourceOfTruthAppended, formula = A204_01 ~ A004) #manufacturer responsbility with child
+wilcox_test(singleSourceOfTruthAppended, formula = A204_02 ~ A004) # A004: Children
+wilcox_test(singleSourceOfTruthAppended, formula = A204_03 ~ A004)
+wilcox_test(singleSourceOfTruthAppended, formula = A204_04 ~ A004)
+wilcox_test(singleSourceOfTruthAppended, formula = A204_05 ~ A004)
+wilcox_test(singleSourceOfTruthAppended, formula = A204_06 ~ A004)
 
 #testing for children affecting the type of usage the user is comfortable with
 
