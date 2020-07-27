@@ -38,7 +38,6 @@ table(device_interaction,exclude = c("False"),useNA = "no")
 truthTable(device_interaction)
 prop.table(table(device_interaction))
 
-##H1####
 #plotting sex against amount of devices (purely out of interest)
 ggboxplot(
   singleSourceOfTruthAppended,
@@ -49,6 +48,19 @@ ggboxplot(
   ylab = "Amount of devices",
   xlab = "Sex"
 )
+
+# testing for amount of children in household
+ggboxplot(
+  singleSourceOfTruthAppended,
+  x = "A004",
+  y = "R101",
+  color = "A004",
+  palette = c("#00AFBB", "#E7B800"),
+  ylab = "Amount of devices",
+  xlab = "Children or no children"
+)
+
+##H1####
 
 
 # testing for amount of devices per property ownership / renting a property
@@ -63,8 +75,9 @@ ggboxplot(
   xlab = "Renting or owning"
 )
 
-wilcox.test(R101 ~ A007 == "Rent" |
-              A007 == "Own") # no statistical significance found
+wilcox.test(singleSourceOfTruthAppended$R101 ~ singleSourceOfTruthAppended$A007 == "Rent" |
+              singleSourceOfTruthAppended$A007 == "Own") # no statistical significance found
+
 kruskal_test(singleSourceOfTruthAppended, formula = R101 ~ A007) 
 
 # Renting and owning distribution in the US DACH UK 
@@ -72,17 +85,6 @@ boxplot <- select(singleSourceOfTruthAppended, A007, `Current Country of Residen
 ggplot(boxplot, aes(y = `Current Country of Residence`)) +
   geom_bar(aes(fill = A007), position = position_stack(reverse = TRUE)) +
   theme(legend.position = "top")
-
-# testing for amount of children in household
-ggboxplot(
-  singleSourceOfTruthAppended,
-  x = "A004",
-  y = "R101",
-  color = "A004",
-  palette = c("#00AFBB", "#E7B800"),
-  ylab = "Amount of devices",
-  xlab = "Children or no children"
-)
 
 ##H2####
 
@@ -129,11 +131,6 @@ colnames(USAGE_A005_LATEX) <- c("Device","Cor", "Method", "P-Value")
 
 
 
-
-
-
-
-
 #H2 - Household size ~ Device Location - R528, R530, R532 //low priority, no interesting findings expected
 
 deviceLocation <-
@@ -166,29 +163,19 @@ ggboxplot(
 
 #dunnTest(singleSourceOfTruthAppended$A004, as.factor(select(singleSourceOfTruthAppended,E201_01:E201_20)), method = "bonferroni")
 
-wilcox_test(singleSourceOfTruthAppended, formula = E201_11 ~ A004)
-wilcox_effsize(singleSourceOfTruthAppended, formula = E201_11 ~ A004)
-
-wilcox_test(singleSourceOfTruthAppended, formula = E201_14 ~ A004) 
-wilcox_effsize(singleSourceOfTruthAppended, formula = E201_14 ~ A004) 
-
-wilcox_test(singleSourceOfTruthAppended, formula = E201_16 ~ A004) 
-wilcox_effsize(singleSourceOfTruthAppended, formula = E201_16 ~ A004) 
-
-wilcox_test(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
-wilcox_effsize(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
-wilcox_test(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
-wilcox_effsize(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
-wilcox_test(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
-wilcox_effsize(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
-wilcox_test(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
-wilcox_effsize(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
-wilcox_test(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
-wilcox_effsize(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
-wilcox_test(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
-wilcox_effsize(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
-wilcox_test(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
-wilcox_effsize(singleSourceOfTruthAppended, formula = E201_01 ~ A004) 
+riskChildren_LATEX <- data.frame(
+  "Usage_type" = c("Smart Lightbulb",
+                   "Smart Speaker",
+                   "Smart TV"
+  ), 
+  "p_value"= c(wilcox_test(singleSourceOfTruthAppended, E201_11 ~ A004)$p,
+               wilcox_test(singleSourceOfTruthAppended, E201_14 ~ A004)$p,
+               wilcox_test(singleSourceOfTruthAppended, E201_16 ~ A004)$p
+  ), 
+  "effect_size" = c(wilcox_effsize(singleSourceOfTruthAppended, formula = E201_11 ~ A004)$effsize,
+                    wilcox_effsize(singleSourceOfTruthAppended, formula = E201_14 ~ A004)$effsize,
+                    wilcox_effsize(singleSourceOfTruthAppended, formula = E201_16 ~ A004)$effsize
+  ))
 
 #Perception of responsibility
 #1 Keeping the Smart Home device software up-to-date
