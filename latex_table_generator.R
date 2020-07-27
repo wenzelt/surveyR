@@ -76,8 +76,20 @@ print(
   file = "latex_tables/DISABLED_FEATURES_CCR.tex"
 )
 
-
+#Manufacturer Responsibility by country 
 print(
   xtable(dunn_A204_04_LATEX, type = "latex", caption = "DunnTest for participants opinion on Manufacturer responsibility on \"Keeping the Smart Home device secure\" by Region of Residence"),
   file = "latex_tables/A204_04_CCR.tex"
+)
+
+
+#Device risk by country TV: 
+print(
+  xtable(E201_SMART_TV_RISK_CCR, type = "latex", caption = "Device Risk assessment dunnTest by Current Region of residence."),
+  file = "latex_tables/E201_SMART_TV_RISK_CCR.tex"
+)
+
+#Perceived Benefits of Smart home devices by region of residence 
+print(
+  xtable(A307_LATEX, type = "latex", caption = "Perceived benefits of smart home devices by region of residence. "),file = "latex_tables/A307_CCR_LATEX.tex", hline.after = c(-1,0,3,6,9,12)
 )

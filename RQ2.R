@@ -1,6 +1,7 @@
 
 
 
+
 ########################## RQ_02 ###################################################
 # RQ2: How does the cultural context impact Smart Home device adoption and use?
 # H1: The purchasing trends of buying a Smart Home device differs internationally.
@@ -161,7 +162,7 @@ Usage_CCR_LATEX_OTHER <-
     method = "bonferroni"
   )$res
 
-# 
+#
 # kruskal_test(d, formula = Usage ~ `Current Country of Residence`) #ns no effect on usage by region could be measured
 # kruskal_test(subset(d, Device == "Smart TV"),
 #              formula = Usage ~ `Current Country of Residence`)
@@ -178,7 +179,7 @@ Usage_CCR_LATEX_OTHER <-
 #   ),
 #   formula = Usage ~ `Current Country of Residence`
 # ) #ns no effect on usage by region could be measured
-# 
+#
 
 smartTVUsers <- subset(d, Device == "Smart TV")
 epsilonSquared(x = as.numeric(smartTVUsers$Usage),
@@ -207,21 +208,27 @@ disabled_features_country <-
     `Current Country of Residence`
   )
 disabled_features_country$choice <-
-  ifelse(disabled_features_country$R507 == "Yes" |
-           disabled_features_country$R510 == "Yes" | disabled_features_country$R513 == "Yes",
-         1,
-         0)
+  ifelse(
+    disabled_features_country$R507 == "Yes" |
+      disabled_features_country$R510 == "Yes" |
+      disabled_features_country$R513 == "Yes",
+    1,
+    0
+  )
 
-test <- merge(disabled_features_country,rbind(sTV_DACH,sTV_UK,sTV_US), by = "participant_id")
-chisq.test(
-  test$`Current Country of Residence.y`,
-  test$choice)
+test <-
+  merge(disabled_features_country,
+        rbind(sTV_DACH, sTV_UK, sTV_US),
+        by = "participant_id")
+chisq.test(test$`Current Country of Residence.y`,
+           test$choice)
 
 
-DISABLED_FEATURES_COUNTRY_LATEX_CHI <- 
-chisq.test(
-  disabled_features_country$`Current Country of Residence`,
-  disabled_features_country$choice)
+DISABLED_FEATURES_COUNTRY_LATEX_CHI <-
+  chisq.test(
+    disabled_features_country$`Current Country of Residence`,
+    disabled_features_country$choice
+  )
 #ns no effect on usage by region could be measured
 
 
@@ -271,12 +278,43 @@ p.adjust(p, method = "bonferroni", n = length(p))
 #pairwise testing for A204_04
 #starting pairwise testing per country
 
-dunn_A204_04 <- dunnTest(singleSourceOfTruthAppended$A204_04, `Current Country of Residence`, method = "bonferroni")
-eps1 <- epsilonSquared(x = as.numeric(subset(singleSourceOfTruthAppended,`Current Country of Residence` == "DACH" | `Current Country of Residence` == "United Kingdom")$A204_04), g = subset(singleSourceOfTruthAppended,`Current Country of Residence` == "DACH" | `Current Country of Residence` == "United Kingdom")$`Current Country of Residence`)
-eps2 <- epsilonSquared(x = as.numeric(subset(singleSourceOfTruthAppended,`Current Country of Residence` == "DACH" | `Current Country of Residence` == "United States")$A204_04), g = subset(singleSourceOfTruthAppended,`Current Country of Residence` == "DACH" | `Current Country of Residence` == "United States")$`Current Country of Residence`)
+dunn_A204_04 <-
+  dunnTest(singleSourceOfTruthAppended$A204_04,
+           `Current Country of Residence`,
+           method = "bonferroni")
+eps1 <-
+  epsilonSquared(
+    x = as.numeric(
+      subset(
+        singleSourceOfTruthAppended,
+        `Current Country of Residence` == "DACH" |
+          `Current Country of Residence` == "United Kingdom"
+      )$A204_04
+    ),
+    g = subset(
+      singleSourceOfTruthAppended,
+      `Current Country of Residence` == "DACH" |
+        `Current Country of Residence` == "United Kingdom"
+    )$`Current Country of Residence`
+  )
+eps2 <-
+  epsilonSquared(
+    x = as.numeric(
+      subset(
+        singleSourceOfTruthAppended,
+        `Current Country of Residence` == "DACH" |
+          `Current Country of Residence` == "United States"
+      )$A204_04
+    ),
+    g = subset(
+      singleSourceOfTruthAppended,
+      `Current Country of Residence` == "DACH" |
+        `Current Country of Residence` == "United States"
+    )$`Current Country of Residence`
+  )
 
-epsilonSquared <- c(eps1,eps2,"NA")
-dunn_A204_04_LATEX <- cbind(dunn_A204_04$res,epsilonSquared)
+epsilonSquared <- c(eps1, eps2, "NA")
+dunn_A204_04_LATEX <- cbind(dunn_A204_04$res, epsilonSquared)
 
 
 
@@ -537,7 +575,39 @@ kruskal_test(
 # --- plot means by country to find out which is different and higher / lower
 p.adjust(p, "bonferroni") #1.0000000 0.2760000 0.0001665
 
-dunnTest(E201_16, `Current Country of Residence`, method = "bonferroni")
+
+E201_SMART_TV_RISK_CCR <-
+  cbind(
+    dunnTest(singleSourceOfTruthAppended$E201_16, singleSourceOfTruthAppended$`Current Country of Residence`, method = "bonferroni")$res,
+    c(
+      epsilonSquared(
+        x = subset(
+          singleSourceOfTruthAppended,
+          `Current Country of Residence` == "DACH" |
+            `Current Country of Residence` == "United Kingdom"
+        )$E201_16,
+        g = subset(
+          singleSourceOfTruthAppended,
+          `Current Country of Residence` == "DACH" |
+            `Current Country of Residence` == "United Kingdom"
+        )$`Current Country of Residence`
+      ),
+      epsilonSquared(
+        x = subset(
+          singleSourceOfTruthAppended,
+          `Current Country of Residence` == "DACH" |
+            `Current Country of Residence` == "United States"
+        )$E201_16,
+        g = subset(
+          singleSourceOfTruthAppended,
+          `Current Country of Residence` == "DACH" |
+            `Current Country of Residence` == "United States"
+        )$`Current Country of Residence`
+      ),
+      "NA"
+    )
+  )
+names(E201_SMART_TV_RISK_CCR)[5] = "EpsilonSquared"
 
 
 #####Country mal A307_04
@@ -594,4 +664,18 @@ aggregate(
   list(countryIncreaseProperty$`Current Country of Residence`),
   mean
 )
+
+
+perceived_benefits <- select(singleSourceOfTruthAppended, `Current Country of Residence`, A307_04,A307_07, A307_08,A307_10)
+
+A307_LATEX <- 
+cbind(c("A307_04","A307_04","A307_04","A307_07","A307_07","A307_07","A307_08","A307_08","A307_08","A307_10","A307_10","A307_10"),rbind(
+data.frame(dunnTest(singleSourceOfTruthAppended$A307_04, singleSourceOfTruthAppended$`Current Country of Residence`, method = "bonferroni")$res),
+data.frame(dunnTest(singleSourceOfTruthAppended$A307_07, singleSourceOfTruthAppended$`Current Country of Residence`, method = "bonferroni")$res),
+data.frame(dunnTest(singleSourceOfTruthAppended$A307_08, singleSourceOfTruthAppended$`Current Country of Residence`, method = "bonferroni")$res),
+data.frame(dunnTest(singleSourceOfTruthAppended$A307_10, singleSourceOfTruthAppended$`Current Country of Residence`, method = "bonferroni")$res)
+))
+names(A307_LATEX)[1] <- "Code"
+
+
 detach(singleSourceOfTruthAppended)
