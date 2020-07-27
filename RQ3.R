@@ -157,16 +157,29 @@ ggboxplot(
   xlab = "Children or no children"
 )
 
-wilcox.test(R101, na.omit(A004))##mann whitney u test #not significant
 
-wilcox_test(singleSourceOfTruthAppended, formula = E201_11 ~ A004) 
+dunnTest(as.numeric(A004), as.factor(select(singleSourceOfTruthAppended,E201_01:E201_20)), method = "bonferroni")
+
+
+wilcox_test(singleSourceOfTruthAppended, formula = E201_11 ~ A004)
+wilcox_effsize(singleSourceOfTruthAppended, formula = E201_11 ~ A004)#
+
 wilcox_test(singleSourceOfTruthAppended, formula = E201_14 ~ A004) 
+wilcox_effsize(singleSourceOfTruthAppended, formula = E201_14 ~ A004) 
+
+
 wilcox_test(singleSourceOfTruthAppended, formula = E201_16 ~ A004) 
+wilcox_effsize(singleSourceOfTruthAppended, formula = E201_16 ~ A004) 
+
+
 
 #p what is this?
 wilcox_test(singleSourceOfTruthAppended, formula = A204_01 ~ A004) #manufacturer responsbility with child
 wilcox_test(singleSourceOfTruthAppended, formula = A204_02 ~ A004) # A004: Children
+
 wilcox_test(singleSourceOfTruthAppended, formula = A204_03 ~ A004)
+wilcox_effsize(singleSourceOfTruthAppended, formula = A204_03 ~ A004) #manufacturer responsbility with child
+
 wilcox_test(singleSourceOfTruthAppended, formula = A204_04 ~ A004)
 wilcox_test(singleSourceOfTruthAppended, formula = A204_05 ~ A004)
 wilcox_test(singleSourceOfTruthAppended, formula = A204_06 ~ A004)
