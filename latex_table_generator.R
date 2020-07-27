@@ -72,6 +72,12 @@ print(
 
 # export Usage x CCR Latex Other Devices
 print(
-  xtable(DISABLED_FEATURES_COUNTRY_LATEX_CHI, type = "latex", caption = "Chi-Squared Test for significant differences in disabling features in smart home devices by Region of residence."),
+  xtable(data.frame(cbind(DISABLED_FEATURES_COUNTRY_LATEX_CHI$p.value,DISABLED_FEATURES_COUNTRY_LATEX_CHI$method)), type = "latex", caption = "Chi-Squared Test for significant differences in disabling features in smart home devices by Region of residence."),
   file = "latex_tables/DISABLED_FEATURES_CCR.tex"
+)
+
+
+print(
+  xtable(dunn_A204_04_LATEX, type = "latex", caption = "DunnTest for participants opinion on Manufacturer responsibility on \"Keeping the Smart Home device secure\" by Region of Residence"),
+  file = "latex_tables/A204_04_CCR.tex"
 )

@@ -271,8 +271,13 @@ p.adjust(p, method = "bonferroni", n = length(p))
 #pairwise testing for A204_04
 #starting pairwise testing per country
 
-dunnTest(A204_04, `Current Country of Residence`, method = "bonferroni")
-epsilonSquared(x = as.numeric(A204_04), g = `Current Country of Residence`)
+dunn_A204_04 <- dunnTest(singleSourceOfTruthAppended$A204_04, `Current Country of Residence`, method = "bonferroni")
+eps1 <- epsilonSquared(x = as.numeric(subset(singleSourceOfTruthAppended,`Current Country of Residence` == "DACH" | `Current Country of Residence` == "United Kingdom")$A204_04), g = subset(singleSourceOfTruthAppended,`Current Country of Residence` == "DACH" | `Current Country of Residence` == "United Kingdom")$`Current Country of Residence`)
+eps2 <- epsilonSquared(x = as.numeric(subset(singleSourceOfTruthAppended,`Current Country of Residence` == "DACH" | `Current Country of Residence` == "United States")$A204_04), g = subset(singleSourceOfTruthAppended,`Current Country of Residence` == "DACH" | `Current Country of Residence` == "United States")$`Current Country of Residence`)
+
+epsilonSquared <- c(eps1,eps2,"NA")
+dunn_A204_04_LATEX <- cbind(dunn_A204_04$res,epsilonSquared)
+
 
 
 countryPerception = select(singleSourceOfTruthAppended,
