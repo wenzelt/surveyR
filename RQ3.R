@@ -33,12 +33,10 @@ colnames(i3) = c("Voice Assistant", "App on my phone", "Physical buttons on the 
 
 
 device_interaction <- rbind(i1,i2,i3)
-prop.table(device_interaction)
 table(device_interaction,exclude = c("False"),useNA = "no")
-truthTable(device_interaction)
 prop.table(table(device_interaction))
 
-##H1####
+####H1####
 #plotting sex against amount of devices (purely out of interest)
 ggboxplot(
   singleSourceOfTruthAppended,
