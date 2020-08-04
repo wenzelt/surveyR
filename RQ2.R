@@ -120,12 +120,21 @@ Usage_CCR_LATEX <-
     g = as.factor(d$`Current Country of Residence`),
     method = "bonferroni"
   )$res
+
+aggregate(as.numeric(d$Usage),list(d$`Current Country of Residence`),mean)
+
+
+
+
 Usage_CCR_LATEX_SMART_TV <-
   dunnTest(
     x = as.numeric(subset(d, Device == "Smart TV")$Usage),
     g = as.factor(subset(d, Device == "Smart TV")$`Current Country of Residence`),
     method = "bonferroni"
   )$res
+aggregate(as.numeric(subset(d, Device == "Smart TV")$Usage),list(as.factor(subset(d, Device == "Smart TV")$`Current Country of Residence`)),mean)
+
+
 Usage_CCR_LATEX_SMART_SPEAKER <-
   dunnTest(
     x = as.numeric(subset(d, Device == "Smart Speaker")$Usage),
@@ -134,6 +143,9 @@ Usage_CCR_LATEX_SMART_SPEAKER <-
     ),
     method = "bonferroni"
   )$res
+aggregate(as.numeric(subset(d, Device == "Smart Speaker")$Usage),list(as.factor(subset(d, Device == "Smart Speaker")$`Current Country of Residence`)),mean)
+
+
 Usage_CCR_LATEX_SMART_LIGHTBULB <-
   dunnTest(
     x = as.numeric(subset(d, Device == "Smart Lightbulb")$Usage),
@@ -142,6 +154,9 @@ Usage_CCR_LATEX_SMART_LIGHTBULB <-
     ),
     method = "bonferroni"
   )$res
+aggregate(as.numeric(subset(d, Device == "Smart Lightbulb")$Usage),list(as.factor(subset(d, Device == "Smart Lightbulb")$`Current Country of Residence`)),mean)
+
+
 Usage_CCR_LATEX_OTHER <-
   dunnTest(
     x = as.numeric(
@@ -162,7 +177,7 @@ Usage_CCR_LATEX_OTHER <-
     method = "bonferroni"
   )$res
 
-#
+
 # kruskal_test(d, formula = Usage ~ `Current Country of Residence`) #ns no effect on usage by region could be measured
 # kruskal_test(subset(d, Device == "Smart TV"),
 #              formula = Usage ~ `Current Country of Residence`)
