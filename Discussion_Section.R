@@ -9,17 +9,8 @@ colnames(location2) <- c("Balcony","Basement", "Children's Room", "Dining Room",
 colnames(location3) <- c("Balcony","Basement", "Children's Room", "Dining Room", "Garage", "Guest Bedroom", "Hallway","Kitchen","Living Room" , "Master Bedroom","Patio", "Yard","Current Country of Residence")
 
 location <- rbind(location1,location2,location3)
-stack(location[1:12])
-location_bool <- select(location, Balcony:Yard)
 
 location_stacked <- subset(cbind(A=location[,13],stack(location[1:12])),values==TRUE,-2)
-table(location_stacked)
-
-ggplot(iris, aes(x=location_stacked$ind, fill=location_stacked$`Current Country of Residence`)) +
-  geom_histogram()
-
-install.packages("vcd")
-library(vcd)
-mosaic(table(location_stacked), shade = TRUE)
-
-
+summary(location_stacked)
+table(location_stacked$ind,location_stacked$`Current Country of Residence`)
+prop.table(table(location_stacked$ind,location_stacked$`Current Country of Residence`))
