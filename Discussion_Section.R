@@ -15,12 +15,11 @@ location_bool <- select(location, Balcony:Yard)
 location_stacked <- subset(cbind(A=location[,13],stack(location[1:12])),values==TRUE,-2)
 table(location_stacked)
 
+ggplot(iris, aes(x=location_stacked$ind, fill=location_stacked$`Current Country of Residence`)) +
+  geom_histogram()
 
-
-
-
-
-
-
+install.packages("vcd")
+library(vcd)
+mosaic(table(location_stacked), shade = TRUE)
 
 
