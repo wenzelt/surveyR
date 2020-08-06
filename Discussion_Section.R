@@ -14,3 +14,6 @@ location_stacked <- subset(cbind(A=location[,13],stack(location[1:12])),values==
 summary(location_stacked)
 table(location_stacked$ind,location_stacked$`Current Country of Residence`)
 prop.table(table(location_stacked$ind,location_stacked$`Current Country of Residence`))
+CrossTable(location_stacked$ind)
+
+
