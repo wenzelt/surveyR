@@ -36,7 +36,6 @@ device_interaction <- rbind(i1,i2,i3)
 table(device_interaction,exclude = c("False"),useNA = "no")
 prop.table(table(device_interaction))
 
-####H1####
 #plotting sex against amount of devices (purely out of interest)
 ggboxplot(
   singleSourceOfTruthAppended,
@@ -47,7 +46,17 @@ ggboxplot(
   ylab = "Amount of devices",
   xlab = "Sex"
 )
-
+# testing for amount of children in household
+ggboxplot(
+  singleSourceOfTruthAppended,
+  x = "A004",
+  y = "R101",
+  color = "A004",
+  palette = c("#00AFBB", "#E7B800"),
+  ylab = "Amount of devices",
+  xlab = "Children or no children"
+)
+####H1####
 
 # testing for amount of devices per property ownership / renting a property
 
@@ -70,17 +79,6 @@ kruskal_test(singleSourceOfTruthAppended, formula = R101 ~ A007)
 # ggplot(boxplot, aes(y = `Current Country of Residence`)) +
 #   geom_bar(aes(fill = A007), position = position_stack(reverse = TRUE)) +
 #   theme(legend.position = "top")
-
-# testing for amount of children in household
-ggboxplot(
-  singleSourceOfTruthAppended,
-  x = "A004",
-  y = "R101",
-  color = "A004",
-  palette = c("#00AFBB", "#E7B800"),
-  ylab = "Amount of devices",
-  xlab = "Children or no children"
-)
 
 ##H2####
 
@@ -125,14 +123,8 @@ colnames(USAGE_A005_LATEX) <- c("Device","Cor", "Method", "P-Value")
 
 #H2 - Household size ~ Device Interaction - R534, R536, R538
 
-
-
-
-
-
-
-
-#H2 - Household size ~ Device Location - R528, R530, R532 //low priority, no interesting findings expected
+#H2 - Household size ~ Device Location - R528, R530, R532 
+#//low priority, no interesting findings expected
 
 deviceLocation <-
   select(
@@ -145,7 +137,8 @@ deviceLocation <-
   )
 #deviceLocationSmartSpeaker <- merge(deviceLocation,dSmartSpeaker, by="participant_id")
 
-#H2 - Household size ~ Disabled features - R507, 510, R513 //no little disabled features (n=37)-> low priority
+#H2 - Household size ~ Disabled features - R507, 510, R513
+##/no little disabled features (n=37)-> low priority
 
 
 #H3####
