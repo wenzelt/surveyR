@@ -104,6 +104,11 @@ print(
 print(
   xtable(USAGE_A005_LATEX, type = "latex", caption = "Household size correlation with the usage of most used devices."),file = "latex_tables/USAGE_A005_LATEX.tex")
 
+print(
+  xtable(riskChildren_LATEX, type = "latex", caption = "Effect on risk assessment of devices by having children or not."),file = "latex_tables/riskChildren_LATEX.tex")
+
+print(
+  xtable(responsibilityChildren_LATEX, type = "latex", caption = "Changes in responsibility stance to having Children or not."),file = "latex_tables/responsibilityChildren_LATEX.tex")
 
 print(
 xtable(USAGETYPE_Children_LATEX, type = "latex", caption = "Household size correlation with the usage of most used devices."),file = "latex_tables/USAGETYPE_Children_LATEX.tex")
