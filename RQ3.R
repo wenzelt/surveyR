@@ -132,14 +132,10 @@ colnames(USAGE_A005_LATEX) <- c("Device","Cor", "Method", "P-Value")
 
 #H2 - Household size ~ Device Interaction - R534, R536, R538
 
-<<<<<<< HEAD
 
-
-#H2 - Household size ~ Device Location - R528, R530, R532 //low priority, no interesting findings expected
-=======
 #H2 - Household size ~ Device Location - R528, R530, R532 
 #//low priority, no interesting findings expected
->>>>>>> 78e9a0f860a3854a44dc5553fef77f2008c571f5
+
 
 deviceLocation <-
   select(
