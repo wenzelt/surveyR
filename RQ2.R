@@ -121,7 +121,7 @@ Usage_CCR_LATEX <-
     method = "bonferroni"
   )$res
 Usage_CCR_LATEX <- Usage_CCR_LATEX[-c(3)]
-Usage_CCR_LATEX[Usage_CCR_LATEX$P.adj] <- paste(as.numeric(Usage_CCR_LATEX$P.adj),stars.pval(as.numeric(Usage_CCR_LATEX$P.adj)))
+Usage_CCR_LATEX$P.adj <- paste(as.numeric(Usage_CCR_LATEX$P.adj),stars.pval(as.numeric(Usage_CCR_LATEX$P.adj)))
 
 view(Usage_CCR_LATEX)
 aggregate(as.numeric(d$Usage),list(d$`Current Country of Residence`),mean)
@@ -136,6 +136,7 @@ Usage_CCR_LATEX_SMART_TV <-
     method = "bonferroni"
   )$res
 Usage_CCR_LATEX_SMART_TV <- Usage_CCR_LATEX_SMART_TV[-c(3)]
+Usage_CCR_LATEX_SMART_TV$P.adj <- paste(as.numeric(Usage_CCR_LATEX_SMART_TV$P.adj),stars.pval(as.numeric(Usage_CCR_LATEX_SMART_TV$P.adj)))
 
 aggregate(as.numeric(subset(d, Device == "Smart TV")$Usage),list(as.factor(subset(d, Device == "Smart TV")$`Current Country of Residence`)),mean)
 
@@ -151,6 +152,7 @@ Usage_CCR_LATEX_SMART_SPEAKER <-
   )$res
 
 Usage_CCR_LATEX_SMART_SPEAKER <- Usage_CCR_LATEX_SMART_SPEAKER[-c(3)]
+Usage_CCR_LATEX_SMART_SPEAKER$P.adj <- paste(as.numeric(Usage_CCR_LATEX_SMART_SPEAKER$P.adj),stars.pval(as.numeric(Usage_CCR_LATEX_SMART_SPEAKER$P.adj)))
 
 aggregate(as.numeric(subset(d, Device == "Smart Speaker")$Usage),list(as.factor(subset(d, Device == "Smart Speaker")$`Current Country of Residence`)),mean)
 
@@ -165,6 +167,8 @@ Usage_CCR_LATEX_SMART_LIGHTBULB <-
   )$res
 
 Usage_CCR_LATEX_SMART_LIGHTBULB <- Usage_CCR_LATEX_SMART_LIGHTBULB[-c(3)]
+
+
 aggregate(as.numeric(subset(d, Device == "Smart Lightbulb")$Usage),list(as.factor(subset(d, Device == "Smart Lightbulb")$`Current Country of Residence`)),mean)
 
 
