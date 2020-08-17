@@ -46,6 +46,7 @@ ggboxplot(
   ylab = "Amount of devices",
   xlab = "Sex"
 )
+
 # testing for amount of children in household
 ggboxplot(
   singleSourceOfTruthAppended,
@@ -56,6 +57,7 @@ ggboxplot(
   ylab = "Amount of devices",
   xlab = "Children or no children"
 )
+
 ####H1####
 
 # testing for amount of devices per property ownership / renting a property
@@ -70,11 +72,18 @@ ggboxplot(
   xlab = "Renting or owning"
 )
 
-wilcox.test(R101 ~ A007 == "Rent" |
-              A007 == "Own") # no statistical significance found
+wilcox.test(singleSourceOfTruthAppended$R101 ~ singleSourceOfTruthAppended$A007 == "Rent" |
+              singleSourceOfTruthAppended$A007 == "Own") # no statistical significance found
+
 kruskal_test(singleSourceOfTruthAppended, formula = R101 ~ A007) 
 
 # Renting and owning distribution in the US DACH UK 
+
+boxplot <- select(singleSourceOfTruthAppended, A007, `Current Country of Residence`)
+ggplot(boxplot, aes(y = `Current Country of Residence`)) +
+  geom_bar(aes(fill = A007), position = position_stack(reverse = TRUE)) +
+  theme(legend.position = "top")
+
 # boxplot <- select(singleSourceOfTruthAppended, A007, `Current Country of Residence`)
 # ggplot(boxplot, aes(y = `Current Country of Residence`)) +
 #   geom_bar(aes(fill = A007), position = position_stack(reverse = TRUE)) +
@@ -123,8 +132,14 @@ colnames(USAGE_A005_LATEX) <- c("Device","Cor", "Method", "P-Value")
 
 #H2 - Household size ~ Device Interaction - R534, R536, R538
 
+<<<<<<< HEAD
+
+
+#H2 - Household size ~ Device Location - R528, R530, R532 //low priority, no interesting findings expected
+=======
 #H2 - Household size ~ Device Location - R528, R530, R532 
 #//low priority, no interesting findings expected
+>>>>>>> 78e9a0f860a3854a44dc5553fef77f2008c571f5
 
 deviceLocation <-
   select(

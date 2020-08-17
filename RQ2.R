@@ -167,7 +167,7 @@ Usage_CCR_LATEX_SMART_LIGHTBULB <-
   )$res
 
 Usage_CCR_LATEX_SMART_LIGHTBULB <- Usage_CCR_LATEX_SMART_LIGHTBULB[-c(3)]
-
+Usage_CCR_LATEX_SMART_LIGHTBULB$P.adj <- paste(as.numeric(Usage_CCR_LATEX_SMART_LIGHTBULB$P.adj),stars.pval(as.numeric(Usage_CCR_LATEX_SMART_LIGHTBULB$P.adj)))
 
 aggregate(as.numeric(subset(d, Device == "Smart Lightbulb")$Usage),list(as.factor(subset(d, Device == "Smart Lightbulb")$`Current Country of Residence`)),mean)
 
@@ -193,6 +193,7 @@ Usage_CCR_LATEX_OTHER <-
   )$res
 
 Usage_CCR_LATEX_OTHER <- Usage_CCR_LATEX_OTHER[-c(3)]
+Usage_CCR_LATEX_OTHER$P.adj <- paste(as.numeric(Usage_CCR_LATEX_OTHER$P.adj),stars.pval(as.numeric(Usage_CCR_LATEX_OTHER$P.adj)))
 
 
 
