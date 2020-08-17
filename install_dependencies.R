@@ -1,7 +1,7 @@
 #this script installs the necessary dependencies and loads our dataset reliably.
 
 list.of.packages <-
-  c("ggplot2", "tidyverse","data.table","plyr","psych","gmodels","lattice","multcompView", "dplyr", "ggpubr","QCA", "FSA", "dunn.test","rcompanion")
+  c("ggplot2", "tidyverse","data.table","plyr","psych","gmodels","lattice","multcompView","gtools", "dplyr", "ggpubr","QCA", "FSA", "dunn.test","rcompanion")
 new.packages <-
   list.of.packages[!(list.of.packages %in% installed.packages()[, "Package"])]
 if (length(new.packages))
@@ -22,6 +22,7 @@ library(xtable)
 library(data.table)
 library(plyr)
 library(gmodels)
+library(gtools)
 
 
 
