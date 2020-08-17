@@ -15,5 +15,3 @@ summary(location_stacked)
 table(location_stacked$ind,location_stacked$`Current Country of Residence`)
 prop.table(table(location_stacked$ind,location_stacked$`Current Country of Residence`))
 CrossTable(location_stacked$ind)
-
-

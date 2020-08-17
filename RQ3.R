@@ -15,7 +15,7 @@ wilcox_test(singleSourceOfTruthAppended, formula = E201_11 ~ A005) # smart home 
 wilcox_test(singleSourceOfTruthAppended, formula = E201_14 ~ A005) # household size
 wilcox_test(singleSourceOfTruthAppended, formula = E201_16 ~ A005)
 
-wilcox_test(singleSourceOfTruthAppended, R101 ~ A004) #p = 0.888
+wilcox_test(singleSourceOfTruthAppended, R101 ~ A004) 
 
 
 device_interaction <- select(singleSourceOfTruthAppended, R534_01:R534_06,R536_01:R536_06,R538_01:R538_06)

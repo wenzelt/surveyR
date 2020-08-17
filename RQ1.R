@@ -153,8 +153,7 @@ d$Usage <-
     )
   )
 cor.test(d$LA_Mean, as.numeric(d$Usage))
-dt <- data.table(d)
-dtCor <- dt[, .(mCor = cor(as.numeric(LA_Mean),as.numeric(Usage))), by=Device_Owned]
+
 
 ####H2_Disabled Features####
 
@@ -220,6 +219,7 @@ LA_MEAN_USAGE_DEVICE_INTERESTING[4] <- c(cor.test(subset(dtInteresting,Device_Ow
                                          cor.test(subset(dtInteresting,Device_Owned == "Smart Speaker")$LA_Mean, as.numeric(subset(dtInteresting,Device_Owned == "Smart Speaker")$Usage),method = "pearson")$p.value,
                                          cor.test(subset(dtInteresting,Device_Owned == "Smart TV")$LA_Mean, as.numeric(subset(dtInteresting,Device_Owned == "Smart TV")$Usage),method = "pearson")$p.value)
 colnames(LA_MEAN_USAGE_DEVICE_INTERESTING) <- c("Device","Cor", "Method", "P-Value")
+LA_MEAN_USAGE_DEVICE_INTERESTING$`P-Value`<- paste(as.numeric(LA_MEAN_USAGE_DEVICE_INTERESTING$`P-Value`),stars.pval(LA_MEAN_USAGE_DEVICE_INTERESTING$`P-Value`))
 
 ddply(dt, "Device_Owned", summarise, corr=cor(LA_Mean, as.numeric(Usage), method = "pearson"))
 
@@ -310,13 +310,13 @@ LA_E201_Latex_Interesting <- subset(select(cor_test(select(
   E201_11,
   E201_14,
   E201_16
-)),var1,var2,cor,p,method),var1 == "LA_Mean" & var2 != "LA_Mean")
+)),var1,var2,cor,p),var1 == "LA_Mean" & var2 != "LA_Mean")
 
 LA_E201_Latex <- subset(select(cor_test(select(
   singleSourceOfTruthAppended,
   LA_Mean,
   E201_01:E201_20
-)),var1,var2,cor,p,method),var1 == "LA_Mean" & var2 != "LA_Mean")
+)),var1,var2,cor,p),var1 == "LA_Mean" & var2 != "LA_Mean")
 
 #testing correlation between perceived risk for popular Devices
 cor_test(select(
@@ -372,4 +372,4 @@ LA_A204_Latex <- subset(select(cor_test(select(
   singleSourceOfTruthAppended,
   LA_Mean,
   A204_01:A204_06
-)),var1,var2,cor,p,method),var1 == "LA_Mean" & var2 != "LA_Mean")
+)),var1,var2,cor,p),var1 == "LA_Mean" & var2 != "LA_Mean")
