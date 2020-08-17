@@ -121,7 +121,9 @@ Usage_CCR_LATEX <-
     method = "bonferroni"
   )$res
 Usage_CCR_LATEX <- Usage_CCR_LATEX[-c(3)]
+Usage_CCR_LATEX[Usage_CCR_LATEX$P.adj] <- paste(as.numeric(Usage_CCR_LATEX$P.adj),stars.pval(as.numeric(Usage_CCR_LATEX$P.adj)))
 
+view(Usage_CCR_LATEX)
 aggregate(as.numeric(d$Usage),list(d$`Current Country of Residence`),mean)
 
 
