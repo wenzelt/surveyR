@@ -303,6 +303,14 @@ cor.test(singleSourceOfTruthAppended$LA01_03, v)
 cor.test(singleSourceOfTruthAppended$LA_Mean, v)
 
 ####H3_Perception_popular devices####
+LA_E201_Latex <- subset(select(cor_test(select(
+  singleSourceOfTruthAppended,
+  LA_Mean,
+  E201_01:E201_20
+)),var1,var2,cor,p),var1 == "LA_Mean" & var2 != "LA_Mean")
+LA_E201_Latex$p <- paste(LA_E201_Latex$p,stars.pval(LA_E201_Latex$p))
+
+
 
 LA_E201_Latex_Interesting <- subset(select(cor_test(select(
   singleSourceOfTruthAppended,
@@ -310,13 +318,12 @@ LA_E201_Latex_Interesting <- subset(select(cor_test(select(
   E201_11,
   E201_14,
   E201_16
-)),var1,var2,cor,p,method),var1 == "LA_Mean" & var2 != "LA_Mean")
+)),var1,var2,cor,p),var1 == "LA_Mean" & var2 != "LA_Mean")
+LA_E201_Latex_Interesting$p <- paste(LA_E201_Latex_Interesting$p,stars.pval(LA_E201_Latex_Interesting$p))
 
-LA_E201_Latex <- subset(select(cor_test(select(
-  singleSourceOfTruthAppended,
-  LA_Mean,
-  E201_01:E201_20
-)),var1,var2,cor,p,method),var1 == "LA_Mean" & var2 != "LA_Mean")
+
+
+
 
 #testing correlation between perceived risk for popular Devices
 cor_test(select(
@@ -372,4 +379,5 @@ LA_A204_Latex <- subset(select(cor_test(select(
   singleSourceOfTruthAppended,
   LA_Mean,
   A204_01:A204_06
-)),var1,var2,cor,p,method),var1 == "LA_Mean" & var2 != "LA_Mean")
+)),var1,var2,cor,p),var1 == "LA_Mean" & var2 != "LA_Mean")
+LA_A204_Latex$p <- paste(LA_A204_Latex$p,stars.pval(LA_A204_Latex$p))
