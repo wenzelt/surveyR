@@ -120,6 +120,7 @@ Usage_CCR_LATEX <-
     g = as.factor(d$`Current Country of Residence`),
     method = "bonferroni"
   )$res
+Usage_CCR_LATEX <- Usage_CCR_LATEX[-c(3)]
 
 aggregate(as.numeric(d$Usage),list(d$`Current Country of Residence`),mean)
 
@@ -132,7 +133,10 @@ Usage_CCR_LATEX_SMART_TV <-
     g = as.factor(subset(d, Device == "Smart TV")$`Current Country of Residence`),
     method = "bonferroni"
   )$res
+Usage_CCR_LATEX_SMART_TV <- Usage_CCR_LATEX_SMART_TV[-c(3)]
+
 aggregate(as.numeric(subset(d, Device == "Smart TV")$Usage),list(as.factor(subset(d, Device == "Smart TV")$`Current Country of Residence`)),mean)
+
 
 
 Usage_CCR_LATEX_SMART_SPEAKER <-
@@ -143,6 +147,9 @@ Usage_CCR_LATEX_SMART_SPEAKER <-
     ),
     method = "bonferroni"
   )$res
+
+Usage_CCR_LATEX_SMART_SPEAKER <- Usage_CCR_LATEX_SMART_SPEAKER[-c(3)]
+
 aggregate(as.numeric(subset(d, Device == "Smart Speaker")$Usage),list(as.factor(subset(d, Device == "Smart Speaker")$`Current Country of Residence`)),mean)
 
 
@@ -154,6 +161,8 @@ Usage_CCR_LATEX_SMART_LIGHTBULB <-
     ),
     method = "bonferroni"
   )$res
+
+Usage_CCR_LATEX_SMART_LIGHTBULB <- Usage_CCR_LATEX_SMART_LIGHTBULB[-c(3)]
 aggregate(as.numeric(subset(d, Device == "Smart Lightbulb")$Usage),list(as.factor(subset(d, Device == "Smart Lightbulb")$`Current Country of Residence`)),mean)
 
 
@@ -176,6 +185,9 @@ Usage_CCR_LATEX_OTHER <-
     ),
     method = "bonferroni"
   )$res
+
+Usage_CCR_LATEX_OTHER <- Usage_CCR_LATEX_OTHER[-c(3)]
+
 
 
 # kruskal_test(d, formula = Usage ~ `Current Country of Residence`) #ns no effect on usage by region could be measured
@@ -332,7 +344,7 @@ eps2 <-
 
 epsilonSquared <- c(eps1, eps2, "NA")
 dunn_A204_04_LATEX <- cbind(dunn_A204_04$res, epsilonSquared)
-
+dunn_A204_04_LATEX <- dunn_A204_04_LATEX[-c(3)]
 
 
 countryPerception = select(singleSourceOfTruthAppended,
@@ -625,6 +637,7 @@ E201_SMART_TV_RISK_CCR <-
     )
   )
 names(E201_SMART_TV_RISK_CCR)[5] = "EpsilonSquared"
+E201_SMART_TV_RISK_CCR <- E201_SMART_TV_RISK_CCR[-c(3)]
 
 
 #####Country mal A307_04
@@ -693,6 +706,7 @@ data.frame(dunnTest(singleSourceOfTruthAppended$A307_08, singleSourceOfTruthAppe
 data.frame(dunnTest(singleSourceOfTruthAppended$A307_10, singleSourceOfTruthAppended$`Current Country of Residence`, method = "bonferroni")$res)
 ))
 names(A307_LATEX)[1] <- "Code"
+A307_LATEX <- A307_LATEX[-c(4)]
 
 
 detach(singleSourceOfTruthAppended)
