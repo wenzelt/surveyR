@@ -33,9 +33,7 @@ colnames(i3) = c("Voice Assistant", "App on my phone", "Physical buttons on the 
 
 
 device_interaction <- rbind(i1,i2,i3)
-prop.table(device_interaction)
 table(device_interaction,exclude = c("False"),useNA = "no")
-truthTable(device_interaction)
 prop.table(table(device_interaction))
 
 #plotting sex against amount of devices (purely out of interest)
@@ -60,8 +58,7 @@ ggboxplot(
   xlab = "Children or no children"
 )
 
-##H1####
-
+####H1####
 
 # testing for amount of devices per property ownership / renting a property
 
@@ -81,10 +78,16 @@ wilcox.test(singleSourceOfTruthAppended$R101 ~ singleSourceOfTruthAppended$A007 
 kruskal_test(singleSourceOfTruthAppended, formula = R101 ~ A007) 
 
 # Renting and owning distribution in the US DACH UK 
+
 boxplot <- select(singleSourceOfTruthAppended, A007, `Current Country of Residence`)
 ggplot(boxplot, aes(y = `Current Country of Residence`)) +
   geom_bar(aes(fill = A007), position = position_stack(reverse = TRUE)) +
   theme(legend.position = "top")
+
+# boxplot <- select(singleSourceOfTruthAppended, A007, `Current Country of Residence`)
+# ggplot(boxplot, aes(y = `Current Country of Residence`)) +
+#   geom_bar(aes(fill = A007), position = position_stack(reverse = TRUE)) +
+#   theme(legend.position = "top")
 
 ##H2####
 
@@ -129,9 +132,14 @@ colnames(USAGE_A005_LATEX) <- c("Device","Cor", "Method", "P-Value")
 
 #H2 - Household size ~ Device Interaction - R534, R536, R538
 
+<<<<<<< HEAD
 
 
 #H2 - Household size ~ Device Location - R528, R530, R532 //low priority, no interesting findings expected
+=======
+#H2 - Household size ~ Device Location - R528, R530, R532 
+#//low priority, no interesting findings expected
+>>>>>>> 78e9a0f860a3854a44dc5553fef77f2008c571f5
 
 deviceLocation <-
   select(
@@ -144,7 +152,8 @@ deviceLocation <-
   )
 #deviceLocationSmartSpeaker <- merge(deviceLocation,dSmartSpeaker, by="participant_id")
 
-#H2 - Household size ~ Disabled features - R507, 510, R513 //no little disabled features (n=37)-> low priority
+#H2 - Household size ~ Disabled features - R507, 510, R513
+##/no little disabled features (n=37)-> low priority
 
 
 #H3####
@@ -218,7 +227,7 @@ responsibilityChildren_LATEX <- data.frame(
 # 6	E205_06	Usage type: Sensors outside the Home (e.g., Motion Sensors, Light Sensors, etc.)
 # 7	E205_07	Usage type: Automatic Operation based on Device Programming
 
-usageTypeChildren_LATEX <- data.frame(
+USAGETYPE_Children_LATEX <- data.frame(
   "Usage_type" = c("Voice commands via a Smart Speaker",
                    "Voice commands via a Smartphone Voice Assistant",
                    "Smartphone App for the Device",
