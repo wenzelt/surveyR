@@ -644,7 +644,7 @@ E201_SMART_TV_RISK_CCR <-
       "NA"
     )
   )
-names(E201_SMART_TV_RISK_CCR)[5] = "EpsilonSquared"
+names(E201_SMART_TV_RISK_CCR)[5] = "Epsilon^2"
 E201_SMART_TV_RISK_CCR <- E201_SMART_TV_RISK_CCR[-c(3)]
 E201_SMART_TV_RISK_CCR$P.adj <- paste(as.numeric(E201_SMART_TV_RISK_CCR$P.adj),stars.pval(as.numeric(E201_SMART_TV_RISK_CCR$P.adj)))
 
