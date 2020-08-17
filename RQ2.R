@@ -352,6 +352,7 @@ eps2 <-
 epsilonSquared <- c(eps1, eps2, "NA")
 dunn_A204_04_LATEX <- cbind(dunn_A204_04$res, epsilonSquared)
 dunn_A204_04_LATEX <- dunn_A204_04_LATEX[-c(3)]
+dunn_A204_04_LATEX$P.adj <- paste(as.numeric(dunn_A204_04_LATEX$P.adj),stars.pval(as.numeric(dunn_A204_04_LATEX$P.adj)))
 
 
 countryPerception = select(singleSourceOfTruthAppended,
@@ -645,6 +646,7 @@ E201_SMART_TV_RISK_CCR <-
   )
 names(E201_SMART_TV_RISK_CCR)[5] = "EpsilonSquared"
 E201_SMART_TV_RISK_CCR <- E201_SMART_TV_RISK_CCR[-c(3)]
+E201_SMART_TV_RISK_CCR$P.adj <- paste(as.numeric(E201_SMART_TV_RISK_CCR$P.adj),stars.pval(as.numeric(E201_SMART_TV_RISK_CCR$P.adj)))
 
 
 #####Country mal A307_04
@@ -712,8 +714,10 @@ data.frame(dunnTest(singleSourceOfTruthAppended$A307_07, singleSourceOfTruthAppe
 data.frame(dunnTest(singleSourceOfTruthAppended$A307_08, singleSourceOfTruthAppended$`Current Country of Residence`, method = "bonferroni")$res),
 data.frame(dunnTest(singleSourceOfTruthAppended$A307_10, singleSourceOfTruthAppended$`Current Country of Residence`, method = "bonferroni")$res)
 ))
+
 names(A307_LATEX)[1] <- "Code"
 A307_LATEX <- A307_LATEX[-c(4)]
-
+A307_LATEX$P.adj <- paste(as.numeric(A307_LATEX$P.adj),stars.pval(as.numeric(A307_LATEX$P.adj)))
+view(A307_LATEX)
 
 detach(singleSourceOfTruthAppended)

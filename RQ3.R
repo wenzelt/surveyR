@@ -127,7 +127,9 @@ USAGE_A005_LATEX[3] <- "Pearson"
 USAGE_A005_LATEX[4] <- c(cor.test(as.numeric(subset(dtInteresting,Device_Owned == "Smart Lightbulb")$A005), as.numeric(subset(dtInteresting,Device_Owned == "Smart Lightbulb")$Usage),method = "pearson")$p.value,
                                          cor.test(as.numeric(subset(dtInteresting,Device_Owned == "Smart Speaker")$A005), as.numeric(subset(dtInteresting,Device_Owned == "Smart Speaker")$Usage),method = "pearson")$p.value,
                                          cor.test(as.numeric(subset(dtInteresting,Device_Owned == "Smart TV")$A005), as.numeric(subset(dtInteresting,Device_Owned == "Smart TV")$Usage),method = "pearson")$p.value)
+
 colnames(USAGE_A005_LATEX) <- c("Device","Cor", "Method", "P-Value")
+USAGE_A005_LATEX$`P-Value` <- paste(as.numeric(USAGE_A005_LATEX$`P-Value`),stars.pval(as.numeric(USAGE_A005_LATEX$`P-Value`)))
 
 
 #H2 - Household size ~ Device Interaction - R534, R536, R538
@@ -181,6 +183,9 @@ riskChildren_LATEX <- data.frame(
                     wilcox_effsize(singleSourceOfTruthAppended, formula = E201_14 ~ A004)$effsize,
                     wilcox_effsize(singleSourceOfTruthAppended, formula = E201_16 ~ A004)$effsize
   ))
+riskChildren_LATEX$p_value <- paste(as.numeric(riskChildren_LATEX$p_value),stars.pval(as.numeric(riskChildren_LATEX$p_value)))
+
+
 
 #Perception of responsibility
 #1 Keeping the Smart Home device software up-to-date
@@ -212,6 +217,7 @@ responsibilityChildren_LATEX <- data.frame(
                     wilcox_effsize(singleSourceOfTruthAppended, formula = A204_05 ~ A004)$effsize,
                     wilcox_effsize(singleSourceOfTruthAppended, formula = A204_06 ~ A004)$effsize
   ))
+responsibilityChildren_LATEX$p_value <- paste(as.numeric(responsibilityChildren_LATEX$p_value),stars.pval(as.numeric(responsibilityChildren_LATEX$p_value)))
 
 #testing for children affecting the type of usage the user is comfortable with
 
@@ -248,3 +254,4 @@ USAGETYPE_Children_LATEX <- data.frame(
                     wilcox_effsize(singleSourceOfTruthAppended, formula = E205_06 ~ A004)$effsize,
                     wilcox_effsize(singleSourceOfTruthAppended, formula = E205_07 ~ A004)$effsize
   ))
+USAGETYPE_Children_LATEX$p_value <- paste(as.numeric(USAGETYPE_Children_LATEX$p_value),stars.pval(as.numeric(USAGETYPE_Children_LATEX$p_value)))
