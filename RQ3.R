@@ -84,10 +84,14 @@ ggplot(boxplot, aes(y = `Current Country of Residence`)) +
   geom_bar(aes(fill = A007), position = position_stack(reverse = TRUE)) +
   theme(legend.position = "top") + labs(fill = "Living Situation") + labs(y = "Current Region of Residence")
 
-# boxplot <- select(singleSourceOfTruthAppended, A007, `Current Country of Residence`)
-# ggplot(boxplot, aes(y = `Current Country of Residence`)) +
-#   geom_bar(aes(fill = A007), position = position_stack(reverse = TRUE)) +
-#   theme(legend.position = "top")
+
+boxplot <- select(singleSourceOfTruthAppended, A007, `Current Country of Residence`)
+
+p= ggplot(boxplot, aes(y = `Current Country of Residence`)) +
+  geom_bar(aes(fill = A007), position = "fill") +
+  theme(legend.position = "top") +labs(x = "Percentage")+ labs(fill = "Living Situation") + labs(y = "Current Region of Residence")
+p
+
 
 ##H2####
 
