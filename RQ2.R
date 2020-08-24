@@ -120,7 +120,10 @@ Usage_CCR_LATEX <-
     g = as.factor(d$`Current Country of Residence`),
     method = "bonferroni"
   )$res
+Usage_CCR_LATEX <- Usage_CCR_LATEX[-c(3)]
+Usage_CCR_LATEX$P.adj <- paste(signif(as.numeric(Usage_CCR_LATEX$P.adj),4 ),stars.pval(as.numeric(Usage_CCR_LATEX$P.adj)))
 
+view(Usage_CCR_LATEX)
 aggregate(as.numeric(d$Usage),list(d$`Current Country of Residence`),mean)
 
 
@@ -132,7 +135,13 @@ Usage_CCR_LATEX_SMART_TV <-
     g = as.factor(subset(d, Device == "Smart TV")$`Current Country of Residence`),
     method = "bonferroni"
   )$res
+Usage_CCR_LATEX_SMART_TV <- Usage_CCR_LATEX_SMART_TV[-c(3)]
+Usage_CCR_LATEX_SMART_TV$P.adj <- paste(as.numeric(Usage_CCR_LATEX_SMART_TV$P.adj),stars.pval(as.numeric(Usage_CCR_LATEX_SMART_TV$P.adj)))
+Usage_CCR_LATEX_SMART_TV$P.adj <- signif(Usage_CCR_LATEX_SMART_TV$P.adj,4)
+  
+  
 aggregate(as.numeric(subset(d, Device == "Smart TV")$Usage),list(as.factor(subset(d, Device == "Smart TV")$`Current Country of Residence`)),mean)
+
 
 
 Usage_CCR_LATEX_SMART_SPEAKER <-
@@ -143,6 +152,11 @@ Usage_CCR_LATEX_SMART_SPEAKER <-
     ),
     method = "bonferroni"
   )$res
+
+Usage_CCR_LATEX_SMART_SPEAKER <- Usage_CCR_LATEX_SMART_SPEAKER[-c(3)]
+Usage_CCR_LATEX_SMART_SPEAKER$P.adj <- paste(as.numeric(Usage_CCR_LATEX_SMART_SPEAKER$P.adj),stars.pval(as.numeric(Usage_CCR_LATEX_SMART_SPEAKER$P.adj)))
+Usage_CCR_LATEX_SMART_SPEAKER$P.adj <- signif(Usage_CCR_LATEX_SMART_SPEAKER$P.adj,4)
+
 aggregate(as.numeric(subset(d, Device == "Smart Speaker")$Usage),list(as.factor(subset(d, Device == "Smart Speaker")$`Current Country of Residence`)),mean)
 
 
@@ -154,6 +168,12 @@ Usage_CCR_LATEX_SMART_LIGHTBULB <-
     ),
     method = "bonferroni"
   )$res
+
+Usage_CCR_LATEX_SMART_LIGHTBULB <- Usage_CCR_LATEX_SMART_LIGHTBULB[-c(3)]
+Usage_CCR_LATEX_SMART_LIGHTBULB$P.adj <- paste(as.numeric(Usage_CCR_LATEX_SMART_LIGHTBULB$P.adj),stars.pval(as.numeric(Usage_CCR_LATEX_SMART_LIGHTBULB$P.adj)))
+Usage_CCR_LATEX_SMART_LIGHTBULB$P.adj <- signif(Usage_CCR_LATEX_SMART_LIGHTBULB$P.adj,4)
+
+
 aggregate(as.numeric(subset(d, Device == "Smart Lightbulb")$Usage),list(as.factor(subset(d, Device == "Smart Lightbulb")$`Current Country of Residence`)),mean)
 
 
@@ -176,6 +196,10 @@ Usage_CCR_LATEX_OTHER <-
     ),
     method = "bonferroni"
   )$res
+
+Usage_CCR_LATEX_OTHER <- Usage_CCR_LATEX_OTHER[-c(3)]
+Usage_CCR_LATEX_OTHER$P.adj <- paste(as.numeric(Usage_CCR_LATEX_OTHER$P.adj),stars.pval(as.numeric(Usage_CCR_LATEX_OTHER$P.adj)))
+
 
 
 # kruskal_test(d, formula = Usage ~ `Current Country of Residence`) #ns no effect on usage by region could be measured
@@ -332,7 +356,8 @@ eps2 <-
 
 epsilonSquared <- c(eps1, eps2, "NA")
 dunn_A204_04_LATEX <- cbind(dunn_A204_04$res, epsilonSquared)
-
+dunn_A204_04_LATEX <- dunn_A204_04_LATEX[-c(3)]
+dunn_A204_04_LATEX$P.adj <- paste(as.numeric(dunn_A204_04_LATEX$P.adj),stars.pval(as.numeric(dunn_A204_04_LATEX$P.adj)))
 
 
 countryPerception = select(singleSourceOfTruthAppended,
@@ -624,7 +649,9 @@ E201_SMART_TV_RISK_CCR <-
       "NA"
     )
   )
-names(E201_SMART_TV_RISK_CCR)[5] = "EpsilonSquared"
+names(E201_SMART_TV_RISK_CCR)[5] = "Epsilon^2"
+E201_SMART_TV_RISK_CCR <- E201_SMART_TV_RISK_CCR[-c(3)]
+E201_SMART_TV_RISK_CCR$P.adj <- paste(as.numeric(E201_SMART_TV_RISK_CCR$P.adj),stars.pval(as.numeric(E201_SMART_TV_RISK_CCR$P.adj)))
 
 
 #####Country mal A307_04
@@ -692,7 +719,12 @@ data.frame(dunnTest(singleSourceOfTruthAppended$A307_07, singleSourceOfTruthAppe
 data.frame(dunnTest(singleSourceOfTruthAppended$A307_08, singleSourceOfTruthAppended$`Current Country of Residence`, method = "bonferroni")$res),
 data.frame(dunnTest(singleSourceOfTruthAppended$A307_10, singleSourceOfTruthAppended$`Current Country of Residence`, method = "bonferroni")$res)
 ))
+
 names(A307_LATEX)[1] <- "Code"
+A307_LATEX <- A307_LATEX[-c(4)]
+A307_LATEX$P.adj <- paste(as.numeric(A307_LATEX$P.adj),stars.pval(as.numeric(A307_LATEX$P.adj)))
+
+
 
 
 detach(singleSourceOfTruthAppended)
