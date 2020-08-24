@@ -1,27 +1,22 @@
-list.of.packages <- c("ggplot2", "tidyverse", "dplyr", "ggpubr")
-new.packages <-
-  list.of.packages[!(list.of.packages %in% installed.packages()[, "Package"])]
-if (length(new.packages))
-  install.packages(new.packages)
 
-library(tidyverse)
-library(dplyr)
-library(ggplot2)
-library(ggpubr)
-library(rstatix)
-library(readxl)
-
-
-singleSourceOfTruthAppended <-
-  read_xlsx("singleSourceOfTruthAppended_P.xlsx")
-singleSourceOfTruthAppended <-
-  subset(singleSourceOfTruthAppended,
-         `Current Country of Residence` != "NA")
-
-prop.table(table(singleSourceOfTruthAppended$Sex))
-prop.table(table(singleSourceOfTruthAppended$age))
-prop.table(table(singleSourceOfTruthAppended$A003))#edu
+prop.table(table(singleSourceOfTruthAppended$Sex)) # female 
+prop.table(table(singleSourceOfTruthAppended$age)) # 32.14 years old
+prop.table(table(singleSourceOfTruthAppended$A003))#Bachelor's degree
 prop.table(table(singleSourceOfTruthAppended$A006))
+prop.table(table(singleSourceOfTruthAppended$A007))
+
+
+mean(as.numeric(as.character(singleSourceOfTruthAppended$age)), na.rm = T)
+max(prop.table(table(singleSourceOfTruthAppended$A003)))#edu
+max(prop.table(table(singleSourceOfTruthAppended$A006)))#between 40k and 49,999k 
+prop.table(table(singleSourceOfTruthAppended$A007))# rents house 
+
+
+
+
+
+
+
 range(rowMeans(select(singleSourceOfTruthAppended, S101_01:S101_12)))
 range(singleSourceOfTruthAppended$sebis_avg)
 range(singleSourceOfTruthAppended$sebis_DeviceSecurement_avg)
