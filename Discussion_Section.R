@@ -14,4 +14,30 @@ location_stacked <- subset(cbind(A=location[,13],stack(location[1:12])),values==
 summary(location_stacked)
 table(location_stacked$ind,location_stacked$`Current Country of Residence`)
 prop.table(table(location_stacked$ind,location_stacked$`Current Country of Residence`))
-CrossTable(location_stacked$ind)
+
+
+#RQ3 preserving privacy of certain people in the household E203
+
+E203 <- select(singleSourceOfTruthAppended,E203_01:E203_07)
+colnames(E203) = c("I wish to preserve the privacy of the adults in my household.","I wish to preserve the privacy of my children.","I wish to preserve the privacy of my guests.","I wish to preserve the privacy of my pets.
+","I perceive no benefit from using Smart Home devices.","I find Smart Home devices too expensive.","I do not have a domestic Internet connection suitable for the use of Smart Home devices.")
+
+count(E203[1]) #327 T / 108 F 75.2%
+count(E203[2]) #215 T / 220 F 49.4%
+count(E203[3]) #182 T / 253 F 41.8%
+count(E203[4]) 
+count(E203[5])
+count(E203[6])
+count(E203[7])
+
+
+
+
+df <- as.data.frame(E203)
+nn <- names(df)
+for (i in seq_along(df)) {
+  df[i] <- ifelse(df[i] == TRUE, nn[i], df[i])
+}
+df %>% 
+  transmute_all(funs(ifelse(. == TRUE, deparse(substitute(.)), NA)))
+

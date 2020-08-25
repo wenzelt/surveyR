@@ -229,6 +229,11 @@ responsibilityChildren_LATEX$p_value <- paste(as.numeric(responsibilityChildren_
 # 6	E205_06	Usage type: Sensors outside the Home (e.g., Motion Sensors, Light Sensors, etc.)
 # 7	E205_07	Usage type: Automatic Operation based on Device Programming
 
+aggregate(singleSourceOfTruthAppended$E205_01,
+          list(singleSourceOfTruthAppended$A004),
+          mean)
+
+
 USAGETYPE_Children_LATEX <- data.frame(
   "Usage_type" = c("Voice commands via a Smart Speaker",
                    "Voice commands via a Smartphone Voice Assistant",
