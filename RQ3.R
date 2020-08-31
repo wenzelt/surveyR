@@ -87,11 +87,25 @@ ggplot(boxplot, aes(y = `Current Country of Residence`)) +
 
 boxplot <- select(singleSourceOfTruthAppended, A007, `Current Country of Residence`)
 
-p= ggplot(boxplot, aes(y = `Current Country of Residence`)) +
-  geom_bar(aes(fill = A007), position = "fill") +
-  theme(legend.position = "top") +labs(x = "Percentage")+ labs(fill = "Living Situation") + labs(y = "Current Region of Residence")
-p
+piechart <- boxplot %>%
+  group_by(`Current Country of Residence`, A007) %>%
+  dplyr::summarise(count = n()) %>%
+  group_by(`Current Country of Residence`) %>%
+  mutate(per=count/sum(count)) %>% 
+  ungroup()
 
+ggplot(piechart, aes(x= "", y = per, fill=A007)) + 
+  geom_col( width=1, position = "fill") +
+  facet_wrap(~`Current Country of Residence`)+
+  ggtitle("Living Situation in Regions surveyed in percent") +
+  coord_polar("y", start=0) +
+  scale_y_continuous(labels = scales::percent)+
+  scale_fill_discrete(name = "Living situation")+
+  theme(axis.text.x = element_text(color = "grey20", size = 6, angle = 0, hjust =0.5, vjust = 0.5, face = "plain"),
+        axis.text.y = element_text(color = "grey20", size = 0, angle = 0, hjust = 1, vjust = 0, face = "plain"),  
+        axis.title.x = element_text(color = "grey20", size = 0, angle = 0, hjust = .5, vjust = 0, face = "plain"),
+        axis.title.y = element_text(color = "grey20", size = 0, angle = 90, hjust = .5, vjust = .5, face = "plain")
+  )
 
 ##H2####
 
@@ -150,11 +164,11 @@ deviceLocation <-
   )
 #deviceLocationSmartSpeaker <- merge(deviceLocation,dSmartSpeaker, by="participant_id")
 
-#H2 - Household size ~ Disabled features - R507, 510, R513
+#H1 - Household size ~ Disabled features - R507, 510, R513
 ##/no little disabled features (n=37)-> low priority
 
 
-#H3####
+#H2####
 ##testing wilcox test for children > 0 impact on amount of devices##
 
 #plotting having children and not having children against eachother
