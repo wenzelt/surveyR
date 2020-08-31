@@ -101,6 +101,7 @@ ggplot(piechart, aes(x= "", y = per, fill=A007)) +
   coord_polar("y", start=0) +
   scale_y_continuous(labels = scales::percent)+
   scale_fill_discrete(name = "Living situation")+
+  scale_fill_brewer(palette="Accent") + 
   theme(axis.text.x = element_text(color = "grey20", size = 6, angle = 0, hjust =0.5, vjust = 0.5, face = "plain"),
         axis.text.y = element_text(color = "grey20", size = 0, angle = 0, hjust = 1, vjust = 0, face = "plain"),  
         axis.title.x = element_text(color = "grey20", size = 0, angle = 0, hjust = .5, vjust = 0, face = "plain"),
