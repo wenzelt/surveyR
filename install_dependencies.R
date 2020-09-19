@@ -1,7 +1,7 @@
 #this script installs the necessary dependencies and loads our dataset reliably.
 
 list.of.packages <-
-  c("ggplot2", "tidyverse","sjPlot","data.table","plyr","psych","lattice","multcompView", "dplyr", "ggpubr","QCA", "FSA", "dunn.test","rcompanion")
+  c("ggplot2", "tidyverse","stringi","sjPlot","data.table","plyr","psych","lattice","multcompView", "dplyr", "ggpubr","QCA", "FSA", "dunn.test","rcompanion")
 new.packages <-
   list.of.packages[!(list.of.packages %in% installed.packages()[, "Package"])]
 if (length(new.packages))
@@ -33,6 +33,9 @@ singleSourceOfTruthAppended <-
   subset(singleSourceOfTruthAppended,
          `Current Country of Residence` != "NA")
 
+#load index of questions into dataframe 
+Code_Answer_transpose <- read_delim("Excels/Code_Answer_transpose.csv", 
+                                    ";", escape_double = FALSE, trim_ws = TRUE)
 
 #corrections in the code 
 singleSourceOfTruthAppended$A004 <-ifelse(singleSourceOfTruthAppended$A004 > 0, 1, 0)

@@ -41,3 +41,7 @@ for (i in seq_along(df)) {
 df %>% 
   transmute_all(funs(ifelse(. == TRUE, deparse(substitute(.)), NA)))
 
+
+test <- cbind(colMeans(select(Participants_DACH, E201_01:E201_20)),colMeans(select(Participants_UK, E201_01:E201_20)),colMeans(select(Participants_US, E201_01:E201_20)))
+dunnTest(x=as.numeric(singleSourceOfTruthAppended$E201_16),g=as.factor(singleSourceOfTruthAppended$`Current Country of Residence`))
+
