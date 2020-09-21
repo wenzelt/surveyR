@@ -211,7 +211,7 @@ ggboxplot(
 ####H2_Device_usage_TV,Speaker,Light####
 
 #Device Usage x LA_Mean 
-dtInteresting <- filter(dt, Device_Owned == "Smart TV" | Device_Owned == "Smart Lightbulb" | Device_Owned == "Smart Speaker")
+dtInteresting <- subset(dt, Device_Owned == "Smart TV" | Device_Owned == "Smart Lightbulb" | Device_Owned == "Smart Speaker")
 dt = group_by(dtInteresting, Device_Owned)
 LA_MEAN_USAGE_DEVICE_INTERESTING <- dplyr::summarize(dt, cor(LA_Mean, as.numeric(Usage)))
 LA_MEAN_USAGE_DEVICE_INTERESTING[3] <- "Pearson"
