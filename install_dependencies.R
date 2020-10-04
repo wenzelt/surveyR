@@ -1,12 +1,14 @@
 #this script installs the necessary dependencies and loads our dataset reliably.
 
 list.of.packages <-
-  c("ggplot2", "tidyverse","stringi","sjPlot","data.table","plyr","psych","lattice","multcompView", "dplyr", "ggpubr","QCA", "FSA", "dunn.test","rcompanion")
+  c("ggplot2", "tidyverse","summarytools","stringi","sjPlot","data.table","plyr","psych","lattice","multcompView", "dplyr", "ggpubr","QCA", "FSA", "dunn.test","rcompanion")
 new.packages <-
   list.of.packages[!(list.of.packages %in% installed.packages()[, "Package"])]
 if (length(new.packages))
   install.packages(new.packages)
 
+
+library(summarytools)
 library(rcompanion)
 library(FSA)
 library(dunn.test)
