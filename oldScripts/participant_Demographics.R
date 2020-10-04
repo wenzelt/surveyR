@@ -6,7 +6,9 @@ prop.table(table(singleSourceOfTruthAppended$A006))
 prop.table(table(singleSourceOfTruthAppended$A007))
 
 demographics <- select(singleSourceOfTruthAppended, Sex, age,A001, A003, A006, A007)
-view(dfSummary(demographics))
+demographics$age <- cut(as.numeric(demographics$age),seq(0, 100, 10))
+
+view(dfSummary(demographics, round.digits = 2, style = 'grid', max.distinct.values = 40))
 
 mean(as.numeric(as.character(singleSourceOfTruthAppended$age)), na.rm = T)
 max(prop.table(table(singleSourceOfTruthAppended$A003)))#edu
