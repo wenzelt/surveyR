@@ -44,4 +44,6 @@ df %>%
 
 test <- cbind(colMeans(select(Participants_DACH, E201_01:E201_20)),colMeans(select(Participants_UK, E201_01:E201_20)),colMeans(select(Participants_US, E201_01:E201_20)))
 dunnTest(x=as.numeric(singleSourceOfTruthAppended$E201_16),g=as.factor(singleSourceOfTruthAppended$`Current Country of Residence`))
+dunnTest(x=as.numeric(singleSourceOfTruthAppended$LA_Mean),g=as.factor(singleSourceOfTruthAppended$`Current Country of Residence`))
+aggregate(singleSourceOfTruthAppended$LA_Mean ~ singleSourceOfTruthAppended$`Current Country of Residence`, data = singleSourceOfTruthAppended, mean)
 
