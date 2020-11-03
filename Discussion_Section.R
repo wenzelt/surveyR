@@ -47,3 +47,14 @@ dunnTest(x=as.numeric(singleSourceOfTruthAppended$E201_16),g=as.factor(singleSou
 dunnTest(x=as.numeric(singleSourceOfTruthAppended$LA_Mean),g=as.factor(singleSourceOfTruthAppended$`Current Country of Residence`))
 aggregate(singleSourceOfTruthAppended$LA_Mean ~ singleSourceOfTruthAppended$`Current Country of Residence`, data = singleSourceOfTruthAppended, mean)
 
+#MUIPC Sebis experiments
+rcorr(as.matrix(select(singleSourceOfTruthAppended,muipc_PerceivedSur_avg,muipc_PerceivedIntrusion_avg,muipc_PersonalInformation_avg,A204_04)))
+cor.test(singleSourceOfTruthAppended$muipc_PerceivedSur_avg,singleSourceOfTruthAppended$A204_04)
+
+
+#Getting the qualitative from disabled devices: 
+library(tidyr)
+disabled_features <- select(singleSourceOfTruthAppended,R509_07a,R542_07a,R512_07a)
+disabled_features <- data.frame(a=unlist(a, use.names = FALSE))
+disabled_features <- disabled_features %>% filter(a!= "NA")
+write_csv(disabled_features, path = "./Excels/disabled_features.csv")
