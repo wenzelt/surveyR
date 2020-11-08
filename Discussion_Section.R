@@ -1,3 +1,11 @@
+
+####RQ1####
+
+#Checking for diff of first time user and others
+
+
+
+
 location <- select(singleSourceOfTruthAppended, R528_01:R528_12, R529_01:R529_12,R530_01:R530_12, `Current Country of Residence`)
 
 location1 <- select(singleSourceOfTruthAppended,R528_01:R528_12, `Current Country of Residence`)
@@ -16,7 +24,8 @@ table(location_stacked$ind,location_stacked$`Current Country of Residence`)
 prop.table(table(location_stacked$ind,location_stacked$`Current Country of Residence`))
 
 
-#RQ3 preserving privacy of certain people in the household E203
+####RQ3 preserving privacy of certain people in the household E203####
+
 
 E203 <- select(singleSourceOfTruthAppended,E203_01:E203_07)
 colnames(E203) = c("I wish to preserve the privacy of the adults in my household.","I wish to preserve the privacy of my children.","I wish to preserve the privacy of my guests.","I wish to preserve the privacy of my pets.
