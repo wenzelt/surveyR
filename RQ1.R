@@ -439,6 +439,7 @@ var1 == "LA_Mean" & var2 != "LA_Mean")
 # [EXPLANATION] we cannot find a large correlation between manufacturer responsibility and perceived legilsative protection
 
 
+
 # perception - how does perceived legislative protection influence perceived surveillance
 cor_test(select(singleSourceOfTruthAppended, LA_Mean, muipc_PerceivedSur_avg))
 # higher legislative protection negatively impacts perceived surveillance greatly
