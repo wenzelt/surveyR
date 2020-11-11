@@ -367,6 +367,24 @@ aggregate(countryPerception[, 2],
           list(countryPerception$`Current Country of Residence`),
           mean)
 
+library(plyr)
+mu <- ddply(countryPerception,"`Current Country of Residence`", summarise, grp.mean=mean(A204_04))
+
+
+p <- ggplot(countryPerception, aes(x=countryPerception$A204_04, color=countryPerception$`Current Country of Residence`)) +
+  geom_density() + geom_vline(data=mu, aes(xintercept=grp.mean, color=`Current Country of Residence`),
+           linetype="dashed")+scale_color_brewer(palette="Dark2") + labs(title="Manufacturer responsibility - keeping smart home device secure",
+                                                                         x ="Likert Scale from myself vs. Manufacturer", y = "density") + theme(legend.title = element_blank())
+# barplot, show the whole scale, germans want to take more responsibility or no trust in responsibility. Protected by GDPR , different regions call to different conclusions, test for a206 global change, in all three regions there is a desire to place responsibility on the manufacturer
+# english speaking countries nudged into Manufacturer domain
+# No real trends add mean and
+p
+
+a <- ggplot(countryPerception, aes(x=A204_04, color=`Current Country of Residence`, fill=`Current Country of Residence`)) + 
+  geom_histogram(aes(y=..density..), alpha=0.5, 
+                 position="identity")+
+  geom_density(alpha=.2) 
+a
 # Group.1  A204_04
 # 1           DACH 3.940741
 # 2 United Kingdom 4.535484
