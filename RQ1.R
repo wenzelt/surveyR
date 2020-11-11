@@ -1,5 +1,6 @@
 
 
+
 ############################### RQ_01 ##############################################################
 ##fresh start to analyses###
 
@@ -16,33 +17,34 @@
 
 ####H1_Purchase Behaviour####
 
-#how does the purchase behaviour / adoption of smart home devices change in regards to the participant's feeling legistlative protection 
+#how does the purchase behaviour / adoption of smart home devices change in regards to the participant's feeling legistlative protection
 
 #Rq1 - H1 LA01_01 - R101
 # R101 equals the amount of owned devices of the user
 
 #testing for unwanted access to data with amount of different devices owned.
 
-#variance of devices correlates with the Legislative satisfaction lightly 
+#variance of devices correlates with the Legislative satisfaction lightly
 cor.test(singleSourceOfTruthAppended$LA01_01,
-         singleSourceOfTruthAppended$R101) #* 
+         singleSourceOfTruthAppended$R101) #*
 cor.test(singleSourceOfTruthAppended$LA01_02,
          singleSourceOfTruthAppended$R101) #-
 cor.test(singleSourceOfTruthAppended$LA01_03,
          singleSourceOfTruthAppended$R101) #*
-cor.test(singleSourceOfTruthAppended$LA_Mean,singleSourceOfTruthAppended$R101) #* 
+cor.test(singleSourceOfTruthAppended$LA_Mean,
+         singleSourceOfTruthAppended$R101) #*
 
-# [EXPLANATION] Overall shows that the more the participants feel protected from evil entities by legislation the more different devices they own 
+# [EXPLANATION] Overall shows that the more the participants feel protected from evil entities by legislation the more different devices they own
 
 
 
-# [EXPLANATION] Is there a difference in the amount of devices by region investigated? 
+# [EXPLANATION] Is there a difference in the amount of devices by region investigated?
 
-kruskal_test(rbind(Participants_UK,Participants_US), LA_Mean ~ R101) #* 
-kruskal_test(rbind(Participants_DACH,Participants_US), LA_Mean ~ R101) #* 
-kruskal_test(rbind(Participants_DACH,Participants_UK), LA_Mean ~ R101) #* 
+kruskal_test(rbind(Participants_UK, Participants_US), LA_Mean ~ R101) #*
+kruskal_test(rbind(Participants_DACH, Participants_US), LA_Mean ~ R101) #*
+kruskal_test(rbind(Participants_DACH, Participants_UK), LA_Mean ~ R101) #*
 
-#There is significant difference in the means of the different countries regarding the legislative protection and the amount of devices unique owned 
+#There is significant difference in the means of the different countries regarding the legislative protection and the amount of devices unique owned
 
 ####H1_Pairwise comparison, only used for discussion####
 
@@ -150,14 +152,39 @@ u <-
   )
 
 #filtering out devices owned for our analysis on the recurring devices
-d1 <- select(subset(singleSourceOfTruthAppended, R233_01 == 1), participant_id, R232_01, R501, LA_Mean) 
-d2 <- select(subset(singleSourceOfTruthAppended, R233_02 == 1), participant_id, R232_02, R503, LA_Mean) 
-d3 <- select(subset(singleSourceOfTruthAppended, R233_03 == 1), participant_id, R232_03, R505, LA_Mean)
-colnames(d1) <- c("participant_id", "Device_Owned", "Usage", "LA_Mean")
-colnames(d2) <- c("participant_id", "Device_Owned", "Usage", "LA_Mean")
-colnames(d3) <- c("participant_id", "Device_Owned", "Usage", "LA_Mean")
+d1 <-
+  select(
+    subset(singleSourceOfTruthAppended, R233_01 == 1),
+    participant_id,
+    R232_01,
+    R501,
+    LA_Mean
+  )
+d2 <-
+  select(
+    subset(singleSourceOfTruthAppended, R233_02 == 1),
+    participant_id,
+    R232_02,
+    R503,
+    LA_Mean
+  )
+d3 <-
+  select(
+    subset(singleSourceOfTruthAppended, R233_03 == 1),
+    participant_id,
+    R232_03,
+    R505,
+    LA_Mean
+  )
+colnames(d1) <-
+  c("participant_id", "Device_Owned", "Usage", "LA_Mean")
+colnames(d2) <-
+  c("participant_id", "Device_Owned", "Usage", "LA_Mean")
+colnames(d3) <-
+  c("participant_id", "Device_Owned", "Usage", "LA_Mean")
 d <- rbind(d1, d2, d3)
-d <- subset(d, Usage != "Don't know") #filtering out the options of I do not know due to them not holding additional data 
+d <-
+  subset(d, Usage != "Don't know") #filtering out the options of I do not know due to them not holding additional data
 d$Usage <-
   factor(
     d$Usage,
@@ -170,21 +197,32 @@ d$Usage <-
       "30+ times"
     )
   )
-cor.test(d$LA_Mean, as.numeric(d$Usage)) 
+cor.test(d$LA_Mean, as.numeric(d$Usage))
 
-# [Explanation] we find that the usage of devices correlates positively when the participants fell protected by legislation 
+# [Explanation] we find that the usage of devices correlates positively when the participants fell protected by legislation
 
 
 ####H2_Disabled Features#### -- too little people to use in analysis
 
 disabled_features <-
-  select(singleSourceOfTruthAppended,
-         participant_id,
-         R507,
-         R510,
-         R513,
-         LA01_01,LA01_02,LA01_03,)
-disabled_features$choice <-ifelse(disabled_features$R507 == "Yes" | disabled_features$R510 == "Yes" | disabled_features$R513 == "Yes", 1, 0)
+  select(
+    singleSourceOfTruthAppended,
+    participant_id,
+    R507,
+    R510,
+    R513,
+    LA01_01,
+    LA01_02,
+    LA01_03,
+  )
+disabled_features$choice <-
+  ifelse(
+    disabled_features$R507 == "Yes" |
+      disabled_features$R510 == "Yes" |
+      disabled_features$R513 == "Yes",
+    1,
+    0
+  )
 
 wilcox.test(disabled_features$LA01_01, disabled_features$choice) #p-value < 2.2e-16
 wilcox.test(disabled_features$LA01_02, disabled_features$choice) #p-value < 2.2e-16
@@ -230,61 +268,113 @@ ggboxplot(
 
 ####H2 Device specific usage in popular smart home devices - how does usage relate to legislative protection?
 
-#Device Usage x LA_Mean 
-dtInteresting <- subset(d, Device_Owned == "Smart TV" | Device_Owned == "Smart Lightbulb" | Device_Owned == "Smart Speaker")
+#Device Usage x LA_Mean
+dtInteresting <-
+  subset(
+    d,
+    Device_Owned == "Smart TV" |
+      Device_Owned == "Smart Lightbulb" |
+      Device_Owned == "Smart Speaker"
+  )
 dt = group_by(dtInteresting, Device_Owned)
-LA_MEAN_USAGE_DEVICE_INTERESTING <- dplyr::summarize(dt, cor(LA_Mean, as.numeric(Usage)))
+LA_MEAN_USAGE_DEVICE_INTERESTING <-
+  dplyr::summarize(dt, cor(LA_Mean, as.numeric(Usage)))
 LA_MEAN_USAGE_DEVICE_INTERESTING[3] <- "Pearson"
-LA_MEAN_USAGE_DEVICE_INTERESTING[4] <- c(cor.test(subset(dtInteresting,Device_Owned == "Smart Lightbulb")$LA_Mean, as.numeric(subset(dtInteresting,Device_Owned == "Smart Lightbulb")$Usage),method = "pearson")$p.value,
-                                         cor.test(subset(dtInteresting,Device_Owned == "Smart Speaker")$LA_Mean, as.numeric(subset(dtInteresting,Device_Owned == "Smart Speaker")$Usage),method = "pearson")$p.value,
-                                         cor.test(subset(dtInteresting,Device_Owned == "Smart TV")$LA_Mean, as.numeric(subset(dtInteresting,Device_Owned == "Smart TV")$Usage),method = "pearson")$p.value)
-colnames(LA_MEAN_USAGE_DEVICE_INTERESTING) <- c("Device","Cor", "Method", "P-Value")
+LA_MEAN_USAGE_DEVICE_INTERESTING[4] <-
+  c(
+    cor.test(
+      subset(dtInteresting, Device_Owned == "Smart Lightbulb")$LA_Mean,
+      as.numeric(subset(
+        dtInteresting, Device_Owned == "Smart Lightbulb"
+      )$Usage),
+      method = "pearson"
+    )$p.value,
+    cor.test(
+      subset(dtInteresting, Device_Owned == "Smart Speaker")$LA_Mean,
+      as.numeric(subset(
+        dtInteresting, Device_Owned == "Smart Speaker"
+      )$Usage),
+      method = "pearson"
+    )$p.value,
+    cor.test(
+      subset(dtInteresting, Device_Owned == "Smart TV")$LA_Mean,
+      as.numeric(subset(dtInteresting, Device_Owned == "Smart TV")$Usage),
+      method = "pearson"
+    )$p.value
+  )
+colnames(LA_MEAN_USAGE_DEVICE_INTERESTING) <-
+  c("Device", "Cor", "Method", "P-Value")
 
 #overall correlation over all 3 devices
-cor.test(dtInteresting$LA_Mean, as.numeric(dtInteresting$Usage),method = "pearson")
+cor.test(dtInteresting$LA_Mean,
+         as.numeric(dtInteresting$Usage),
+         method = "pearson")
 
 #All devices in one table
-ddply(dt, "Device_Owned", summarise, corr=cor(LA_Mean, as.numeric(Usage), method = "pearson"))
+ddply(dt,
+      "Device_Owned",
+      summarise,
+      corr = cor(LA_Mean, as.numeric(Usage), method = "pearson"))
 
 #individual correlations
-cor.test(subset(dtInteresting,Device_Owned == "Smart TV")$LA_Mean, as.numeric(subset(dtInteresting,Device_Owned == "Smart TV")$Usage),method = "pearson")
-cor.test(subset(dtInteresting,Device_Owned == "Smart Speaker")$LA_Mean, as.numeric(subset(dtInteresting,Device_Owned == "Smart Speaker")$Usage),method = "pearson")
-cor.test(subset(dtInteresting,Device_Owned == "Smart Lightbulb")$LA_Mean, as.numeric(subset(dtInteresting,Device_Owned == "Smart Lightbulb")$Usage),method = "pearson")
+cor.test(
+  subset(dtInteresting, Device_Owned == "Smart TV")$LA_Mean,
+  as.numeric(subset(dtInteresting, Device_Owned == "Smart TV")$Usage),
+  method = "pearson"
+)
+cor.test(
+  subset(dtInteresting, Device_Owned == "Smart Speaker")$LA_Mean,
+  as.numeric(subset(
+    dtInteresting, Device_Owned == "Smart Speaker"
+  )$Usage),
+  method = "pearson"
+)
+cor.test(
+  subset(dtInteresting, Device_Owned == "Smart Lightbulb")$LA_Mean,
+  as.numeric(subset(
+    dtInteresting, Device_Owned == "Smart Lightbulb"
+  )$Usage),
+  method = "pearson"
+)
 
-####H3_Perception#### How is perception affected by the feeling of legislative protection ? 
+####H3_Perception#### How is perception affected by the feeling of legislative protection ?
 #E201_01-20 correspond to the perceived risk of a certain device
 #11 Smart Lightbuld; 14 Smart Speaker; 16 Smart TV
 
 # over all devices. Different devices and use cases generate noise
 v <- rowMeans(select(singleSourceOfTruthAppended, E201_01:E201_20))
-cor.test(singleSourceOfTruthAppended$LA01_01, v) 
+cor.test(singleSourceOfTruthAppended$LA01_01, v)
 cor.test(singleSourceOfTruthAppended$LA01_02, v)
 cor.test(singleSourceOfTruthAppended$LA01_03, v)
 cor.test(singleSourceOfTruthAppended$LA_Mean, v)
 #even though it generates noise, we find that with a statistically significant value
-# device risk assessment goes down when the participants feel protected by legislation 
+# device risk assessment goes down when the participants feel protected by legislation
 
 
 ####H3_Perception_popular devices####
 
 #correlation of interesting devices (3)
-LA_E201_Latex_Interesting <- subset(select(cor_test(select(
-  singleSourceOfTruthAppended,
-  LA_Mean,
-  E201_11,
-  E201_14,
-  E201_16
-)),var1,var2,cor,p),var1 == "LA_Mean" & var2 != "LA_Mean")
-# [explanation] we find that the smart speaker benefits the most from strong legislation due to a significant drop in risk 
+LA_E201_Latex_Interesting <- subset(select(cor_test(
+  select(
+    singleSourceOfTruthAppended,
+    LA_Mean,
+    E201_11,
+    E201_14,
+    E201_16
+  )
+), var1, var2, cor, p),
+var1 == "LA_Mean" & var2 != "LA_Mean")
+# [explanation] we find that the smart speaker benefits the most from strong legislation due to a significant drop in risk
 
 
-#correlation of all devices we have asked 
-LA_E201_Latex <- subset(select(cor_test(select(
-  singleSourceOfTruthAppended,
-  LA_Mean,
-  E201_01:E201_20
-)),var1,var2,cor,p),var1 == "LA_Mean" & var2 != "LA_Mean")
-# we find that the smart home monitoring system receives a huge boost and has 49 people owning it 
+#correlation of all devices we have asked
+LA_E201_Latex <- subset(select(cor_test(
+  select(singleSourceOfTruthAppended,
+         LA_Mean,
+         E201_01:E201_20)
+), var1, var2, cor, p),
+var1 == "LA_Mean" & var2 != "LA_Mean")
+# we find that the smart home monitoring system receives a huge boost and has 49 people owning it
 
 cor_test(select(singleSourceOfTruthAppended, LA_Mean, E201_10))
 #shows large negative impact on device risk when high legislative satisfaction
@@ -332,26 +422,23 @@ cor_test(select(
 ####H3_Perceived Responsibility####
 #Correlation between LA01 and Manufacturer responsibility
 #Likert-scale from 0-me to 7-manufacturer
- #Keeping the Smart Home device software up-to-date
- #Ensuring my privacy
- #Protecting my Smart Home ecosystem as a whole #ns
- #keeping my device secure #ns
- #Fixing a hardware failure
- #Fixing a software failure
+#Keeping the Smart Home device software up-to-date
+#Ensuring my privacy
+#Protecting my Smart Home ecosystem as a whole #ns
+#keeping my device secure #ns
+#Fixing a hardware failure
+#Fixing a software failure
 
 cor_test(select(singleSourceOfTruthAppended, LA_Mean, A204_01:A204_06))
-LA_A204_Latex <- subset(select(cor_test(select(
-  singleSourceOfTruthAppended,
-  LA_Mean,
-  A204_01:A204_06
-)),var1,var2,cor,p),var1 == "LA_Mean" & var2 != "LA_Mean")
+LA_A204_Latex <- subset(select(cor_test(
+  select(singleSourceOfTruthAppended,
+         LA_Mean,
+         A204_01:A204_06)
+), var1, var2, cor, p),
+var1 == "LA_Mean" & var2 != "LA_Mean")
 # [EXPLANATION] we cannot find a large correlation between manufacturer responsibility and perceived legilsative protection
 
 
 # perception - how does perceived legislative protection influence perceived surveillance
 cor_test(select(singleSourceOfTruthAppended, LA_Mean, muipc_PerceivedSur_avg))
 # higher legislative protection negatively impacts perceived surveillance greatly
-
-
-
-
