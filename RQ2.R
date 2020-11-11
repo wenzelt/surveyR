@@ -1,4 +1,5 @@
 
+
 ########################## RQ_02 ###################################################
 # RQ2: How does the cultural context impact Smart Home device adoption and use?
 # H1: The purchasing trends of buying a Smart Home device differs internationally.
@@ -45,9 +46,9 @@ kruskal_test(singleSourceOfTruthAppended,
 
 
 
-##H2#### - usage affected by region? 
+##H2#### - usage affected by region?
 
-# Adding all device owners to the same data frame and stacking them for analysis 
+# Adding all device owners to the same data frame and stacking them for analysis
 u <-
   select(
     singleSourceOfTruthAppended,
@@ -112,7 +113,7 @@ d$Usage <-
     )
   )
 
-#testing for connection between current region of residence and the amount of usaage over ALL smart home devices 
+#testing for connection between current region of residence and the amount of usaage over ALL smart home devices
 Usage_CCR_LATEX <-
   dunnTest(
     x = as.numeric(d$Usage),
@@ -122,9 +123,11 @@ Usage_CCR_LATEX <-
 Usage_CCR_LATEX <- Usage_CCR_LATEX[-c(3)]
 
 view(Usage_CCR_LATEX)
-aggregate(as.numeric(d$Usage),list(d$`Current Country of Residence`),mean)
+aggregate(as.numeric(d$Usage),
+          list(d$`Current Country of Residence`),
+          mean)
 # we find that there is no significant connection between the region of residence
-# and the amount of usage of smart home devices overall 
+# and the amount of usage of smart home devices overall
 
 
 
@@ -137,9 +140,11 @@ Usage_CCR_LATEX_SMART_TV <-
   )$res
 Usage_CCR_LATEX_SMART_TV <- Usage_CCR_LATEX_SMART_TV[-c(3)]
 
-aggregate(as.numeric(subset(d, Device == "Smart TV")$Usage),list(as.factor(subset(d, Device == "Smart TV")$`Current Country of Residence`)),mean)
+aggregate(as.numeric(subset(d, Device == "Smart TV")$Usage), list(as.factor(
+  subset(d, Device == "Smart TV")$`Current Country of Residence`
+)), mean)
 
-# we find that there is a significant difference in usage between DE-UK and DE - US 
+# we find that there is a significant difference in usage between DE-UK and DE - US
 
 #---
 
@@ -153,9 +158,12 @@ Usage_CCR_LATEX_SMART_SPEAKER <-
     method = "bonferroni"
   )$res
 
-Usage_CCR_LATEX_SMART_SPEAKER <- Usage_CCR_LATEX_SMART_SPEAKER[-c(3)]
+Usage_CCR_LATEX_SMART_SPEAKER <-
+  Usage_CCR_LATEX_SMART_SPEAKER[-c(3)]
 
-aggregate(as.numeric(subset(d, Device == "Smart Speaker")$Usage),list(as.factor(subset(d, Device == "Smart Speaker")$`Current Country of Residence`)),mean)
+aggregate(as.numeric(subset(d, Device == "Smart Speaker")$Usage), list(as.factor(
+  subset(d, Device == "Smart Speaker")$`Current Country of Residence`
+)), mean)
 #we find that there is no significant difference between the participants from different regions in smart speaker usage
 
 #---
@@ -170,9 +178,12 @@ Usage_CCR_LATEX_SMART_LIGHTBULB <-
     method = "bonferroni"
   )$res
 
-Usage_CCR_LATEX_SMART_LIGHTBULB <- Usage_CCR_LATEX_SMART_LIGHTBULB[-c(3)]
+Usage_CCR_LATEX_SMART_LIGHTBULB <-
+  Usage_CCR_LATEX_SMART_LIGHTBULB[-c(3)]
 
-aggregate(as.numeric(subset(d, Device == "Smart Lightbulb")$Usage),list(as.factor(subset(d, Device == "Smart Lightbulb")$`Current Country of Residence`)),mean)
+aggregate(as.numeric(subset(d, Device == "Smart Lightbulb")$Usage), list(as.factor(
+  subset(d, Device == "Smart Lightbulb")$`Current Country of Residence`
+)), mean)
 #we find that there is no sgnificant difference in smart lightbulb use across different regions
 
 # we investigate all other devices
@@ -197,15 +208,15 @@ Usage_CCR_LATEX_OTHER <-
   )$res
 
 Usage_CCR_LATEX_OTHER <- Usage_CCR_LATEX_OTHER[-c(3)]
-# we find that the other devices do not have a significant change in use because of the region of residence 
+# we find that the other devices do not have a significant change in use because of the region of residence
 
 #---
 
-# we investigate further into smart TV users 
+# we investigate further into smart TV users
 smartTVUsers <- subset(d, Device == "Smart TV")
 epsilonSquared(x = as.numeric(smartTVUsers$Usage),
                g = smartTVUsers$`Current Country of Residence`)
-# we determine the effect size 
+# we determine the effect size
 sTV_UK <- subset(smartTVUsers,
                  `Current Country of Residence` == "United Kingdom")##
 sTV_US <- subset(smartTVUsers,
@@ -248,8 +259,14 @@ DISABLED_FEATURES_COUNTRY_LATEX_CHI <-
     disabled_features_country$`Current Country of Residence`,
     disabled_features_country$choice
   )
-DISABLED_FEATURES_COUNTRY_LATEX_CHI <- data.frame(cbind(DISABLED_FEATURES_COUNTRY_LATEX_CHI$p.value,DISABLED_FEATURES_COUNTRY_LATEX_CHI$method))
-names(DISABLED_FEATURES_COUNTRY_LATEX_CHI) <- c("p","X^2")
+DISABLED_FEATURES_COUNTRY_LATEX_CHI <-
+  data.frame(
+    cbind(
+      DISABLED_FEATURES_COUNTRY_LATEX_CHI$p.value,
+      DISABLED_FEATURES_COUNTRY_LATEX_CHI$method
+    )
+  )
+names(DISABLED_FEATURES_COUNTRY_LATEX_CHI) <- c("p", "X^2")
 #ns no effect on usage by region could be measured
 
 #---
@@ -300,7 +317,7 @@ p.adjust(p, method = "bonferroni", n = length(p))
 #pairwise testing for A204_04
 #starting pairwise testing per country
 
-# we investigate how the regions perception change in regard to manufacturer 
+# we investigate how the regions perception change in regard to manufacturer
 # responsibility of keeping the smart home device secure as a whole
 
 dunn_A204_04 <-
@@ -349,36 +366,55 @@ countryPerception = select(singleSourceOfTruthAppended,
 aggregate(countryPerception[, 2],
           list(countryPerception$`Current Country of Residence`),
           mean)
-# We find that germany sees smart home device security to lie more in their individual hands 
-# whereas the english speaking regions see it more in the manufacturers hands 
+# We find that germany sees smart home device security to lie more in their individual hands
+# whereas the english speaking regions see it more in the manufacturers hands
 
 #---
 
 
 library(plyr)
-mu <- ddply(countryPerception,"`Current Country of Residence`", summarise, grp.mean=mean(A204_04))
+mu <-
+  ddply(countryPerception,
+        "`Current Country of Residence`",
+        summarise,
+        grp.mean = mean(A204_04))
 
 
-p <- ggplot(countryPerception, aes(x=countryPerception$A204_04, color=countryPerception$`Current Country of Residence`)) +
-  geom_density() + geom_vline(data=mu, aes(xintercept=grp.mean, color=`Current Country of Residence`),
-           linetype="dashed")+scale_color_brewer(palette="Dark2") + labs(title="Manufacturer responsibility - keeping smart home device secure",
-                                                                         x ="Likert Scale from myself vs. Manufacturer", y = "density") + theme(legend.title = element_blank())
+p <-
+  ggplot(
+    countryPerception,
+    aes(
+      x = countryPerception$A204_04,
+      color = countryPerception$`Current Country of Residence`
+    )
+  ) +
+  geom_density() + geom_vline(
+    data = mu,
+    aes(xintercept = grp.mean, color = `Current Country of Residence`),
+    linetype = "dashed"
+  ) + scale_color_brewer(palette = "Dark2") + labs(title = "Manufacturer responsibility - keeping smart home device secure",
+                                                   x =
+                                                     "Likert Scale from myself vs. Manufacturer", y = "density") + theme(legend.title = element_blank())
 # barplot, show the whole scale, germans want to take more responsibility or no trust in responsibility. Protected by GDPR , different regions call to different conclusions, test for a206 global change, in all three regions there is a desire to place responsibility on the manufacturer
 # english speaking countries nudged into Manufacturer domain
 # No real trends add mean and
 p
 
-a <- ggplot(countryPerception, aes(x=A204_04, color=`Current Country of Residence`, fill=`Current Country of Residence`)) + 
-  geom_histogram(aes(y=..density..), alpha=0.5, 
-                 position="identity")+
-  geom_density(alpha=.2) 
+a <-
+  ggplot(
+    countryPerception,
+    aes(x = A204_04, color = `Current Country of Residence`, fill = `Current Country of Residence`)
+  ) +
+  geom_histogram(aes(y = ..density..), alpha = 0.5,
+                 position = "identity") +
+  geom_density(alpha = .2)
 a
 # Group.1  A204_04
 # 1           DACH 3.940741
 # 2 United Kingdom 4.535484
 # 3  United States 4.675862
 
-# we are investigating the benefits of smart home device perceived benefits and if they change by country 
+# we are investigating the benefits of smart home device perceived benefits and if they change by country
 
 # 1	A307_01	Perceived benefits: Saving money
 # 2	A307_02	Perceived benefits: Saving energy
@@ -463,16 +499,14 @@ p.adjust(p, method = "bonferroni", n = length(p))
 dunnTest(A307_04, `Current Country of Residence`, method = "bonferroni")
 
 increaseLeisure = select(singleSourceOfTruthAppended,
-                                 `Current Country of Residence`,
-                                 A307_04)
+                         `Current Country of Residence`,
+                         A307_04)
 
-aggregate(
-  increaseLeisure[, 2],
-  list(increaseLeisure$`Current Country of Residence`),
-  mean
-)
+aggregate(increaseLeisure[, 2],
+          list(increaseLeisure$`Current Country of Residence`),
+          mean)
 
-# we find that perceived benefits include enhancing leisure activities is significantly different in the different regions 
+# we find that perceived benefits include enhancing leisure activities is significantly different in the different regions
 # with germany / UK / US in rank for enhancing leisure activities
 
 #---
@@ -501,17 +535,15 @@ test = subset(
 )
 
 providingComfort = select(singleSourceOfTruthAppended,
-                                 `Current Country of Residence`,
-                                 A307_06)
+                          `Current Country of Residence`,
+                          A307_06)
 
-aggregate(
-  providingComfort[, 2],
-  list(providingComfort$`Current Country of Residence`),
-  mean
-)
+aggregate(providingComfort[, 2],
+          list(providingComfort$`Current Country of Residence`),
+          mean)
 
-# we find that providing comfort is significantly different across regions 
-# rank: UK / US / DACH 
+# we find that providing comfort is significantly different across regions
+# rank: UK / US / DACH
 
 #---
 
@@ -532,16 +564,14 @@ aggregate(
 dunnTest(A307_07, `Current Country of Residence`, method = "bonferroni")
 
 increasingSafety = select(singleSourceOfTruthAppended,
-                                 `Current Country of Residence`,
-                                 A307_07)
-aggregate(
-  increasingSafety[, 2],
-  list(increasingSafety$`Current Country of Residence`),
-  mean
-)
+                          `Current Country of Residence`,
+                          A307_07)
+aggregate(increasingSafety[, 2],
+          list(increasingSafety$`Current Country of Residence`),
+          mean)
 
-# we find that increasing safety is important to US 
-# rank: DACH / UK / US 
+# we find that increasing safety is important to US
+# rank: DACH / UK / US
 
 #---
 
@@ -562,15 +592,13 @@ aggregate(
 
 dunnTest(A307_08, `Current Country of Residence`, method = "bonferroni")
 providingCare = select(singleSourceOfTruthAppended,
-                                 `Current Country of Residence`,
-                                 A307_08)
-aggregate(
-  providingCare[, 2],
-  list(providingCare$`Current Country of Residence`),
-  mean
-)
+                       `Current Country of Residence`,
+                       A307_08)
+aggregate(providingCare[, 2],
+          list(providingCare$`Current Country of Residence`),
+          mean)
 
-# providing care is different for DACH - US/UK 
+# providing care is different for DACH - US/UK
 # rank DACH / US-UK (close)
 
 #------------------------------------------------------------------------------------
@@ -590,8 +618,8 @@ aggregate(
   mean
 )
 
-# significant use to increase property value 
-# rank : DACH/ UK / US 
+# significant use to increase property value
+# rank : DACH/ UK / US
 
 #-------------------------------------------------------------------------------
 # testing for country by perceived device risk
@@ -640,7 +668,11 @@ p.adjust(p, "bonferroni") #1.0000000 0.2760000 0.0001665
 
 E201_SMART_TV_RISK_CCR <-
   cbind(
-    dunnTest(singleSourceOfTruthAppended$E201_16, singleSourceOfTruthAppended$`Current Country of Residence`, method = "bonferroni")$res,
+    dunnTest(
+      singleSourceOfTruthAppended$E201_16,
+      singleSourceOfTruthAppended$`Current Country of Residence`,
+      method = "bonferroni"
+    )$res,
     c(
       epsilonSquared(
         x = subset(
@@ -672,33 +704,77 @@ E201_SMART_TV_RISK_CCR <-
 names(E201_SMART_TV_RISK_CCR)[5] = "Epsilon^2"
 E201_SMART_TV_RISK_CCR <- E201_SMART_TV_RISK_CCR[-c(3)]
 
-avg_smart_tv_risk = select(singleSourceOfTruthAppended, E201_16, `Current Country of Residence`)
+avg_smart_tv_risk = select(singleSourceOfTruthAppended,
+                           E201_16,
+                           `Current Country of Residence`)
 
-aggregate(
-  avg_smart_tv_risk[, 1],
-  list(avg_smart_tv_risk$`Current Country of Residence`),
-  mean
-)
+aggregate(avg_smart_tv_risk[, 1],
+          list(avg_smart_tv_risk$`Current Country of Residence`),
+          mean)
 
-# we find that the smart tv posed risk is significant by region 
-# rank UK / US /  - DACH 
+# we find that the smart tv posed risk is significant by region
+# rank UK / US /  - DACH
 
 
-perceived_benefits <- select(singleSourceOfTruthAppended, `Current Country of Residence`, A307_04,A307_07, A307_08,A307_10)
+perceived_benefits <-
+  select(
+    singleSourceOfTruthAppended,
+    `Current Country of Residence`,
+    A307_04,
+    A307_07,
+    A307_08,
+    A307_10
+  )
 
-A307_LATEX <- 
-cbind(c("A307_04","A307_04","A307_04","A307_07","A307_07","A307_07","A307_08","A307_08","A307_08","A307_10","A307_10","A307_10"),rbind(
-data.frame(dunnTest(singleSourceOfTruthAppended$A307_04, singleSourceOfTruthAppended$`Current Country of Residence`, method = "bonferroni")$res),
-data.frame(dunnTest(singleSourceOfTruthAppended$A307_07, singleSourceOfTruthAppended$`Current Country of Residence`, method = "bonferroni")$res),
-data.frame(dunnTest(singleSourceOfTruthAppended$A307_08, singleSourceOfTruthAppended$`Current Country of Residence`, method = "bonferroni")$res),
-data.frame(dunnTest(singleSourceOfTruthAppended$A307_10, singleSourceOfTruthAppended$`Current Country of Residence`, method = "bonferroni")$res)
-))
+A307_LATEX <-
+  cbind(
+    c(
+      "A307_04",
+      "A307_04",
+      "A307_04",
+      "A307_07",
+      "A307_07",
+      "A307_07",
+      "A307_08",
+      "A307_08",
+      "A307_08",
+      "A307_10",
+      "A307_10",
+      "A307_10"
+    ),
+    rbind(
+      data.frame(
+        dunnTest(
+          singleSourceOfTruthAppended$A307_04,
+          singleSourceOfTruthAppended$`Current Country of Residence`,
+          method = "bonferroni"
+        )$res
+      ),
+      data.frame(
+        dunnTest(
+          singleSourceOfTruthAppended$A307_07,
+          singleSourceOfTruthAppended$`Current Country of Residence`,
+          method = "bonferroni"
+        )$res
+      ),
+      data.frame(
+        dunnTest(
+          singleSourceOfTruthAppended$A307_08,
+          singleSourceOfTruthAppended$`Current Country of Residence`,
+          method = "bonferroni"
+        )$res
+      ),
+      data.frame(
+        dunnTest(
+          singleSourceOfTruthAppended$A307_10,
+          singleSourceOfTruthAppended$`Current Country of Residence`,
+          method = "bonferroni"
+        )$res
+      )
+    )
+  )
 
 names(A307_LATEX)[1] <- "Code"
 A307_LATEX <- A307_LATEX[-c(4)]
-A307_LATEX$P.adj <- paste(as.numeric(A307_LATEX$P.adj),stars.pval(as.numeric(A307_LATEX$P.adj)))
-
-
-
 
 detach(singleSourceOfTruthAppended)
