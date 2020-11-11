@@ -44,12 +44,15 @@ singleSourceOfTruthAppended$A004 <-ifelse(singleSourceOfTruthAppended$A004 > 0, 
 
 # adding avg of legislation 
 singleSourceOfTruthAppended$LA_Mean <-rowMeans(select(singleSourceOfTruthAppended,LA01_01:LA01_03))
+singleSourceOfTruthAppended$LA02_Mean <-rowMeans(select(singleSourceOfTruthAppended,LA02_01:LA02_03))
 
+
+singleSourceOfTruthAppended <- subset(singleSourceOfTruthAppended,)
 
 # subsetting into different countries 
-Participants_DACH <- subset(singleSourceOfTruthAppended, `Current Country of Residence` == "DACH")
-Participants_US <- subset(singleSourceOfTruthAppended, `Current Country of Residence` == "United States")
-Participants_UK <- subset(singleSourceOfTruthAppended, `Current Country of Residence` == "United Kingdom")
+#Participants_DACH <- subset(singleSourceOfTruthAppended, `Current Country of Residence` == "DACH")
+#Participants_US <- subset(singleSourceOfTruthAppended, `Current Country of Residence` == "United States")
+#Participants_UK <- subset(singleSourceOfTruthAppended, `Current Country of Residence` == "United Kingdom")
 
 
 

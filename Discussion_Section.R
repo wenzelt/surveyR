@@ -57,9 +57,22 @@ dunnTest(x=as.numeric(singleSourceOfTruthAppended$LA_Mean),g=as.factor(singleSou
 aggregate(singleSourceOfTruthAppended$LA_Mean ~ singleSourceOfTruthAppended$`Current Country of Residence`, data = singleSourceOfTruthAppended, mean)
 
 #MUIPC Sebis experiments
-rcorr(as.matrix(select(singleSourceOfTruthAppended,muipc_PerceivedSur_avg,muipc_PerceivedIntrusion_avg,muipc_PersonalInformation_avg,A204_04)))
 cor.test(singleSourceOfTruthAppended$muipc_PerceivedSur_avg,singleSourceOfTruthAppended$A204_04)
+cor.test(singleSourceOfTruthAppended$muipc_PerceivedSur_avg,rowMeans(select(singleSourceOfTruthAppended,A204_01:A204_06)))
 
+plot(singleSourceOfTruthAppended$muipc_PerceivedSur_avg,rowMeans(select(singleSourceOfTruthAppended,A204_01:A204_06)))
+abline(lm(singleSourceOfTruthAppended$muipc_PerceivedSur_avg~rowMeans(select(singleSourceOfTruthAppended,A204_01:A204_06))), col="red") # regression line (y~x)
+lines(lowess(rowMeans(select(singleSourceOfTruthAppended,A204_01:A204_06))), col="blue") # lowess line (x,y)
+#discuss in meeting
+
+
+#sebis experiments 
+cor.test(singleSourceOfTruthAppended$sebis_ProactiveAwareness_avg, rowMeans(select(singleSourceOfTruthAppended, A204_01:A204_06)))
+cor.test(singleSourceOfTruthAppended$sebis_ProactiveAwareness_avg, rowMeans(select(singleSourceOfTruthAppended, A204_02)))
+
+cor.test(singleSourceOfTruthAppended$sebis_ProactiveAwareness_avg, rowMeans(select(singleSourceOfTruthAppended, E201_11)))#device risk
+cor.test(singleSourceOfTruthAppended$sebis_ProactiveAwareness_avg, rowMeans(select(singleSourceOfTruthAppended, E203)))
+chisq_test(singleSourceOfTruthAppended$sebis_ProactiveAwareness_avg,singleSourceOfTruthAppended$E203_04)
 
 #Getting the qualitative from disabled devices: 
 library(tidyr)
