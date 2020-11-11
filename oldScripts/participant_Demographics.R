@@ -21,3 +21,13 @@ range(singleSourceOfTruthAppended$sebis_avg)
 range(singleSourceOfTruthAppended$sebis_DeviceSecurement_avg)
 range(singleSourceOfTruthAppended$sebis_ProactiveAwareness_avg)
 range(singleSourceOfTruthAppended$sebis_UpdatingBehaviour_avg)
+
+#mean and median time taken 
+
+#prolific academic 
+mean(singleSourceOfTruthAppended$time_taken)
+median(singleSourceOfTruthAppended$time_taken)
+
+#Sosci survey values 
+mean(singleSourceOfTruthAppended$TIME_SUM)
+median(singleSourceOfTruthAppended$TIME_SUM)
