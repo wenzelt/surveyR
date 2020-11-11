@@ -3,7 +3,24 @@
 
 #Checking for diff of first time user and others
 
+oneDevice <- subset(singleSourceOfTruthAppended, as.numeric(R101) == 1)
+moreDevices <- subset(singleSourceOfTruthAppended, as.numeric(R101) > 1)
+moreDevices$R101 = 2
 
+overallDevices <- rbind(oneDevice, moreDevices)
+
+mean(oneDevice$LA_Mean)
+mean(moreDevices$LA_Mean)
+wilcox_test(overallDevices, formula = LA_Mean ~ R101)
+
+#Comparison LA01 /LA02
+mean(singleSourceOfTruthAppended$LA_Mean)
+mean(singleSourceOfTruthAppended$LA02_Mean)
+
+#Country comparison
+mean(Participants_DACH$LA_Mean)
+mean(Participants_UK$LA_Mean)
+mean(Participants_US$LA_Mean)
 
 
 location <- select(singleSourceOfTruthAppended, R528_01:R528_12, R529_01:R529_12,R530_01:R530_12, `Current Country of Residence`)
