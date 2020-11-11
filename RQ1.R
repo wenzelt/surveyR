@@ -1,6 +1,5 @@
 
 
-
 ############################### RQ_01 ##############################################################
 ##fresh start to analyses###
 
@@ -437,6 +436,7 @@ LA_A204_Latex <- subset(select(cor_test(
 ), var1, var2, cor, p),
 var1 == "LA_Mean" & var2 != "LA_Mean")
 # [EXPLANATION] we cannot find a large correlation between manufacturer responsibility and perceived legilsative protection
+
 
 
 
