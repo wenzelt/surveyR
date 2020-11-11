@@ -52,5 +52,6 @@ Participants_DACH <- subset(singleSourceOfTruthAppended, `Current Country of Res
 Participants_US <- subset(singleSourceOfTruthAppended, `Current Country of Residence` == "United States")
 Participants_UK <- subset(singleSourceOfTruthAppended, `Current Country of Residence` == "United Kingdom")
 
+singleSourceOfTruthAppended <- subset(singleSourceOfTruthAppended, R101 >0 )
 
 
