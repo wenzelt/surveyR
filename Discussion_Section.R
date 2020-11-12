@@ -97,3 +97,7 @@ disabled_features <- select(singleSourceOfTruthAppended,R509_07a,R542_07a,R512_0
 disabled_features <- data.frame(a=unlist(a, use.names = FALSE))
 disabled_features <- disabled_features %>% filter(a!= "NA")
 write_csv(disabled_features, path = "./Excels/disabled_features.csv")
+
+# 20 people per region in non-users, make mini section with smarthome independent questions. 
+# differences in legislative protection over the different users 
+# adjustments to the paper user/non-user part regarding legislation --> discussion 

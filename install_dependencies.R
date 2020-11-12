@@ -29,11 +29,7 @@ library(plyr)
 
 setwd("~/Documents/surveyR")
 
-singleSourceOfTruthAppended <-
-  read_xlsx("Excels/singleSourceOfTruthAppended_P.xlsx")
-singleSourceOfTruthAppended <-
-  subset(singleSourceOfTruthAppended,
-         `Current Country of Residence` != "NA")
+singleSourceOfTruthAppended <- read_delim("SSOT.csv", ";", escape_double = FALSE,  na = "NA", trim_ws = TRUE)[-1]
 
 #load index of questions into dataframe 
 Code_Answer_transpose <- read_delim("Excels/Code_Answer_transpose.csv", 
@@ -46,12 +42,13 @@ singleSourceOfTruthAppended$A004 <-ifelse(singleSourceOfTruthAppended$A004 > 0, 
 singleSourceOfTruthAppended$LA_Mean <-rowMeans(select(singleSourceOfTruthAppended,LA01_01:LA01_03))
 singleSourceOfTruthAppended$LA02_Mean <-rowMeans(select(singleSourceOfTruthAppended,LA02_01:LA02_03))
 
+# adding Sebis/MUIPC Averages to dataset
+singleSourceOfTruthAppended$sebis_avg <- rowMeans(select(singleSourceOfTruthAppended, S101_01:S101_12))
+singleSourceOfTruthAppended$sebis_DeviceSecurement_avg <- rowMeans(select(singleSourceOfTruthAppended, S101_01:S101_04))
+singleSourceOfTruthAppended$sebis_ProactiveAwareness_avg <- rowMeans(select(singleSourceOfTruthAppended, S101_05:S101_09))
+singleSourceOfTruthAppended$sebis_UpdatingBehaviour_avg <- rowMeans(select(singleSourceOfTruthAppended, S101_10:S101_12))
 
 # subsetting into different countries 
 Participants_DACH <- subset(singleSourceOfTruthAppended, `Current Country of Residence` == "DACH")
 Participants_US <- subset(singleSourceOfTruthAppended, `Current Country of Residence` == "United States")
 Participants_UK <- subset(singleSourceOfTruthAppended, `Current Country of Residence` == "United Kingdom")
-
-singleSourceOfTruthAppended <- subset(singleSourceOfTruthAppended, R101 >0 )
-
-
