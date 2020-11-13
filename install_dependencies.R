@@ -38,6 +38,18 @@ Code_Answer_transpose <- read_delim("Excels/Code_Answer_transpose.csv",
 singleSourceOfTruthAppended <- within(singleSourceOfTruthAppended, rm(S101_13))
 singleSourceOfTruthAppended$A004 <-ifelse(singleSourceOfTruthAppended$A004 > 0, 1, 0) # having children 
 
+#translating device names from german to english
+singleSourceOfTruthAppended$R232_01 <- replace(as.character(singleSourceOfTruthAppended$R232_01), singleSourceOfTruthAppended$R232_01 == "Smart Lautsprecher", "Smart Speaker")
+singleSourceOfTruthAppended$R232_01 <- replace(as.character(singleSourceOfTruthAppended$R232_01), singleSourceOfTruthAppended$R232_01 == "Smart Glühbirne", "Smart Lightbulb")
+
+singleSourceOfTruthAppended$R232_02 <- replace(as.character(singleSourceOfTruthAppended$R232_02), singleSourceOfTruthAppended$R232_02 == "Smart Lautsprecher", "Smart Speaker")
+singleSourceOfTruthAppended$R232_02 <- replace(as.character(singleSourceOfTruthAppended$R232_02), singleSourceOfTruthAppended$R232_02 == "Smart Glühbirne", "Smart Lightbulb")
+
+singleSourceOfTruthAppended$R232_03 <- replace(as.character(singleSourceOfTruthAppended$R232_03), singleSourceOfTruthAppended$R232_03 == "Smart Lautsprecher", "Smart Speaker")
+singleSourceOfTruthAppended$R232_03 <- replace(as.character(singleSourceOfTruthAppended$R232_03), singleSourceOfTruthAppended$R232_03 == "Smart Glühbirne", "Smart Lightbulb")
+
+
+
 # adding avg of legislation 
 singleSourceOfTruthAppended$LA_Mean <-rowMeans(select(singleSourceOfTruthAppended,LA01_01:LA01_03))
 singleSourceOfTruthAppended$LA02_Mean <-rowMeans(select(singleSourceOfTruthAppended,LA02_01:LA02_03))
