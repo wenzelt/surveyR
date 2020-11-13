@@ -32,16 +32,21 @@ cor.test(singleSourceOfTruthAppended$LA01_03,
          singleSourceOfTruthAppended$R101) #*
 cor.test(singleSourceOfTruthAppended$LA_Mean,
          singleSourceOfTruthAppended$R101) #*
-
 # [EXPLANATION] Overall shows that the more the participants feel protected from evil entities by legislation the more different devices they own
 
 
 
 # [EXPLANATION] Is there a difference in the amount of devices by region investigated?
-
 kruskal_test(rbind(Participants_UK, Participants_US), LA_Mean ~ R101) #*
 kruskal_test(rbind(Participants_DACH, Participants_US), LA_Mean ~ R101) #*
 kruskal_test(rbind(Participants_DACH, Participants_UK), LA_Mean ~ R101) #*
+
+
+
+#[EXPLANATION] Check if there is a significant difference in amount of devices over regions 
+kruskal_test(singleSourceOfTruthAppended,R101~`Current Country of Residence`)
+# there is no reason to believe there are different amount of unique devices over different regions 
+
 
 #There is significant difference in the means of the different countries regarding the legislative protection and the amount of devices unique owned
 
