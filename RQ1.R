@@ -1,5 +1,7 @@
 
 
+
+
 ############################### RQ_01 ##############################################################
 ##fresh start to analyses###
 
@@ -43,9 +45,10 @@ kruskal_test(rbind(Participants_DACH, Participants_UK), LA_Mean ~ R101) #*
 
 
 
-#[EXPLANATION] Check if there is a significant difference in amount of devices over regions 
-kruskal_test(singleSourceOfTruthAppended,R101~`Current Country of Residence`)
-# there is no reason to believe there are different amount of unique devices over different regions 
+#[EXPLANATION] Check if there is a significant difference in amount of devices over regions
+kruskal_test(singleSourceOfTruthAppended,
+             R101 ~ `Current Country of Residence`)
+# there is no reason to believe there are different amount of unique devices over different regions
 
 
 #There is significant difference in the means of the different countries regarding the legislative protection and the amount of devices unique owned
@@ -203,10 +206,12 @@ d$Usage <-
   )
 cor.test(d$LA_Mean, as.numeric(d$Usage))
 
-# [Explanation] we find that the usage of devices correlates positively when the participants fell protected by legislation
+# [Explanation] we find that the usage of devices correlates positively when the participants felt protected by legislation
 
 
 ####H2_Disabled Features#### -- too little people to use in analysis
+
+
 
 disabled_features <-
   select(
@@ -227,7 +232,9 @@ disabled_features$choice <-
     1,
     0
   )
+table(disabled_features$choice)
 
+wilcox.test(disabled_features$LA01_Mean, disabled_features$choice) #p-value < 2.2e-16
 wilcox.test(disabled_features$LA01_01, disabled_features$choice) #p-value < 2.2e-16
 wilcox.test(disabled_features$LA01_02, disabled_features$choice) #p-value < 2.2e-16
 wilcox.test(disabled_features$LA01_03, disabled_features$choice) #p-value < 2.2e-16
@@ -383,6 +390,13 @@ var1 == "LA_Mean" & var2 != "LA_Mean")
 cor_test(select(singleSourceOfTruthAppended, LA_Mean, E201_10))
 #shows large negative impact on device risk when high legislative satisfaction
 
+cor_test(select(
+  singleSourceOfTruthAppended,
+  LA_Mean,
+  E201_11,
+  E201_14,
+  E201_16
+))
 
 #testing correlation between perceived risk for popular Devices
 cor_test(select(
@@ -444,7 +458,17 @@ var1 == "LA_Mean" & var2 != "LA_Mean")
 
 
 
-
 # perception - how does perceived legislative protection influence perceived surveillance
 cor_test(select(singleSourceOfTruthAppended, LA_Mean, muipc_PerceivedSur_avg))
+#strong negative correlation for non device users.
+cor_test(select(
+  subset(singleSourceOfTruthAppended, R101 < 1),
+  LA_Mean,
+  muipc_PerceivedSur_avg
+))
+cor_test(select(
+  subset(singleSourceOfTruthAppended, R101 > 0),
+  LA_Mean,
+  muipc_PerceivedSur_avg
+))
 # higher legislative protection negatively impacts perceived surveillance greatly
