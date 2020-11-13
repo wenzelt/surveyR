@@ -44,6 +44,13 @@ kruskal_test(singleSourceOfTruthAppended,
 kruskal_test(singleSourceOfTruthAppended,
              formula = HP02_05 ~ `Current Country of Residence`)#n.s
 
+#How does legislation affect the adoption of different devices over different regions 
+cor.test(Participants_DACH$LA_Mean,
+         Participants_DACH$R101) #*
+cor.test(Participants_UK$LA_Mean,
+         Participants_UK$R101)
+cor.test(Participants_US$LA_Mean,
+         Participants_US$R101)
 
 
 ##H2#### - usage affected by region?
