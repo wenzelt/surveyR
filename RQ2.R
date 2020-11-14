@@ -146,7 +146,7 @@ Usage_CCR_LATEX_SMART_TV <-
     method = "bonferroni"
   )$res
 Usage_CCR_LATEX_SMART_TV <- Usage_CCR_LATEX_SMART_TV[-c(3)]
-
+view(Usage_CCR_LATEX_SMART_TV)
 aggregate(as.numeric(subset(d, Device == "Smart TV")$Usage), list(as.factor(
   subset(d, Device == "Smart TV")$`Current Country of Residence`
 )), mean)
