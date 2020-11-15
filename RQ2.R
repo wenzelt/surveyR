@@ -373,6 +373,22 @@ countryPerception = select(singleSourceOfTruthAppended,
 aggregate(countryPerception[, 2],
           list(countryPerception$`Current Country of Residence`),
           mean)
+
+#check on non-users
+countryPerception_N = select(subset(singleSourceOfTruthAppended, R101 < 1),
+                           `Current Country of Residence`,
+                           A204_04)
+aggregate(countryPerception_N[, 2],
+          list(countryPerception_N$`Current Country of Residence`),
+          mean)
+
+#check users
+countryPerception_U = select(subset(singleSourceOfTruthAppended, R101 > 0),
+                           `Current Country of Residence`,
+                           A204_04)
+aggregate(countryPerception_U[, 2],
+          list(countryPerception_U$`Current Country of Residence`),
+          mean)
 # We find that germany sees smart home device security to lie more in their individual hands
 # whereas the english speaking regions see it more in the manufacturers hands
 
