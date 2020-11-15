@@ -97,7 +97,7 @@ piechart <- boxplot %>%
 ggplot(piechart, aes(x= "", y = per, fill=A007)) + 
   geom_col( width=1, position = "fill") +
   facet_wrap(~`Current Country of Residence`)+
-  ggtitle("Living Situation in Regions surveyed in percent") +
+  ggtitle("Living Situation in regions in percent") +
   coord_polar("y", start=0) +
   scale_y_continuous(labels = scales::percent)+
   scale_fill_brewer(name = "Living situation", palette="Accent") + 
@@ -106,6 +106,12 @@ ggplot(piechart, aes(x= "", y = per, fill=A007)) +
         axis.title.x = element_text(color = "grey20", size = 0, angle = 0, hjust = .5, vjust = 0, face = "plain"),
         axis.title.y = element_text(color = "grey20", size = 0, angle = 90, hjust = .5, vjust = .5, face = "plain")
   )
+
+children_in_household <- subset(singleSourceOfTruthAppended, A004>0)
+cor.test(children_in_household$R101, as.numeric(children_in_household$A005))
+
+no_children_in_household <- subset(singleSourceOfTruthAppended, A004==0)
+cor.test(no_children_in_household$R101, as.numeric(no_children_in_household$A005))
 
 ##H2####
 
@@ -170,6 +176,126 @@ deviceLocation <-
 
 #H2####
 ##testing wilcox test for children > 0 impact on amount of devices##
+
+#usage factoring into 
+# Adding all device owners to the same data frame and stacking them for analysis
+u <-
+  select(
+    singleSourceOfTruthAppended,
+    participant_id,
+    `Current Country of Residence`,
+    R232_01,
+    R232_02,
+    R232_03,
+    R233_01,
+    R233_02 ,
+    R233_03 ,
+    R501,
+    R503,
+    R505,
+    A004,
+    A005,
+  )
+
+d1 <-
+  select(subset(u, R233_01 == 1),
+         participant_id,
+         `Current Country of Residence`,
+         R232_01,
+         R501,
+         A004,
+         A005,)
+d2 <-
+  select(subset(u, R233_02 == 1),
+         participant_id,
+         `Current Country of Residence`,
+         R232_02,
+         R503,
+         A004,
+         A005,)
+d3 <-
+  select(subset(u, R233_03 == 1),
+         participant_id,
+         `Current Country of Residence`,
+         R232_03,
+         R505,
+         A004,
+         A005,)
+colnames(d1) <-
+  c("participant_id",
+    "Current Country of Residence",
+    "Device",
+    "Usage", "Children", "Household")
+colnames(d2) <-
+  c("participant_id",
+    "Current Country of Residence",
+    "Device",
+    "Usage", "Children", "Household")
+colnames(d3) <-
+  c("participant_id",
+    "Current Country of Residence",
+    "Device",
+    "Usage", "Children", "Household")
+d <- rbind(d1, d2, d3)
+d <- subset(d, Usage != "Don't know")
+d$Usage <-
+  factor(
+    d$Usage,
+    levels = c(
+      "0 times",
+      "1-5 times",
+      "6-10 times",
+      "11-20 times",
+      "21-30 times",
+      "30+ times"
+    )
+  )
+
+mean(as.numeric(subset(d,Children==1)$Usage))
+mean(as.numeric(subset(d,Children==0)$Usage))
+
+median(as.numeric(subset(d,Children==1)$Usage))
+median(as.numeric(subset(d,Children==0)$Usage))
+
+
+wilcox.test(as.numeric(d$Usage)~d$Children)
+
+children_smartTV = subset(d, Device == "Smart TV")
+wilcox.test(as.numeric(children_smartTV$Usage)~children_smartTV$Children)
+mean(as.numeric(subset(children_smartTV,Children==1)$Usage))
+mean(as.numeric(subset(children_smartTV,Children==0)$Usage))
+
+median(as.numeric(subset(children_smartTV,Children==1)$Usage))
+median(as.numeric(subset(children_smartTV,Children==0)$Usage))
+#--
+children_smartTV = subset(d, Device == "Smart Speaker")
+wilcox.test(as.numeric(children_smartTV$Usage)~children_smartTV$Children)
+mean(as.numeric(subset(children_smartTV,Children==1)$Usage))
+mean(as.numeric(subset(children_smartTV,Children==0)$Usage))
+
+median(as.numeric(subset(children_smartTV,Children==1)$Usage))
+median(as.numeric(subset(children_smartTV,Children==0)$Usage))
+#--
+children_smartTV = subset(d, Device == "Smart Lightbulb")
+wilcox.test(as.numeric(children_smartTV$Usage)~children_smartTV$Children)
+mean(as.numeric(subset(children_smartTV,Children==1)$Usage))
+mean(as.numeric(subset(children_smartTV,Children==0)$Usage))
+
+median(as.numeric(subset(children_smartTV,Children==1)$Usage))
+median(as.numeric(subset(children_smartTV,Children==0)$Usage))
+#--
+
+ggboxplot(
+  d,
+  x = "Children",
+  y = "Usage",
+  color = "Children",
+  palette = c("#00AFBB", "#E7B800"),
+  ylab = "Amount of devices",
+  xlab = "Children or no children"
+)
+
+
 
 #plotting having children and not having children against eachother
 ggboxplot(
@@ -244,6 +370,9 @@ responsibilityChildren_LATEX$p_value <- paste(as.numeric(responsibilityChildren_
 # 7	E205_07	Usage type: Automatic Operation based on Device Programming
 
 aggregate(singleSourceOfTruthAppended$E205_01,
+          list(singleSourceOfTruthAppended$A004),
+          mean)
+aggregate(singleSourceOfTruthAppended$E205_02,
           list(singleSourceOfTruthAppended$A004),
           mean)
 
