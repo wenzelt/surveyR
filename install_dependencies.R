@@ -48,8 +48,6 @@ singleSourceOfTruthAppended$R232_02 <- replace(as.character(singleSourceOfTruthA
 singleSourceOfTruthAppended$R232_03 <- replace(as.character(singleSourceOfTruthAppended$R232_03), singleSourceOfTruthAppended$R232_03 == "Smart Lautsprecher", "Smart Speaker")
 singleSourceOfTruthAppended$R232_03 <- replace(as.character(singleSourceOfTruthAppended$R232_03), singleSourceOfTruthAppended$R232_03 == "Smart Glühbirne", "Smart Lightbulb")
 
-
-
 # adding avg of legislation 
 singleSourceOfTruthAppended$LA_Mean <-rowMeans(select(singleSourceOfTruthAppended,LA01_01:LA01_03))
 singleSourceOfTruthAppended$LA02_Mean <-rowMeans(select(singleSourceOfTruthAppended,LA02_01:LA02_03))
@@ -70,3 +68,4 @@ Participants_DACH <- subset(singleSourceOfTruthAppended, `Current Country of Res
 Participants_US <- subset(singleSourceOfTruthAppended, `Current Country of Residence` == "United States")
 Participants_UK <- subset(singleSourceOfTruthAppended, `Current Country of Residence` == "United Kingdom")
 
+singleSourceOfTruthAppended$A005 <- as.numeric(singleSourceOfTruthAppended$A005)
