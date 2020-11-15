@@ -8,7 +8,7 @@ attach(singleSourceOfTruthAppended)
 #p Discussion
 # the below test can only be done before splitting into >1 
 cor.test(singleSourceOfTruthAppended$R101, as.numeric(singleSourceOfTruthAppended$A005)) # greater hh size higher variance of devices
-cor.test(singleSourceOfTruthAppended$R101, as.numeric(singleSourceOfTruthAppended$A004)) # more kids does not correlate 
+cor.test(singleSourceOfTruthAppended$R101, as.numeric(singleSourceOfTruthAppended$A004)) 
 
 #Discussion
 wilcox_test(singleSourceOfTruthAppended, formula = E201_11 ~ A005) # smart home smart speaker smart tv risk assessment
