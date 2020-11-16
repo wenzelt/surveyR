@@ -12,6 +12,23 @@ overallDevices <- rbind(oneDevice, moreDevices)
 mean(oneDevice$LA_Mean)
 mean(moreDevices$LA_Mean)
 wilcox_test(overallDevices, formula = LA_Mean ~ R101)
+chisq_test(overallDevices, formula = LA_Mean ~ R101)
+
+#perceived prosecution of evil-doers.
+mean(oneDevice$LA02_Mean)
+mean(moreDevices$LA02_Mean)
+wilcox_test(overallDevices, formula = LA02_Mean ~ R101)
+chisq_test(overallDevices, formula = LA02_Mean ~ R101)
+
+#non users more privacy aware?
+no_devices <- subset(select(singleSourceOfTruthAppended,LA_Mean, LA02_Mean, sebis_avg, R101),R101==0) 
+devices <- subset(select(singleSourceOfTruthAppended,LA_Mean, LA02_Mean, sebis_avg, R101),R101>0) 
+devices$R101 = 1
+
+devices_test <- rbind(no_devices,devices)
+wilcox.test(devices_test$sebis_avg,devices_test$R101)
+mean(no_devices$sebis_avg)
+mean(devices$sebis_avg)
 
 #Comparison LA01 /LA02
 mean(singleSourceOfTruthAppended$LA_Mean)

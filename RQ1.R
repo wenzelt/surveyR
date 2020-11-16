@@ -34,9 +34,12 @@ cor.test(singleSourceOfTruthAppended$LA01_03,
          singleSourceOfTruthAppended$R101) #*
 cor.test(singleSourceOfTruthAppended$LA_Mean,
          singleSourceOfTruthAppended$R101) #*
+
+mean(subset(singleSourceOfTruthAppended,R101 == 0)$LA_Mean)
+mean(subset(singleSourceOfTruthAppended,R101 > 0)$LA_Mean)
 # [EXPLANATION] Overall shows that the more the participants feel protected from evil entities by legislation the more different devices they own
 
-
+wilcox.test(subset(singleSourceOfTruthAppended,R101 == 0)$LA_Mean,subset(singleSourceOfTruthAppended,R101 > 0)$LA_Mean)
 
 # [EXPLANATION] Is there a difference in the amount of devices by region investigated?
 kruskal_test(rbind(Participants_UK, Participants_US), LA_Mean ~ R101) #*
@@ -232,6 +235,7 @@ disabled_features$choice <-
     1,
     0
   )
+
 table(disabled_features$choice)
 
 wilcox.test(disabled_features$LA01_Mean, disabled_features$choice) #p-value < 2.2e-16
