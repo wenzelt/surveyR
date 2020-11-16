@@ -1,4 +1,4 @@
-
+attach(singleSourceOfTruthAppended)
 ####RQ1####
 
 #Checking for diff of first time user and others
@@ -21,14 +21,18 @@ wilcox_test(overallDevices, formula = LA02_Mean ~ R101)
 chisq_test(overallDevices, formula = LA02_Mean ~ R101)
 
 #non users more privacy aware?
-no_devices <- subset(select(singleSourceOfTruthAppended,LA_Mean, LA02_Mean, sebis_avg, R101),R101==0) 
-devices <- subset(select(singleSourceOfTruthAppended,LA_Mean, LA02_Mean, sebis_avg, R101),R101>0) 
+no_devices <- subset(select(singleSourceOfTruthAppended,LA_Mean, LA02_Mean, sebis_avg, R101, A204_01:A204_06),R101==0) 
+devices <- subset(select(singleSourceOfTruthAppended,LA_Mean, LA02_Mean, sebis_avg, R101,  A204_01:A204_06),R101>0) 
 devices$R101 = 1
 
 devices_test <- rbind(no_devices,devices)
 wilcox.test(devices_test$sebis_avg,devices_test$R101)
 mean(no_devices$sebis_avg)
 mean(devices$sebis_avg)
+
+mean(rowMeans(select(no_devices,A204_01:A204_06)))
+mean(rowMeans(select(devices,A204_01:A204_06)))
+
 
 #Comparison LA01 /LA02
 mean(singleSourceOfTruthAppended$LA_Mean)
@@ -118,3 +122,7 @@ write_csv(disabled_features, path = "./Excels/disabled_features.csv")
 # 20 people per region in non-users, make mini section with smarthome independent questions. 
 # differences in legislative protection over the different users 
 # adjustments to the paper user/non-user part regarding legislation --> discussion 
+
+users
+
+detach(singleSourceOfTruthAppended)
