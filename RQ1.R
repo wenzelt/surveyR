@@ -138,12 +138,8 @@ kruskal_test(
   ),
   LA01_03 ~ R101
 ) #s
-###
 
-
-#####H2 Usage of smart home devices influenced by Legislation (LA)
-
-
+####H2 Usage of smart home devices influenced by Legislation (LA)
 
 # creating table usage device ownership
 u <-
