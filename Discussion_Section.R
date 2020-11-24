@@ -59,7 +59,7 @@ location <- rbind(location1,location2,location3)
 location_stacked <- subset(cbind(A=location[,13],stack(location[1:12])),values==TRUE,-2)
 summary(location_stacked)
 table(location_stacked$ind,location_stacked$`Current Country of Residence`)
-prop.table(table(location_stacked$ind,location_stacked$`Current Country of Residence`))
+prop.table(table(location_stacked$ind,location_stacked$`Current Country of Residence`),2)*100
 
 
 ####RQ3 preserving privacy of certain people in the household E203####

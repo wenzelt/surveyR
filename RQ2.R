@@ -52,6 +52,11 @@ cor.test(Participants_UK$LA_Mean,
 cor.test(Participants_US$LA_Mean,
          Participants_US$R101)
 
+kruskal_test(singleSourceOfTruthAppended,
+             formula = R101 ~ `Current Country of Residence`)#n.s
+
+
+
 
 ##H2#### - usage affected by region?
 
@@ -630,7 +635,7 @@ aggregate(providingCare[, 2],
 # Country and adding to the property value
 
 
-dunnTest(A307_10, `Current Country of Residence`, method = "bonferroni")
+dunnTest(A307_10, as.factor(`Current Country of Residence`), method = "bonferroni")
 epsilonSquared(x = as.numeric(A307_10), g = `Current Country of Residence`)
 countryIncreaseProperty = select(singleSourceOfTruthAppended,
                                  `Current Country of Residence`,
@@ -799,5 +804,14 @@ A307_LATEX <-
 
 names(A307_LATEX)[1] <- "Code"
 A307_LATEX <- A307_LATEX[-c(4)]
+
+#smart lights actually smart home device (benefiting from smart capabilities)
+CCR_Device_Smart_Benefit <- select(singleSourceOfTruthAppended, `Current Country of Residence`,A302_01:A302_19)
+kruskal.test(CCR_Device_Smart_Benefit$`Current Country of Residence`, CCR_Device_Smart_Benefit$A302_11)
+kruskal.test(CCR_Device_Smart_Benefit$`Current Country of Residence`, CCR_Device_Smart_Benefit$A302_14)
+kruskal.test(CCR_Device_Smart_Benefit$`Current Country of Residence`, CCR_Device_Smart_Benefit$A302_16)
+table(CCR_Device_Smart_Benefit$A302_11) #light
+table(CCR_Device_Smart_Benefit$A302_14) #speaker
+table(CCR_Device_Smart_Benefit$A302_16) #TV
 
 detach(singleSourceOfTruthAppended)
