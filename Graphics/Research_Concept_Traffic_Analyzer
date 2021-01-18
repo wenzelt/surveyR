@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2021-01-18T11:40:05.256Z" agent="5.0 (Macintosh; Intel Mac OS X 11_1_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36" etag="01UB737whXc8AAY4TPGP" version="14.2.4" type="github">
+<mxfile host="app.diagrams.net" modified="2021-01-18T11:46:22.606Z" agent="5.0 (Macintosh; Intel Mac OS X 11_1_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36" etag="4KQnNADVNoALkXYl83Xo" version="14.2.4" type="github">
   <diagram id="iGhb0nxNujz5j-rD17ak" name="Page-1">
-    <mxGraphModel dx="1502" dy="388" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1638" dy="468" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -555,6 +555,19 @@
         </mxCell>
         <mxCell id="nxQYeeaTC5t06r_whCgK-269" value="" style="shape=image;html=1;verticalAlign=top;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;imageAspect=0;aspect=fixed;image=https://cdn2.iconfinder.com/data/icons/essential-web-5/50/maximize-expand-large-extensive-increase-128.png;rounded=1;shadow=0;sketch=1;strokeColor=#000000;fillColor=#F0F0F0;fontColor=#CCCCCC;perimeterSpacing=3;" vertex="1" parent="1">
           <mxGeometry x="660" y="1390" width="29" height="29" as="geometry" />
+        </mxCell>
+        <mxCell id="nxQYeeaTC5t06r_whCgK-270" value="Interactive Panel" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="850" y="1060" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="nxQYeeaTC5t06r_whCgK-271" value="" style="endArrow=classic;html=1;dashed=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0.829;exitY=0.992;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="nxQYeeaTC5t06r_whCgK-270" target="nxQYeeaTC5t06r_whCgK-23">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="960" y="1160" as="sourcePoint" />
+            <mxPoint x="950" y="1330" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="950" y="1174" />
+              <mxPoint x="950" y="1275" />
+            </Array>
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
