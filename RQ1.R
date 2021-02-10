@@ -233,7 +233,6 @@ disabled_features$choice <-
     0
   )
 
-table(disabled_features$)
 
 wilcox.test(disabled_features$LA01_Mean, disabled_features$choice) #p-value < 2.2e-16
 wilcox.test(disabled_features$LA01_01, disabled_features$choice) #p-value < 2.2e-16

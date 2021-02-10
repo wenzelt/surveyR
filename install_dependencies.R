@@ -25,10 +25,6 @@ library(xtable)
 library(data.table)
 library(plyr)
 
-
-
-setwd("~/Documents/surveyR")
-
 singleSourceOfTruthAppended <- read_delim("SSOT.csv", ";", escape_double = FALSE,  na = "NA", trim_ws = TRUE)[-1]
 
 #load index of questions into dataframe 
