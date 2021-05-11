@@ -122,7 +122,36 @@ write_csv(disabled_features, path = "./Excels/disabled_features.csv")
 # 20 people per region in non-users, make mini section with smarthome independent questions. 
 # differences in legislative protection over the different users 
 # adjustments to the paper user/non-user part regarding legislation --> discussion 
+#---------------------------------------
+sebis_by_region <- select(singleSourceOfTruthAppended, `Current Country of Residence`,sebis_avg, muipc_avg, LA_Mean)
+ggplot(sebis_by_region, aes(x=`Current Country of Residence`, y=sebis_avg)) + 
+  geom_boxplot()
 
-users
+ggplot(sebis_by_region, aes(x=`Current Country of Residence`, y=sebis_DeviceSecurement_avg)) + 
+  geom_boxplot()
+ggplot(sebis_by_region, aes(x=`Current Country of Residence`, y=sebis_ProactiveAwareness_avg)) + 
+  geom_boxplot()
+ggplot(sebis_by_region, aes(x=`Current Country of Residence`, y=sebis_UpdatingBehaviour_avg)) + 
+  geom_boxplot()
+#---------------------------------------
+#boxplots sebis categories
+ggplot(sebis_by_region, aes(x=`Current Country of Residence`, y=muipc_avg)) + 
+  geom_boxplot()
+
+ggplot(sebis_by_region, aes(x=`Current Country of Residence`, y=muipc_PerceivedIntrusion_avg)) + 
+  geom_boxplot()
+ggplot(sebis_by_region, aes(x=`Current Country of Residence`, y=muipc_PerceivedSur_avg)) + 
+  geom_boxplot()
+ggplot(sebis_by_region, aes(x=`Current Country of Residence`, y=muipc_PersonalInfo_avg)) + 
+  geom_boxplot()
+#---------------------------------------
+#violin plot for LA_Mean
+p <- ggplot(sebis_by_region, aes(x=`Current Country of Residence`, y=LA_Mean)) + 
+  geom_violin(trim=FALSE)
+p+ geom_jitter(shape=16, position=position_jitter(0.2))
+
+p
+
+
 
 detach(singleSourceOfTruthAppended)
