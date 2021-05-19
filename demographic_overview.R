@@ -23,7 +23,7 @@ age_data <- summaryBy(
   age ~ country,
   data = demographic_data,
   FUN = c(median, mean, sd, min, max),
-  na.rm = TRUE
+  na.rm = FALSE
 )
 
 gender_data <- tabyl(demographic_data, country, gender) %>%
