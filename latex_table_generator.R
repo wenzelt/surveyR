@@ -181,3 +181,13 @@ print(
   ),
   file = "latex_tables/USAGETYPE_Children_LATEX.tex",digits = 2
 )
+
+print(
+  xtable(
+    demographic_overview_table,
+    type = "latex",
+    caption = "Summary of demographic information pertaining to our participants. ",
+    label = "demographic_overview_table"
+  ),
+  file = "latex_tables/demographic_overview_table.tex"
+)
