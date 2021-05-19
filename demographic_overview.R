@@ -1,9 +1,4 @@
 # Demographic overview of the sample. Please run 'install_dependencies.R first'
-install.packages('doBy')
-install.packages('janitor')
-
-library(doBy)
-library(janitor)
 
 demographic_data <-
   select(singleSourceOfTruthAppended,
@@ -23,13 +18,13 @@ age_data <- summaryBy(
   age ~ country,
   data = demographic_data,
   FUN = c(median, mean, sd, min, max),
-  na.rm = FALSE
+  na.rm = TRUE
 )
 
 gender_data <- tabyl(demographic_data, country, gender) %>%
   adorn_percentages("row") %>%
   adorn_pct_formatting(digits = 1)
 
-demographic_overview_table <- bind_cols(count(country),age_data, gender_data[2:3])
+demographic_overview_table <- bind_cols(count(country),age_data[2:6], gender_data[2:3])
 
 detach(demographic_data)
