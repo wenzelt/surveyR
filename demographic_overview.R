@@ -30,6 +30,6 @@ gender_data <- tabyl(demographic_data, country, gender) %>%
   adorn_percentages("row") %>%
   adorn_pct_formatting(digits = 1)
 
-asd <- bind_cols(age_data, gender_data[2:3])
+demographic_overview_table <- bind_cols(age_data, gender_data[2:3])
 
 detach(demographic_data)
