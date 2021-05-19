@@ -20,7 +20,8 @@ list.of.packages <-
     "QCA",
     "FSA",
     "dunn.test",
-    "rcompanion"
+    "rcompanion",
+    "gplots"
   )
 new.packages <-
   list.of.packages[!(list.of.packages %in% installed.packages()[, "Package"])]
@@ -46,6 +47,7 @@ library(data.table)
 library(plyr)
 library(doBy)
 library(janitor)
+library(gplots)
 
 
 singleSourceOfTruthAppended <-
