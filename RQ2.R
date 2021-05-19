@@ -814,4 +814,18 @@ table(CCR_Device_Smart_Benefit$A302_11) #light
 table(CCR_Device_Smart_Benefit$A302_14) #speaker
 table(CCR_Device_Smart_Benefit$A302_16) #TV
 
+
+#######ANOVA analyses##
+
+
+
+
+
 detach(singleSourceOfTruthAppended)
+
+
+
+
+
+
+
