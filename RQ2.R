@@ -1,5 +1,8 @@
 
 
+
+
+
 ########################## RQ_02 ###################################################
 # RQ2: How does the cultural context impact Smart Home device adoption and use?
 # H1: The purchasing trends of buying a Smart Home device differs internationally.
@@ -44,7 +47,7 @@ kruskal_test(singleSourceOfTruthAppended,
 kruskal_test(singleSourceOfTruthAppended,
              formula = HP02_05 ~ `Current Country of Residence`)#n.s
 
-#How does legislation affect the adoption of different devices over different regions 
+#How does legislation affect the adoption of different devices over different regions
 cor.test(Participants_DACH$LA_Mean,
          Participants_DACH$R101) #*
 cor.test(Participants_UK$LA_Mean,
@@ -381,19 +384,23 @@ aggregate(countryPerception[, 2],
 
 #check on non-users
 countryPerception_N = select(subset(singleSourceOfTruthAppended, R101 < 1),
-                           `Current Country of Residence`,
-                           A204_04)
-aggregate(countryPerception_N[, 2],
-          list(countryPerception_N$`Current Country of Residence`),
-          mean)
+                             `Current Country of Residence`,
+                             A204_04)
+aggregate(
+  countryPerception_N[, 2],
+  list(countryPerception_N$`Current Country of Residence`),
+  mean
+)
 
 #check users
 countryPerception_U = select(subset(singleSourceOfTruthAppended, R101 > 0),
-                           `Current Country of Residence`,
-                           A204_04)
-aggregate(countryPerception_U[, 2],
-          list(countryPerception_U$`Current Country of Residence`),
-          mean)
+                             `Current Country of Residence`,
+                             A204_04)
+aggregate(
+  countryPerception_U[, 2],
+  list(countryPerception_U$`Current Country of Residence`),
+  mean
+)
 # We find that germany sees smart home device security to lie more in their individual hands
 # whereas the english speaking regions see it more in the manufacturers hands
 
@@ -806,26 +813,69 @@ names(A307_LATEX)[1] <- "Code"
 A307_LATEX <- A307_LATEX[-c(4)]
 
 #smart lights actually smart home device (benefiting from smart capabilities)
-CCR_Device_Smart_Benefit <- select(singleSourceOfTruthAppended, `Current Country of Residence`,A302_01:A302_19)
-kruskal.test(CCR_Device_Smart_Benefit$`Current Country of Residence`, CCR_Device_Smart_Benefit$A302_11)
-kruskal.test(CCR_Device_Smart_Benefit$`Current Country of Residence`, CCR_Device_Smart_Benefit$A302_14)
-kruskal.test(CCR_Device_Smart_Benefit$`Current Country of Residence`, CCR_Device_Smart_Benefit$A302_16)
+CCR_Device_Smart_Benefit <-
+  select(singleSourceOfTruthAppended,
+         `Current Country of Residence`,
+         A302_01:A302_19)
+kruskal.test(
+  CCR_Device_Smart_Benefit$`Current Country of Residence`,
+  CCR_Device_Smart_Benefit$A302_11
+)
+kruskal.test(
+  CCR_Device_Smart_Benefit$`Current Country of Residence`,
+  CCR_Device_Smart_Benefit$A302_14
+)
+kruskal.test(
+  CCR_Device_Smart_Benefit$`Current Country of Residence`,
+  CCR_Device_Smart_Benefit$A302_16
+)
 table(CCR_Device_Smart_Benefit$A302_11) #light
 table(CCR_Device_Smart_Benefit$A302_14) #speaker
 table(CCR_Device_Smart_Benefit$A302_16) #TV
 
 
-#######ANOVA analyses##
+#######ANOVA analyses
+# country as exploratory variable
+country_anova = select(singleSourceOfTruthAppended,
+                       `Current Country of Residence`,
+                       sebis_avg)
+
+# explanatory var = country
+# responsible var = sebis_avg
+# country ˜ sebis_avg
+# null hypothesis = all regions are equal
+# alternative hypothesis = there is a reationship between continents and sebis
+
+means <-
+  round(
+    tapply(
+      as.numeric(singleSourceOfTruthAppended$sebis_avg),
+      singleSourceOfTruthAppended$`Current Country of Residence`,
+      mean
+    ),
+    digits = 2
+  )
 
 
+plotmeans(
+  singleSourceOfTruthAppended$sebis_avg ~ singleSourceOfTruthAppended$`Current Country of Residence`,
+  digits = 2,
+  ccol = 'red',
+  mean.labels = T,
+  main = 'Plot of sebis score means by region'
+)
 
+boxplot(
+  singleSourceOfTruthAppended$sebis_avg ~ singleSourceOfTruthAppended$`Current Country of Residence`,
+  main = "Plot of sebis score means by region",
+  xlab = "'region'",
+  ylab = "Sebis Score",
+  col = rainbow(7)
+)
+# F statistics = Variation among sample means / Variation within groups
+
+aov_content<- aov(singleSourceOfTruthAppended$sebis_avg ~ singleSourceOfTruthAppended$`Current Country of Residence`)
+summary(aov_cont) 
 
 
 detach(singleSourceOfTruthAppended)
-
-
-
-
-
-
-
