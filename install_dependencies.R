@@ -21,7 +21,8 @@ list.of.packages <-
     "FSA",
     "dunn.test",
     "rcompanion",
-    "gplots"
+    "gplots",
+    "hash"
   )
 new.packages <-
   list.of.packages[!(list.of.packages %in% installed.packages()[, "Package"])]
@@ -48,7 +49,7 @@ library(plyr)
 library(doBy)
 library(janitor)
 library(gplots)
-
+library(hash)
 
 singleSourceOfTruthAppended <-
   read_delim(
