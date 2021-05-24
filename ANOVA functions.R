@@ -3,7 +3,7 @@ country_anova = select(
   `Current Country of Residence`,
   sebis_avg,
   R101,
-  E201_11:E201_16
+  E201_01:E201_20
 )
 
 
@@ -28,7 +28,8 @@ calc_anova <- function(data, column_to_use) {
     data[[column_to_use]] ~ data$`Current Country of Residence`,
     digits = 2,
     ccol = 'red',
-    mean.labels = T,
+    mean.labels = F,
+    ylab = 'mean',
     main = sprintf("Plot of %s means by region", column_to_use),
   )
   
@@ -51,9 +52,13 @@ calc_anova <- function(data, column_to_use) {
   }
   
   
-  return(summary(aov_content))
+  
 }
-calc_anova(country_anova, "E201_16")
+#calc_anova(country_anova, "E201_11")
+#calc_anova(country_anova, "E201_14")
+calc_anova(country_anova, "E201_16") # significant Smart TV
+calc_anova(country_anova, "E201_19") # significant Smart Vacuum
+calc_anova(country_anova, "E201_18") # significant Smart Toy
 
 
 # 1	E201_01	Device risk: Smart Coffee Maker
