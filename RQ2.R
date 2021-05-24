@@ -3,14 +3,16 @@
 
 
 
-########################## RQ_02 ###################################################
+
+# RQ 2 ---------------------------------
 # RQ2: How does the cultural context impact Smart Home device adoption and use?
 # H1: The purchasing trends of buying a Smart Home device differs internationally.
 # H2: The cultural background of participants affects the usage of Smart Home devices.
 # H3: The perception towards Smart Home devices differs internationally.
 
 
-## H1 #### -- not used in paper as we decided purchasing is not part of our initial investigation
+## H1 ----
+# -- not used in paper as we decided purchasing is not part of our initial investigation
 attach(singleSourceOfTruthAppended)
 # 1 R216_01	Education about Device D1: Online reviews
 # 2	R216_02	Education about Device D1: Online forums
@@ -61,8 +63,8 @@ kruskal_test(singleSourceOfTruthAppended,
 
 
 
-##H2#### - usage affected by region?
-
+## H2 ----
+#- usage affected by region?
 # Adding all device owners to the same data frame and stacking them for analysis
 u <-
   select(
@@ -289,7 +291,8 @@ names(DISABLED_FEATURES_COUNTRY_LATEX_CHI) <- c("p", "X^2")
 
 
 
-##H3####
+## H3 ----
+
 #The perception towards Smart Home devices differs internationally.
 
 # 1 A204_01	Manufacturer responsibilitiy: Keeping the Smart Home device software up-to-date
@@ -526,11 +529,7 @@ p.adjust(p, method = "bonferroni", n = length(p))
 # 7	A307_07	Perceived benefits: Increasing safety
 # 8	A307_08	Perceived benefits: Providing care
 # 9	A307_09	Perceived benefits: Improving quality of life
-# 10	A307_10	Perceived benefits: Increasing property value
-
-
-#-------------------------------------------------------------------------------
-#testing for smart home device preference country ~ enhancing leisure activities
+# 10	A307_10	Perceived benefits: Increasing property value-------------------------------------------------------------------------------#testing for smart home device preference country ~ enhancing leisure activities
 dunnTest(A307_04, `Current Country of Residence`, method = "bonferroni")
 
 increaseLeisure = select(singleSourceOfTruthAppended,
@@ -557,8 +556,7 @@ aggregate(increaseLeisure[, 2],
 # 9	A307_09	Perceived benefits: Improving quality of life
 # 10	A307_10	Perceived benefits: Increasing property value
 
-#-------------------------------------------------------------------------------
-#testing for smart home device preference country ~ providing comfort
+#testing for smart home device preference country ~ providing comfort-------------------------------------------------------------------------------
 
 
 
@@ -593,8 +591,8 @@ aggregate(providingComfort[, 2],
 # 9	A307_09	Perceived benefits: Improving quality of life
 # 10	A307_10	Perceived benefits: Increasing property value
 
-#------------------------------------------------------------------------------------
-#testing for smart home device preference country ~ increasing safety
+# Pairwise testing by  country ~ increasing safety -----------------------------------------------------------------------------
+#testing for smart home device preference
 
 dunnTest(A307_07, `Current Country of Residence`, method = "bonferroni")
 
@@ -622,7 +620,7 @@ aggregate(increasingSafety[, 2],
 # 10	A307_10	Perceived benefits: Increasing property value
 
 
-#------------------------------------------------------------------------------------
+# Pairwise testing by country ---------------------------------------------------------------
 #testing for smart home device preference country ~ providing care
 
 dunnTest(A307_08, `Current Country of Residence`, method = "bonferroni")
@@ -636,7 +634,7 @@ aggregate(providingCare[, 2],
 # providing care is different for DACH - US/UK
 # rank DACH / US-UK (close)
 
-#------------------------------------------------------------------------------------
+# Pairwise testing by country ------------------------------------------------------------------------------------
 
 #starting pairwise testing per country
 # Country and adding to the property value
@@ -656,7 +654,7 @@ aggregate(
 # significant use to increase property value
 # rank : DACH/ UK / US
 
-#-------------------------------------------------------------------------------
+# Testing Device Risk-------------------------------------------------------------------------------
 # testing for country by perceived device risk
 
 # 1	E201_01	Device risk: Smart Coffee Maker
@@ -834,11 +832,13 @@ table(CCR_Device_Smart_Benefit$A302_14) #speaker
 table(CCR_Device_Smart_Benefit$A302_16) #TV
 
 
-#######ANOVA analyses
+# ANOVA I - sebis_avg----
 # country as exploratory variable
 country_anova = select(singleSourceOfTruthAppended,
                        `Current Country of Residence`,
-                       sebis_avg)
+                       sebis_avg,
+                       R101,
+                       E201_11)
 
 # explanatory var = country
 # responsible var = sebis_avg
@@ -847,18 +847,16 @@ country_anova = select(singleSourceOfTruthAppended,
 # alternative hypothesis = there is a reationship between continents and sebis
 
 means <-
-  round(
-    tapply(
-      as.numeric(singleSourceOfTruthAppended$sebis_avg),
-      singleSourceOfTruthAppended$`Current Country of Residence`,
-      mean
-    ),
-    digits = 2
-  )
+  round(tapply(
+    as.numeric(country_anova$sebis_avg),
+    country_anova$`Current Country of Residence`,
+    mean
+  ),
+  digits = 2)
 
 
 plotmeans(
-  singleSourceOfTruthAppended$sebis_avg ~ singleSourceOfTruthAppended$`Current Country of Residence`,
+  country_anova$sebis_avg ~ country_anova$`Current Country of Residence`,
   digits = 2,
   ccol = 'red',
   mean.labels = T,
@@ -866,7 +864,7 @@ plotmeans(
 )
 
 boxplot(
-  singleSourceOfTruthAppended$sebis_avg ~ singleSourceOfTruthAppended$`Current Country of Residence`,
+  country_anova$sebis_avg ~ country_anova$`Current Country of Residence`,
   main = "Plot of sebis score means by region",
   xlab = "'region'",
   ylab = "Sebis Score",
@@ -874,8 +872,87 @@ boxplot(
 )
 # F statistics = Variation among sample means / Variation within groups
 
-aov_content<- aov(singleSourceOfTruthAppended$sebis_avg ~ singleSourceOfTruthAppended$`Current Country of Residence`)
-summary(aov_cont) 
+aov_content <-
+  aov(country_anova$sebis_avg ~ country_anova$`Current Country of Residence`)
+summary(aov_content)
+
+# summary:
+# Not significant in this test.
+
+
+# ANOVA II - R101 ----
+
+# ANOVA analysis II | Amount of owned devices
+# R101
+# CCR
+
+means <-
+  round(tapply(
+    as.numeric(country_anova$R101),
+    country_anova$`Current Country of Residence`,
+    mean
+  ),
+  digits = 2)
+
+
+plotmeans(
+  country_anova$R101 ~ country_anova$`Current Country of Residence`,
+  digits = 2,
+  ccol = 'red',
+  mean.labels = T,
+  main = 'Plot of sebis score means by region'
+)
+
+boxplot(
+  country_anova$R101 ~ country_anova$`Current Country of Residence`,
+  main = "Plot of sebis score means by region",
+  xlab = "'region'",
+  ylab = "Sebis Score",
+  col = rainbow(7)
+)
+# F statistics = Variation among sample means / Variation within groups
+
+aov_content =  aov(country_anova$R101 ~ singleSourceOfTruthAppended$`Current Country of Residence`)
+summary(aov_content)
+
+# summary:
+# Not significant in this test.
+
+# ANOVA II - E201 device risk ----
+
+calc_anova <- function(data, column_to_use) {
+  data <- data %>%
+    filter(column_to_use > 0)
+  
+  means <-
+    round(tapply(as.numeric(data[[column_to_use]]),
+                 data$`Current Country of Residence`,
+                 mean),
+          digits = 2)
+  
+  
+  plotmeans(
+    data[[column_to_use]] ~ data$`Current Country of Residence`,
+    digits = 2,
+    ccol = 'red',
+    mean.labels = T,
+    main = 'Plot of sebis score means by region'
+  )
+  
+  boxplot(
+    data[[column_to_use]] ~ data$`Current Country of Residence`,
+    main = sprintf("Plot of %s means by region", names(column_to_use)),
+    xlab = "'region'",
+    ylab = "Sebis Score",
+    col = rainbow(7)
+  )
+  # F statistics = Variation among sample means / Variation within groups
+  
+  aov_content =  aov(data[[column_to_use]] ~ data$`Current Country of Residence`)
+  
+  return(summary(aov_content))
+}
+calc_anova(country_anova, "E201_11")
 
 
 detach(singleSourceOfTruthAppended)
