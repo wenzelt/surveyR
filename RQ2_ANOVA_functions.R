@@ -19,7 +19,7 @@ calc_anova <- function(data, column_to_use) {
     print("Column does not Exist")
   }
   
-  pdf(sprintf("Plot_'%s'by_region.pdf", titles[[column_to_use]])) 
+  # pdf(sprintf("Plot_'%s'by_region.pdf", titles[[column_to_use]])) 
   means <-
     round(tapply(as.numeric(data[[column_to_use]]),
                  data$`Current Country of Residence`,
@@ -55,7 +55,7 @@ calc_anova <- function(data, column_to_use) {
     print(summary(aov_content))
     print(tuk)
     plot(tuk)
-    dev.off() 
+    # dev.off() 
   }
 }
 
