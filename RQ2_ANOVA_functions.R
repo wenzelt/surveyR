@@ -11,7 +11,6 @@ country_anova = select(
 #Definition ANOVA function -----
 
 titles <- hash()
-titles$E201_01
 
 calc_anova <- function(data, column_to_use) {
   if (!is.null(data[[column_to_use]])) {
@@ -20,7 +19,7 @@ calc_anova <- function(data, column_to_use) {
     print("Column does not Exist")
   }
   
-  
+  pdf(sprintf("Plot_'%s'by_region.pdf", titles[[column_to_use]])) 
   means <-
     round(tapply(as.numeric(data[[column_to_use]]),
                  data$`Current Country of Residence`,
@@ -56,10 +55,8 @@ calc_anova <- function(data, column_to_use) {
     print(summary(aov_content))
     print(tuk)
     plot(tuk)
+    dev.off() 
   }
-  
-  
-  
 }
 
 #E201 Device Risk ----
@@ -85,11 +82,11 @@ titles$E201_19 = "Smart Vacuum Cleaner"
 titles$E201_20 = "Smart Washing Machine"
 
 
-#calc_anova(country_anova, "E201_11")
-#calc_anova(country_anova, "E201_14")
-#calc_anova(country_anova, "E201_16") # significant Smart TV
-#calc_anova(country_anova, "E201_18") # significant Smart Toy
-#calc_anova(country_anova, "E201_19") # significant Smart Vacuum
+calc_anova(country_anova, "E201_11")
+calc_anova(country_anova, "E201_14")
+calc_anova(country_anova, "E201_16") # significant Smart TV
+calc_anova(country_anova, "E201_18") # significant Smart Toy
+calc_anova(country_anova, "E201_19") # significant Smart Vacuum
 
 
 #A204 Perception of responsibility ----
@@ -101,8 +98,8 @@ titles$A204_04 = "Keeping the Smart Home device secure"
 titles$A204_05 = "Fixing a hardware failure"
 titles$A204_06 = "Fixing a software failure"
 
-#calc_anova(country_anova, 'A204_04')
-#calc_anova(country_anova, 'A204_05')
+calc_anova(country_anova, 'A204_04')
+calc_anova(country_anova, 'A204_05')
 
 #A307 Perceived Feature benefit ----
 
@@ -117,9 +114,9 @@ titles$A307_08 = "Providing care"
 titles$A307_09 = "Improving quality of life"
 titles$A307_10 = "Increasing property value"
 
-# calc_anova(country_anova,'A307_04')
-# calc_anova(country_anova,'A307_05')
-# calc_anova(country_anova,'A307_06')
-# calc_anova(country_anova,'A307_07')
-# calc_anova(country_anova,'A307_08')
-# calc_anova(country_anova,'A307_10')
+calc_anova(country_anova,'A307_04')
+calc_anova(country_anova,'A307_05')
+calc_anova(country_anova,'A307_06')
+calc_anova(country_anova,'A307_07')
+calc_anova(country_anova,'A307_08')
+calc_anova(country_anova,'A307_10')
