@@ -3,7 +3,6 @@
 
 
 ############################### RQ_01 ##############################################################
-##fresh start to analyses###
 
 # RQ1: What is the effect of the applied regulatory framework on Smart Home device usage and adoption?
 
