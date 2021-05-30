@@ -1,4 +1,34 @@
-la_regression = select(
+
+
+#E201 Device Risk ----
+set_device_titles <- function() {
+  titles <- hash()
+  
+  titles$E201_01 = "Smart Coffee Maker"
+  titles$E201_02 = "Smart Dishwasher"
+  titles$E201_03 = "Smart Door Lock"
+  titles$E201_04 = "Smart Doorbell"
+  titles$E201_05 = "Smart Electricity Meter"
+  titles$E201_06 = "Smart Electrical Outlet"
+  titles$E201_07 = "Smart Fridge"
+  titles$E201_08 = "Smart Gardening Equipment"
+  titles$E201_09 = "Smart Heating/Cooling System"
+  titles$E201_10 = "Smart Home Monitoring System"
+  titles$E201_11 = "Smart Lightbulb"
+  titles$E201_12 = "Smart Oven"
+  titles$E201_13 = "Smart Robot"
+  titles$E201_14 = "Smart Speaker"
+  titles$E201_15 = "Smart Stove"
+  titles$E201_16 = "Smart TV"
+  titles$E201_17 = "Smart Thermostat"
+  titles$E201_18 = "Smart Toy"
+  titles$E201_19 = "Smart Vacuum Cleaner"
+  titles$E201_20 = "Smart Washing Machine"
+}
+
+set_device_titles()
+
+data = select(
   singleSourceOfTruthAppended,
   LA_Mean,
   age,
@@ -11,72 +41,29 @@ la_regression = select(
   `Current Country of Residence`
 )
 
+
 #Definition LR function -----
-calc_lr <- function(data) {
-  devices.lm <- lm(formula = data$LA_Mean ~ data$A204_04 + data$age + data$Sex,
-                   data = data)
-  devices$value <- devices.lm$fitted.values
-  head(devices)
-  
-  
+calc_lr <- function(d) {
+  d = d[1:2]
+  d[, 2][d[, 2] < 0] = NA #remove negative values
+  lmtemp = lm(d[[1]] ~ d[[2]] + data$age , data = d)
   plot(
-    x = devices.lm$model$R101,
-    # True values on x-axis
-    y = devices.lm$fitted.values,
-    # fitted values on y-axis
-    xlab = "True Values",
-    ylab = "Model Fitted Values",
-    main = "Regression fits of diamond values"
+    lmtemp$residuals,
+    pch = 16,
+    col = "red",
+    main = sprintf("'%s'~ '%s' LR residuals", names(d[1]), titles[[names(d[2])]]),
   )
-
-  abline(b = 1, a = 0)
-  summary(devices.lm)
+  plot(d,
+       col = 'blue',
+       main = sprintf("'%s'~ '%s' LR values", names(d[1]), titles[[names(d[2])]]),
+  )
+  abline(lmtemp)
+  print(summary(lmtemp))
+  
 }
 
-data = la_regression
-lm_responsibility <- lm(formula = data$LA_Mean ~ data$E201_16,
-                 data = data)
-if (!is.null(data[[column_to_use]])) {
-  data <- data[data[[column_to_use]] >= 0,]
-} else{
-  print("Column does not Exist")
-}
-plot(
-  x = data$LA_Mean,
-  # True values on x-axis
-  y = data$E201_16,
-  # fitted values on y-axis
-  xlab = "Country perception",
-  ylab = "Risk",
-  main = "Regression fits of Risk values"
-)
-summary(lm_responsibility)
-
-plot(
-  x = devices.lm$model$R101,
-  # True values on x-axis
-  y = devices.lm$fitted.values,
-  # fitted values on y-axis
-  xlab = "True Values",
-  ylab = "Model Fitted Values",
-  main = "Regression fits of diamond values"
-)
 
 
-
-devices$value <- devices.lm$fitted.values
-head(devices)
-
-
-plot(
-  x = devices.lm$model$R101,
-  # True values on x-axis
-  y = devices.lm$fitted.values,
-  # fitted values on y-axis
-  xlab = "True Values",
-  ylab = "Model Fitted Values",
-  main = "Regression fits of diamond values"
-)
-
-abline(b = 1, a = 0)
-summary(devices.lm)
+calc_lr(select(data, LA_Mean, E201_11))
+calc_lr(select(data, LA_Mean, E201_14))
+calc_lr(select(data, LA_Mean, E201_16))
