@@ -82,8 +82,8 @@ titles$E201_19 = "Smart Vacuum Cleaner"
 titles$E201_20 = "Smart Washing Machine"
 
 
-calc_anova(country_anova, "E201_11")
-calc_anova(country_anova, "E201_14")
+calc_anova(country_anova, "E201_11") # not significant Smart Lightbulb
+calc_anova(country_anova, "E201_14") # not significant Smart Speaker
 calc_anova(country_anova, "E201_16") # significant Smart TV
 calc_anova(country_anova, "E201_18") # significant Smart Toy
 calc_anova(country_anova, "E201_19") # significant Smart Vacuum
