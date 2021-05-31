@@ -49,12 +49,14 @@ calc_anova <- function(data, column_to_use) {
   # F statistics = Variation among sample means / Variation within groups
   
   aov_content =  aov(data[[column_to_use]] ~ data$`Current Country of Residence`)
-  if ((summary(aov_content)[[1]][["Pr(>F)"]])[1] < 0.05) {
+  if ((summary(aov_content)[[1]][["Pr(>F)"]])[1] < 0.1) {
     tuk = TukeyHSD(aov_content)
     
     print(summary(aov_content))
     print(tuk)
     plot(tuk)
+    print(means)
+    
     # dev.off() 
   }
 }
@@ -101,6 +103,13 @@ titles$A204_06 = "Fixing a software failure"
 calc_anova(country_anova, 'A204_04')
 calc_anova(country_anova, 'A204_05')
 
+no_users = subset(country_anova, R101==0)
+calc_anova(no_users, 'A204_04')
+
+
+country_anova$risk_avg = rowMeans(select(country_anova,A204_01:A204_06))
+calc_anova(country_anova, 'risk_avg')
+
 #A307 Perceived Feature benefit ----
 
 titles$A307_01 = "Saving money"
@@ -120,3 +129,9 @@ calc_anova(country_anova,'A307_06')
 calc_anova(country_anova,'A307_07')
 calc_anova(country_anova,'A307_08')
 calc_anova(country_anova,'A307_10')
+
+
+calc_anova(country_anova,'R101')
+
+calc_anova(d,'Usage')
+
