@@ -63,18 +63,18 @@ data = select(
   E201_01:E201_20,
   A307_01:A307_10,
   `Current Country of Residence`,
-  muipc_PerceivedSur_avg
+  muipc_PerceivedSur_avg,
+  R101
 )
 
 
 #Definition LR function -----
 calc_lr <- function(d) {
-  # pdf(sprintf("Plot_LA_MEAN_%s_by_device_Risk.pdf", titles[[names(d[2])]]))
+  # pdf(sprintf("Plot_LA_MEAN_%s.pdf", titles[[names(d[2])]]))
   
   print(sprintf("Running Regression on %s and '%s'", names(d[1]), titles[[names(d[2])]]))
-  d = d[1:2]
   d[, 2][d[, 2] < 0] = NA #remove negative values
-  lmtemp = lm(d[[1]] ~ d[[2]] + data$Sex + data$age , data = d)
+  lmtemp = lm(d[[1]] ~ d[[2]] + d$Sex + d$age , data = d)
   plot(
     lmtemp$residuals,
     pch = 16,
@@ -82,7 +82,7 @@ calc_lr <- function(d) {
     main = sprintf("'%s'~ '%s' LR residuals", names(d[1]), titles[[names(d[2])]]),
   )
   plot(
-    d,
+    d[1:2],
     ylab = sprintf("'%s' risk assessment", titles[[names(d[2])]]),
     xlab = sprintf("'%s' regulatory perception", names(d[1])),
     col = 'blue',
@@ -94,10 +94,16 @@ calc_lr <- function(d) {
 }
 
 
-calc_lr(select(data, LA_Mean, E201_11))
-calc_lr(select(data, LA_Mean, E201_14))
-calc_lr(select(data, LA_Mean, E201_16))
+calc_lr(select(data, LA_Mean, E201_11, Sex, age))
+calc_lr(select(data, LA_Mean, E201_14, Sex, age))
+calc_lr(select(data, LA_Mean, E201_16, Sex, age))
 
-calc_lr(select(data, LA_Mean, muipc_PerceivedSur_avg))
+calc_lr(select(data, LA_Mean, muipc_PerceivedSur_avg, Sex, age))
 
+# Device Adoption + LA_MEAN
+calc_lr(select(data, LA_Mean,R101, Sex,age))
+
+calc_lr(select(Participants_DACH,LA_Mean,R101,Sex,age))
+calc_lr(select(Participants_UK,LA_Mean,R101,Sex,age))
+calc_lr(select(Participants_US,LA_Mean,R101,Sex,age))
 
