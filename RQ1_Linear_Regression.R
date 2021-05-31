@@ -65,7 +65,8 @@ data = select(
   `Current Country of Residence`,
   muipc_PerceivedSur_avg,
   R101,
-  A005
+  A005,
+  LA01_01:LA01_03
 )
 
 
@@ -109,4 +110,3 @@ calc_lr(select(Participants_UK,LA_Mean,R101,Sex,age))
 calc_lr(select(Participants_US,LA_Mean,R101,Sex,age))
 
 calc_lr(select(data,A005,R101,Sex,age))
-
