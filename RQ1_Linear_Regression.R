@@ -128,3 +128,7 @@ calc_lr(select(data, A005, R101, Sex, age))
 
 knitr::stitch_rhtml('RQ1_Linear_Regression.r')
 knitr::stitch('RQ1_Linear_Regression.r')
+stitch_rhtml('RQ1_Linear_Regression.R')
+stitch("RQ1_LR_REPORT.Rmd")
+rmarkdown::render("RQ1_LR_REPORT.Rmd")
+rmarkdown::render("RQ1_Linear_Regression.R", "html")
