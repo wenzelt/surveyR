@@ -24,7 +24,8 @@ list.of.packages <-
     "gplots",
     "hash",
     'knitr',
-    'pagedown'
+    'pagedown',
+    'rmarkdown'
   )
 new.packages <-
   list.of.packages[!(list.of.packages %in% installed.packages()[, "Package"])]
@@ -54,6 +55,7 @@ library(gplots)
 library(hash)
 library(knitr)
 library(pagedown)
+library(rmarkdown)
 
 
 singleSourceOfTruthAppended <-
