@@ -22,7 +22,9 @@ list.of.packages <-
     "dunn.test",
     "rcompanion",
     "gplots",
-    "hash"
+    "hash",
+    'knitr',
+    'pagedown'
   )
 new.packages <-
   list.of.packages[!(list.of.packages %in% installed.packages()[, "Package"])]
@@ -50,6 +52,9 @@ library(doBy)
 library(janitor)
 library(gplots)
 library(hash)
+library(knitr)
+library(pagedown)
+
 
 singleSourceOfTruthAppended <-
   read_delim(

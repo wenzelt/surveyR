@@ -58,6 +58,7 @@ calc_anova <- function(data, column_to_use) {
     print(means)
     
     # dev.off() 
+    #return(tuk)
   }
 }
 
@@ -128,6 +129,7 @@ calc_anova(country_anova,'A307_05')
 calc_anova(country_anova,'A307_06')
 calc_anova(country_anova,'A307_07')
 calc_anova(country_anova,'A307_08')
+calc_anova(country_anova,'A307_09')
 calc_anova(country_anova,'A307_10')
 
 
