@@ -68,6 +68,8 @@ d$Usage <-
   )
 
 #testing for connection between current region of residence and the amount of usaage over ALL smart home devices
+d = subset(d, Sex != "Non-binary" )
+
 Usage_CCR_LATEX <-
   dunnTest(
     x = as.numeric(d$Usage),
