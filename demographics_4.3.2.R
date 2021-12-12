@@ -10,6 +10,7 @@
 library(ggplot2)
 library(pastecs)
 library(ryouready)
+library(dplyr)
 
 theme_set(
   theme_classic() + 
@@ -421,3 +422,21 @@ barplot(counts, main="Devices by Count",
         xlab="Number of Devices in Household",  legend = rownames(counts), beside=TRUE, col =colors())
 
 temp = select(d,Device,`Number Devices in Household`,`People in Household`)
+frequency_devices = freq(d$Device, order = "freq")
+
+temp2 = transform(temp, freq.loc = ave(seq(nrow(temp)), Device, FUN=length)/nrow(temp))
+
+asd = select(d,`People in Household`,Device)
+arrange(asd,`People in Household`, Device)
+
+asd = subset(asd,`People in Household` == 1)
+qwe = asd %>% count()
+transform(qwe, freq.loc = ave(seq(nrow(qwe)), Device, FUN=length))
+qwe = subset(asd,`People in Household` == 2)
+qwe = subset(asd,`People in Household` == 3)
+qwe = subset(asd,`People in Household` == 4)
+qwe = subset(asd,`People in Household` == 5)
+qwe = subset(asd,`People in Household` == 6)
+
+transform(asd, freq.loc = ave(seq(nrow(asd)), Device, FUN=length)/nrow(asd))
+
