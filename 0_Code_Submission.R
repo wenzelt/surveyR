@@ -1428,18 +1428,15 @@ colnames(i1) = c("Voice Assistant", "App on my phone", "Physical buttons on the 
 colnames(i2) = c("Voice Assistant", "App on my phone", "Physical buttons on the device", "Screen on the device", "Internet based service connected to the device", "Home Internet router")
 colnames(i3) = c("Voice Assistant", "App on my phone", "Physical buttons on the device", "Screen on the device", "Internet based service connected to the device", "Home Internet router")
 
-
 device_interaction <- rbind(i1,i2,i3)
-#table(device_interaction,exclude = c("False"),useNA = "no")
-#prop.table(table(device_interaction))
 
+# removing people that neither rented or owned a home 
+rent_own_test = subset(select(ssot_new, A007, R101),A007 != 3)
+wilcox.test(rent_own_test$R101 ~ as.factor(rent_own_test$A007)) # no statistical significance found
 
-wilcox.test(ssot_new$R101 ~ ssot_new$A007 == "Rent" |
-              ssot_new$A007 == "Own") # no statistical significance found
+kruskal_test(rent_own_test, formula = R101 ~ A007) 
 
-kruskal_test(ssot_new, formula = R101 ~ A007) 
-
-# 3.1.0 - Household size ####
+# 3.1.0 - Household size Device adoption ####
 
 
 children_in_household <- subset(ssot_new, A004>0)
@@ -1448,9 +1445,7 @@ cor.test(children_in_household$R101, as.numeric(children_in_household$A005))
 no_children_in_household <- subset(ssot_new, A004==0)
 cor.test(no_children_in_household$R101, as.numeric(no_children_in_household$A005))
 
-# 3.2.0 - Household size ####
-
-#H2 - Household Size ~ Daily Usage of devices - R501, R503, R505
+## 3.2.0 H2 - Household Size ~ Daily Usage of devices - R501, R503, R505 ----
 # creating table usage device ownership
 
 d1 <- select(subset(ssot_new, R233_01 == 1), participant_id, R232_01, R501, A005)
@@ -1474,7 +1469,6 @@ USAGE_A005_LATEX[4] <- c(cor.test(as.numeric(subset(dtInteresting,Device_Owned =
                          cor.test(as.numeric(subset(dtInteresting,Device_Owned == "Smart TV")$A005), as.numeric(subset(dtInteresting,Device_Owned == "Smart TV")$Usage),method = "pearson")$p.value)
 
 colnames(USAGE_A005_LATEX) <- c("Device","Cor", "Method", "P-Value")
-USAGE_A005_LATEX$`P-Value` <- paste(as.numeric(USAGE_A005_LATEX$`P-Value`),stars.pval(as.numeric(USAGE_A005_LATEX$`P-Value`)))
 
 #H2 - Household size ~ Device Location - R528, R530, R532 
 #//low priority, no interesting findings expected
@@ -1491,7 +1485,7 @@ deviceLocation <-
   )
 #deviceLocationSmartSpeaker <- merge(deviceLocation,dSmartSpeaker, by="participant_id")
 
-#Device Perception x A005
+# 3.3.0 Device Perception x A005 ----
 
 asd = select(ssot_new, A005,A204_01,A204_02,A204_03,A204_04,A204_05,A204_06)
 cor.test(as.numeric(asd$A005),as.numeric(asd$A204_01))
@@ -1625,7 +1619,6 @@ riskChildren_LATEX <- data.frame(
                     wilcox_effsize(ssot_new, formula = E201_14 ~ A004)$effsize,
                     wilcox_effsize(ssot_new, formula = E201_16 ~ A004)$effsize
   ))
-riskChildren_LATEX$p_value <- paste(as.numeric(riskChildren_LATEX$p_value),stars.pval(as.numeric(riskChildren_LATEX$p_value)))
 
 
 
@@ -1659,7 +1652,6 @@ responsibilityChildren_LATEX <- data.frame(
                     wilcox_effsize(ssot_new, formula = A204_05 ~ A004)$effsize,
                     wilcox_effsize(ssot_new, formula = A204_06 ~ A004)$effsize
   ))
-responsibilityChildren_LATEX$p_value <- paste(as.numeric(responsibilityChildren_LATEX$p_value),stars.pval(as.numeric(responsibilityChildren_LATEX$p_value)))
 
 #testing for children affecting the type of usage the user is comfortable with
 
@@ -1704,6 +1696,5 @@ USAGETYPE_Children_LATEX <- data.frame(
                     wilcox_effsize(ssot_new, formula = E205_06 ~ A004)$effsize,
                     wilcox_effsize(ssot_new, formula = E205_07 ~ A004)$effsize
   ))
-USAGETYPE_Children_LATEX$p_value <- paste(as.numeric(USAGETYPE_Children_LATEX$p_value),stars.pval(as.numeric(USAGETYPE_Children_LATEX$p_value)))
 
 
