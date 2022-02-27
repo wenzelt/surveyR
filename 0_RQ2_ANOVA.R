@@ -84,12 +84,6 @@ titles$E201_18 = "Smart Toy"
 titles$E201_19 = "Smart Vacuum Cleaner"
 titles$E201_20 = "Smart Washing Machine"
 
-range_devices = 1:18
-for (i in range_devices){
-  calc_anova(country_anova, cat("E201_",i, sep = ""))
-}
-
-
 calc_anova(country_anova, "E201_11") # not significant Smart Lightbulb
 calc_anova(country_anova, "E201_14") # not significant Smart Speaker
 calc_anova(country_anova, "E201_16") # significant Smart TV
@@ -140,5 +134,7 @@ calc_anova(country_anova,'A307_10')
 
 calc_anova(country_anova,'R101')
 
-calc_anova(d,'Usage')
+calc_anova(devices_combined,'Usage')
 
+aov(select(smartTVUsers, `Current Country of Residence`, Usage))
+calc_anova(smartTVUsers,'Usage')

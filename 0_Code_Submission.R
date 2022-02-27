@@ -150,7 +150,7 @@ ssot_new <-
 
 # create bool if participant has children or not from numeric var
 ssot_new$A004 <-
-  ifelse(ssot_new$A004 > 0, 1, 0) # having children
+  ifelse(ssot_new$A004 > 1, 1, 0) # having children
 
 # 0.2.9 Translating Device names  ----
 ssot_new$R232_01 <-
@@ -517,9 +517,6 @@ ssot_new$muipc_PerceivedIntrusion_avg <-
   rowMeans(select(ssot_new, S102_07:S102_09))
 
 # converting household size to numeric variable
-# should we leave out people more than six in analyses (current state) or rename to 6 (two people)
-ssot_new$A005 <- gsub("More than 6", 6, ssot_new$A005)
-
 ssot_new$A005 <-
   as.numeric(ssot_new$A005)
 
@@ -676,7 +673,7 @@ device1 <-
     participant_id,
     R232_01,
     R501,
-    "Current Country of Residence",
+    `Current Country of Residence`,
     LA_Mean
   )
 device2 <-
@@ -685,7 +682,7 @@ device2 <-
     participant_id,
     R232_02,
     R503,
-    "Current Country of Residence",
+    `Current Country of Residence`,
     LA_Mean
   )
 
@@ -695,7 +692,7 @@ device3 <-
     participant_id,
     R232_03,
     R505,
-    "Current Country of Residence",
+    `Current Country of Residence`,
     LA_Mean
   )
 colnames(device1) <-
@@ -1040,14 +1037,14 @@ epsilonSquared(
 )
 
 
-countryPerception = select(singleSourceOfTruthAppended,
+countryPerception = select(ssot_new,
                            `Current Country of Residence`,
                            A204_04)
 aggregate(countryPerception[, 2],
           list(countryPerception$`Current Country of Residence`),
           mean)
 
-countryPerception_N = select(subset(singleSourceOfTruthAppended, R101 < 1),
+countryPerception_N = select(subset(ssot_new, R101 < 1),
                              `Current Country of Residence`,
                              A204_04)
 aggregate(
@@ -1057,7 +1054,7 @@ aggregate(
 )
 
 #check users
-countryPerception_U = select(subset(singleSourceOfTruthAppended, R101 > 0),
+countryPerception_U = select(subset(ssot_new, R101 > 0),
                              `Current Country of Residence`,
                              A204_04)
 aggregate(
@@ -1162,9 +1159,9 @@ aggregate(providingComfort[, 2],
 # Pairwise testing by  country ~ increasing safety
 #testing for smart home device preference
 
-dunnTest(A307_07, `Current Country of Residence`, method = "bonferroni")
+dunnTest(ssot_new$A307_07, as.factor(ssot_new$`Current Country of Residence`), method = "bonferroni")
 
-increasingSafety = select(singleSourceOfTruthAppended,
+increasingSafety = select(ssot_new,
                           `Current Country of Residence`,
                           A307_07)
 aggregate(increasingSafety[, 2],
@@ -1191,7 +1188,7 @@ aggregate(increasingSafety[, 2],
 # Pairwise testing by country 
 #testing for smart home device preference country ~ providing care
 
-dunnTest(ssot_new$A307_08, ssot_new$`Current Country of Residence`, method = "bonferroni")
+dunnTest(ssot_new$A307_08, as.factor(ssot_new$`Current Country of Residence`), method = "bonferroni")
 providingCare = select(ssot_new,
                        `Current Country of Residence`,
                        A307_08)
@@ -1402,4 +1399,311 @@ table(CCR_Device_Smart_Benefit$A302_14) #speaker
 table(CCR_Device_Smart_Benefit$A302_16) #TV
 
 
-# 3.0.0 ----
+# 3.0.0 - Household Factors ----
+
+# 3.0.1 - Discussion Data####
+#p Discussion
+# the below test can only be done before splitting into >1 
+cor.test(ssot_new$R101, as.numeric(ssot_new$A005)) # greater hh size higher variance of devices
+cor.test(ssot_new$R101, as.numeric(ssot_new$A004)) 
+
+#Discussion
+wilcox_test(ssot_new, formula = E201_11 ~ A005) # smart home smart speaker smart tv risk assessment
+wilcox_test(ssot_new, formula = E201_14 ~ A005) # household size
+wilcox_test(ssot_new, formula = E201_16 ~ A005)
+
+wilcox_test(ssot_new, R101 ~ A004) 
+
+
+device_interaction <- select(ssot_new, R534_01:R534_06,R536_01:R536_06,R538_01:R538_06)
+i1 <- select(ssot_new, R534_01:R534_06)
+i2 <- select(ssot_new, R536_01:R536_06)
+i3 <- select(ssot_new, R538_01:R538_06)
+
+i1 <- unname(select(ssot_new, R534_01:R534_06))
+i2 <- unname(select(ssot_new, R536_01:R536_06))
+i3 <- unname(select(ssot_new, R538_01:R538_06))
+
+colnames(i1) = c("Voice Assistant", "App on my phone", "Physical buttons on the device", "Screen on the device", "Internet based service connected to the device", "Home Internet router")
+colnames(i2) = c("Voice Assistant", "App on my phone", "Physical buttons on the device", "Screen on the device", "Internet based service connected to the device", "Home Internet router")
+colnames(i3) = c("Voice Assistant", "App on my phone", "Physical buttons on the device", "Screen on the device", "Internet based service connected to the device", "Home Internet router")
+
+
+device_interaction <- rbind(i1,i2,i3)
+#table(device_interaction,exclude = c("False"),useNA = "no")
+#prop.table(table(device_interaction))
+
+
+wilcox.test(ssot_new$R101 ~ ssot_new$A007 == "Rent" |
+              ssot_new$A007 == "Own") # no statistical significance found
+
+kruskal_test(ssot_new, formula = R101 ~ A007) 
+
+# 3.1.0 - Household size ####
+
+
+children_in_household <- subset(ssot_new, A004>0)
+cor.test(children_in_household$R101, as.numeric(children_in_household$A005))
+
+no_children_in_household <- subset(ssot_new, A004==0)
+cor.test(no_children_in_household$R101, as.numeric(no_children_in_household$A005))
+
+# 3.2.0 - Household size ####
+
+#H2 - Household Size ~ Daily Usage of devices - R501, R503, R505
+# creating table usage device ownership
+
+d1 <- select(subset(ssot_new, R233_01 == 1), participant_id, R232_01, R501, A005)
+d2 <- select(subset(ssot_new, R233_02 == 1), participant_id, R232_02, R503, A005)
+d3 <- select(subset(ssot_new, R233_03 == 1), participant_id, R232_03, R505, A005)
+colnames(d1) <- c("participant_id", "Device_Owned", "Usage", "A005")
+colnames(d2) <- c("participant_id", "Device_Owned", "Usage", "A005")
+colnames(d3) <- c("participant_id", "Device_Owned", "Usage", "A005")
+d <- rbind(d1, d2, d3)
+d <- subset(d, Usage != 7)
+
+cor.test(as.numeric(d$A005), as.numeric(d$Usage))
+
+#Device Usage x A005
+dtInteresting <- filter(d, Device_Owned == "Smart TV" | Device_Owned == "Smart Lightbulb" | Device_Owned == "Smart Speaker")
+dt = group_by(dtInteresting, Device_Owned)
+USAGE_A005_LATEX <- dplyr::summarize(dt, cor(as.numeric(A005), as.numeric(Usage)))
+USAGE_A005_LATEX[3] <- "Pearson"
+USAGE_A005_LATEX[4] <- c(cor.test(as.numeric(subset(dtInteresting,Device_Owned == "Smart Lightbulb")$A005), as.numeric(subset(dtInteresting,Device_Owned == "Smart Lightbulb")$Usage),method = "pearson")$p.value,
+                         cor.test(as.numeric(subset(dtInteresting,Device_Owned == "Smart Speaker")$A005), as.numeric(subset(dtInteresting,Device_Owned == "Smart Speaker")$Usage),method = "pearson")$p.value,
+                         cor.test(as.numeric(subset(dtInteresting,Device_Owned == "Smart TV")$A005), as.numeric(subset(dtInteresting,Device_Owned == "Smart TV")$Usage),method = "pearson")$p.value)
+
+colnames(USAGE_A005_LATEX) <- c("Device","Cor", "Method", "P-Value")
+USAGE_A005_LATEX$`P-Value` <- paste(as.numeric(USAGE_A005_LATEX$`P-Value`),stars.pval(as.numeric(USAGE_A005_LATEX$`P-Value`)))
+
+#H2 - Household size ~ Device Location - R528, R530, R532 
+#//low priority, no interesting findings expected
+
+
+deviceLocation <-
+  select(
+    ssot_new,
+    R528_01:R528_12,
+    R529_01:R529_12,
+    R530_01:R530_12,
+    participant_id,
+    A004
+  )
+#deviceLocationSmartSpeaker <- merge(deviceLocation,dSmartSpeaker, by="participant_id")
+
+#Device Perception x A005
+
+asd = select(ssot_new, A005,A204_01,A204_02,A204_03,A204_04,A204_05,A204_06)
+cor.test(as.numeric(asd$A005),as.numeric(asd$A204_01))
+cor.test(as.numeric(asd$A005),as.numeric(asd$A204_02))
+cor.test(as.numeric(asd$A005),as.numeric(asd$A204_03))
+cor.test(as.numeric(asd$A005),as.numeric(asd$A204_04))
+cor.test(as.numeric(asd$A005),as.numeric(asd$A204_05))
+cor.test(as.numeric(asd$A005),as.numeric(asd$A204_06))
+
+
+plot(as.numeric(asd$A005),as.numeric(asd$A204_01))
+abline(lm(as.numeric(d$A005)~as.numeric(d$Usage)), col="red") # regression line (y~x)
+
+
+#H1 - Household size ~ Disabled features - R507, 510, R513
+##/no little disabled features (n=37)-> low priority
+
+
+#H2####
+##testing wilcox test for children > 0 impact on amount of devices##
+
+#usage factoring into 
+# Adding all device owners to the same data frame and stacking them for analysis
+u <-
+  select(
+    ssot_new,
+    participant_id,
+    `Current Country of Residence`,
+    R232_01,
+    R232_02,
+    R232_03,
+    R233_01,
+    R233_02 ,
+    R233_03 ,
+    R501,
+    R503,
+    R505,
+    A004,
+    A005,
+  )
+
+d1 <-
+  select(subset(u, R233_01 == 1),
+         participant_id,
+         `Current Country of Residence`,
+         R232_01,
+         R501,
+         A004,
+         A005,)
+d2 <-
+  select(subset(u, R233_02 == 1),
+         participant_id,
+         `Current Country of Residence`,
+         R232_02,
+         R503,
+         A004,
+         A005,)
+d3 <-
+  select(subset(u, R233_03 == 1),
+         participant_id,
+         `Current Country of Residence`,
+         R232_03,
+         R505,
+         A004,
+         A005,)
+colnames(d1) <-
+  c("participant_id",
+    "Current Country of Residence",
+    "Device",
+    "Usage", "Children", "Household")
+colnames(d2) <-
+  c("participant_id",
+    "Current Country of Residence",
+    "Device",
+    "Usage", "Children", "Household")
+colnames(d3) <-
+  c("participant_id",
+    "Current Country of Residence",
+    "Device",
+    "Usage", "Children", "Household")
+d <- rbind(d1, d2, d3)
+d <- subset(d, Usage != 7)
+
+
+mean(as.numeric(subset(d,Children==1)$Usage))
+mean(as.numeric(subset(d,Children==0)$Usage))
+
+median(as.numeric(subset(d,Children==1)$Usage))
+median(as.numeric(subset(d,Children==0)$Usage))
+
+
+wilcox.test(as.numeric(d$Usage)~d$Children)
+
+children_smartTV = subset(d, Device == "Smart TV")
+wilcox.test(as.numeric(children_smartTV$Usage)~children_smartTV$Children)
+mean(as.numeric(subset(children_smartTV,Children==1)$Usage))
+mean(as.numeric(subset(children_smartTV,Children==0)$Usage))
+
+median(as.numeric(subset(children_smartTV,Children==1)$Usage))
+median(as.numeric(subset(children_smartTV,Children==0)$Usage))
+#--
+children_smartTV = subset(d, Device == "Smart Speaker")
+wilcox.test(as.numeric(children_smartTV$Usage)~children_smartTV$Children)
+mean(as.numeric(subset(children_smartTV,Children==1)$Usage))
+mean(as.numeric(subset(children_smartTV,Children==0)$Usage))
+
+median(as.numeric(subset(children_smartTV,Children==1)$Usage))
+median(as.numeric(subset(children_smartTV,Children==0)$Usage))
+#--
+children_smartTV = subset(d, Device == "Smart Lightbulb")
+wilcox.test(as.numeric(children_smartTV$Usage)~children_smartTV$Children)
+mean(as.numeric(subset(children_smartTV,Children==1)$Usage))
+mean(as.numeric(subset(children_smartTV,Children==0)$Usage))
+
+median(as.numeric(subset(children_smartTV,Children==1)$Usage))
+median(as.numeric(subset(children_smartTV,Children==0)$Usage))
+#--
+
+#dunnTest(ssot_new$A004, as.factor(select(ssot_new,E201_01:E201_20)), method = "bonferroni")
+
+riskChildren_LATEX <- data.frame(
+  "Usage_type" = c("Smart Lightbulb",
+                   "Smart Speaker",
+                   "Smart TV"
+  ), 
+  "p_value"= c(wilcox_test(ssot_new, E201_11 ~ A004)$p,
+               wilcox_test(ssot_new, E201_14 ~ A004)$p,
+               wilcox_test(ssot_new, E201_16 ~ A004)$p
+  ), 
+  "effect_size" = c(wilcox_effsize(ssot_new, formula = E201_11 ~ A004)$effsize,
+                    wilcox_effsize(ssot_new, formula = E201_14 ~ A004)$effsize,
+                    wilcox_effsize(ssot_new, formula = E201_16 ~ A004)$effsize
+  ))
+riskChildren_LATEX$p_value <- paste(as.numeric(riskChildren_LATEX$p_value),stars.pval(as.numeric(riskChildren_LATEX$p_value)))
+
+
+
+#Perception of responsibility
+#1 Keeping the Smart Home device software up-to-date
+#2 Ensuring my privacy
+#3 Protecting my Smart Home ecosystem as a whole
+#4 Keeping the Smart Home device secure
+#5 Fixing a hardware failure
+#6 Fixing a software failure
+
+responsibilityChildren_LATEX <- data.frame(
+  "Usage_type" = c("Keeping the Smart Home device software up-to-date",
+                   "Ensuring my privacy",
+                   "Protecting my Smart Home ecosystem as a whole",
+                   "Keeping the Smart Home device secure",
+                   "Fixing a hardware failure",
+                   "Fixing a software failure"
+  ), 
+  "p_value"= c(wilcox_test(ssot_new, A204_01 ~ A004)$p,
+               wilcox_test(ssot_new, A204_02 ~ A004)$p,
+               wilcox_test(ssot_new, A204_03 ~ A004)$p,
+               wilcox_test(ssot_new, A204_04 ~ A004)$p,
+               wilcox_test(ssot_new, A204_05 ~ A004)$p,
+               wilcox_test(ssot_new, A204_06 ~ A004)$p
+  ), 
+  "effect_size" = c(wilcox_effsize(ssot_new, formula = A204_01 ~ A004)$effsize,
+                    wilcox_effsize(ssot_new, formula = A204_02 ~ A004)$effsize,
+                    wilcox_effsize(ssot_new, formula = A204_03 ~ A004)$effsize,
+                    wilcox_effsize(ssot_new, formula = A204_04 ~ A004)$effsize,
+                    wilcox_effsize(ssot_new, formula = A204_05 ~ A004)$effsize,
+                    wilcox_effsize(ssot_new, formula = A204_06 ~ A004)$effsize
+  ))
+responsibilityChildren_LATEX$p_value <- paste(as.numeric(responsibilityChildren_LATEX$p_value),stars.pval(as.numeric(responsibilityChildren_LATEX$p_value)))
+
+#testing for children affecting the type of usage the user is comfortable with
+
+# 1 E205_01	Usage type: Voice commands via a Smart Speaker
+# 2	E205_02	Usage type: Voice commands via a Smartphone Voice Assistant
+# 3	E205_03	Usage type: Smartphone App for the Device
+# 4	E205_04	Usage type: Smartphone Widgets or Shortcuts
+# 5	E205_05	Usage type: Sensors inside the Home (e.g., Motion Sensors, Light Sensors, etc.)
+# 6	E205_06	Usage type: Sensors outside the Home (e.g., Motion Sensors, Light Sensors, etc.)
+# 7	E205_07	Usage type: Automatic Operation based on Device Programming
+
+aggregate(ssot_new$E205_01,
+          list(ssot_new$A004),
+          mean)
+aggregate(ssot_new$E205_02,
+          list(ssot_new$A004),
+          mean)
+
+
+USAGETYPE_Children_LATEX <- data.frame(
+  "Usage_type" = c("Voice commands via a Smart Speaker",
+                   "Voice commands via a Smartphone Voice Assistant",
+                   "Smartphone App for the Device",
+                   "Smartphone Widgets or Shortcuts",
+                   "Sensors inside the Home",
+                   "Sensors outside the Home",
+                   "Automatic Operation based on Device Programming"
+  ), 
+  "p_value"= c(wilcox_test(ssot_new, E205_01 ~ A004)$p,
+               wilcox_test(ssot_new, E205_02 ~ A004)$p,
+               wilcox_test(ssot_new, E205_03 ~ A004)$p,
+               wilcox_test(ssot_new, E205_04 ~ A004)$p,
+               wilcox_test(ssot_new, E205_05 ~ A004)$p,
+               wilcox_test(ssot_new, E205_06 ~ A004)$p,
+               wilcox_test(ssot_new, E205_07 ~ A004)$p
+  ), 
+  "effect_size" = c(wilcox_effsize(ssot_new, formula = E205_01 ~ A004)$effsize,
+                    wilcox_effsize(ssot_new, formula = E205_02 ~ A004)$effsize,
+                    wilcox_effsize(ssot_new, formula = E205_03 ~ A004)$effsize,
+                    wilcox_effsize(ssot_new, formula = E205_04 ~ A004)$effsize,
+                    wilcox_effsize(ssot_new, formula = E205_05 ~ A004)$effsize,
+                    wilcox_effsize(ssot_new, formula = E205_06 ~ A004)$effsize,
+                    wilcox_effsize(ssot_new, formula = E205_07 ~ A004)$effsize
+  ))
+USAGETYPE_Children_LATEX$p_value <- paste(as.numeric(USAGETYPE_Children_LATEX$p_value),stars.pval(as.numeric(USAGETYPE_Children_LATEX$p_value)))
+
+
