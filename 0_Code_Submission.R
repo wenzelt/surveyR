@@ -1,7 +1,6 @@
 ##### 0.1 Installation of dependencies ----
 
 list.of.packages <- c(
-  "ggplot2",
   "Hmisc",
   "tidyverse",
   "summarytools",
@@ -85,6 +84,7 @@ table(prolific_table_original$status)
 # 0.2.4 filter out non-approved people from prolific academic
 prolific_table_filtered = subset(prolific_table_original, status == "APPROVED")
 
+# n = 463
 # 0.2.5 merge into full data frame by participant ID in the prolific dataset and their entered prolific ID in the survey
 SSOT <-
   merge(prolific_table_filtered,
@@ -97,16 +97,6 @@ SSOT <-
 SSOT <-
   subset(SSOT,
          `Current Country of Residence` != "NA")
-
-# 0.2.6 remove all people not interested in giving good answers
-# Have you answered all questions in the study according to the provided instructions?
-SSOT <-
-  subset(SSOT,
-         CS06 == 1)
-# Will you provide your best answers to each question in this study?
-SSOT <-
-  subset(SSOT,
-         CS10 == 1)
 
 # 0.2.7 consolidate DACH region
 SSOT$`Current Country of Residence` <-
@@ -128,6 +118,9 @@ SSOT$`Current Country of Residence` <-
     "DACH"
   )
 
+
+
+
 # 0.2.8 remove everybody not from one of the specified regions
 SSOT <-
   subset(
@@ -136,6 +129,17 @@ SSOT <-
       `Current Country of Residence` == "United States" |
       `Current Country of Residence` == "United Kingdom"
   )
+
+# 0.2.6 remove all people not interested in giving good answers
+# Have you answered all questions in the study according to the provided instructions? # reduces by 8 
+SSOT <-
+  subset(SSOT,
+         CS06 == 1)
+# Will you provide your best answers to each question in this study? # reduces by 0 
+SSOT <-
+  subset(SSOT,
+         CS10 == 1)
+
 
 # n = 439 here
 
@@ -384,7 +388,7 @@ ssot_new$R232_02 <-
 
 ssot_new$R232_02 <-
   replace(
-    as.character(ssot_new$R232_01),
+    as.character(ssot_new$R232_02),
     ssot_new$R232_02 == "Smart Steckdose",
     "Smart Electrical Outlet"
   )
@@ -484,7 +488,7 @@ ssot_new$R232_03 <-
 
 ssot_new$R232_03 <-
   replace(
-    as.character(ssot_new$R232_01),
+    as.character(ssot_new$R232_03),
     ssot_new$R232_03 == "Smart Steckdose",
     "Smart Electrical Outlet"
   )
@@ -663,13 +667,16 @@ users_table <-
     R233_03 ,
     R501,
     R503,
-    R505
+    R505,
+    `Current Country of Residence`,
+    LA_Mean
+    
   )
 
 # creating dataset of personally owned devices by participants
 device1 <-
   select(
-    subset(ssot_new, R233_01 == 1),
+    subset(users_table, R233_01 == 1),
     participant_id,
     R232_01,
     R501,
@@ -678,7 +685,7 @@ device1 <-
   )
 device2 <-
   select(
-    subset(ssot_new, R233_02 == 1),
+    subset(users_table, R233_02 == 1),
     participant_id,
     R232_02,
     R503,
@@ -688,7 +695,7 @@ device2 <-
 
 device3 <-
   select(
-    subset(ssot_new, R233_03 == 1),
+    subset(users_table, R233_03 == 1),
     participant_id,
     R232_03,
     R505,
@@ -834,7 +841,7 @@ aggregate(LA01_02 ~ choice, data = disabled_features, mean)
 aggregate(LA01_03 ~ choice, data = disabled_features, mean)
 table(disabled_features$choice)
 
-#### 1.3.1 H3_Perception - How is perception affected by the feeling of legislative protection ? ----
+#### 1.3.1 H3_Perception - How is perception affected by the feeling of legislative protection ? (table) ----
 
 #E201_01-20 correspond to the perceived risk of a certain device
 #11 Smart Lightbuld; 14 Smart Speaker; 16 Smart TV
@@ -938,6 +945,12 @@ dunnTest(
   ),
   method = "bonferroni"
 )$res
+aggregate(as.numeric(
+  subset(devices_combined, Device_Owned == "Smart TV")$Usage
+), list(as.factor(
+  subset(devices_combined, Device_Owned == "Smart TV")$`Current Country of Residence`
+)), mean)
+
 
 dunnTest(
   x = as.numeric(
