@@ -915,6 +915,35 @@ cor_test(select(subset(ssot_new, R101 > 0),
                 muipc_PerceivedSur_avg))
 # higher legislative protection negatively impacts perceived surveillance greatly
 
+
+#### 1.3.4 #non users more privacy aware? ----
+no_devices <- subset(select(ssot_new,LA_Mean, LA02_Mean, sebis_avg, R101, A204_01:A204_06, muipc_PerceivedSur_avg),R101==0) 
+devices <- subset(select(ssot_new,LA_Mean, LA02_Mean, sebis_avg, R101,  A204_01:A204_06, muipc_PerceivedSur_avg),R101>0) 
+devices$R101 = 1
+
+devices_test <- rbind(no_devices,devices)
+wilcox.test(devices_test$sebis_avg,devices_test$R101)
+mean(no_devices$sebis_avg)
+mean(devices$sebis_avg)
+
+
+subset(select(cor_test(
+  select(devices, LA_Mean, A204_01:A204_06), conf.level = 0.95,
+), var1, var2, cor, p),
+var1 == "LA_Mean" & var2 != "LA_Mean")
+
+
+#### 1.3.5 #non users more privacy aware? ----
+cor.test(ssot_new$muipc_PerceivedSur_avg,ssot_new$LA_Mean)
+cor.test(no_devices$muipc_PerceivedSur_avg,no_devices$LA_Mean)
+cor.test(devices$muipc_PerceivedSur_avg,devices$LA_Mean)
+
+#### 1.3.6 - perceived manufacturer responsibility} for privacy and security protection. ----
+cor.test(no_devices$LA_Mean,no_devices$A204_04)
+cor.test(ssot_new$LA_Mean,rowMeans(select(ssot_new,A204_01:A204_06)))
+
+
+
 ##### 2.0 RQ2 ----
 
 cor.test(Participants_DACH$LA_Mean,
@@ -1411,6 +1440,28 @@ table(CCR_Device_Smart_Benefit$A302_11) #light
 table(CCR_Device_Smart_Benefit$A302_14) #speaker
 table(CCR_Device_Smart_Benefit$A302_16) #TV
 
+# 2.3.5 - Disabled features by country 
+
+disabled_features_country <-
+  select(
+    ssot_new,
+    participant_id,
+    R507,
+    R510,
+    R513,
+    `Current Country of Residence`
+  )
+disabled_features_country$choice <-
+  ifelse(
+    disabled_features_country$R507 == 1 |
+      disabled_features_country$R510 == 1 |
+      disabled_features_country$R513 == 1,
+    1,
+    0
+  )
+
+chisq.test(disabled_features_country$`Current Country of Residence`,
+           disabled_features_country$choice)
 
 # 3.0.0 - Household Factors ----
 
