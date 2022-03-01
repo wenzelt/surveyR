@@ -539,7 +539,7 @@ Participants_UK <-
 
 
 
-##### 1.0 RQ1 ----
+##### 1.0 RQ1
 
 # variance of devices correlates with the Legislative satisfaction lightly
 # reporting did not change on this
@@ -917,14 +917,23 @@ cor_test(select(subset(ssot_new, R101 > 0),
 
 
 #### 1.3.4 #non users more privacy aware? ----
-no_devices <- subset(select(ssot_new,LA_Mean, LA02_Mean, sebis_avg, R101, A204_01:A204_06, muipc_PerceivedSur_avg),R101==0) 
-devices <- subset(select(ssot_new,LA_Mean, LA02_Mean, sebis_avg, R101,  A204_01:A204_06, muipc_PerceivedSur_avg),R101>0) 
+no_devices <- subset(select(ssot_new,LA_Mean, LA02_Mean, sebis_avg, R101, A204_01:A204_06, muipc_avg, muipc_PerceivedSur_avg),R101==0) 
+devices <- subset(select(ssot_new,LA_Mean, LA02_Mean, sebis_avg, R101,  A204_01:A204_06, muipc_avg, muipc_PerceivedSur_avg),R101>0) 
 devices$R101 = 1
 
 devices_test <- rbind(no_devices,devices)
 wilcox.test(devices_test$sebis_avg,devices_test$R101)
+wilcox.test(devices_test$sebis_avg,devices_test$R101)
+
 mean(no_devices$sebis_avg)
 mean(devices$sebis_avg)
+wilcox.test(devices$sebis_avg,(no_devices$sebis_avg))
+mean(no_devices$sebis_avg)
+mean(devices$sebis_avg)
+
+wilcox.test((no_devices$muipc_avg),devices$muipc_avg)
+mean(no_devices$muipc_avg)
+mean(devices$muipc_avg)
 
 
 subset(select(cor_test(
@@ -942,6 +951,27 @@ cor.test(devices$muipc_PerceivedSur_avg,devices$LA_Mean)
 cor.test(no_devices$LA_Mean,no_devices$A204_04)
 cor.test(ssot_new$LA_Mean,rowMeans(select(ssot_new,A204_01:A204_06)))
 
+#### 1.3.7 - device_owners more disabled features ? 
+
+disabled_features_users <-
+  select(
+    ssot_new,
+    participant_id,
+    R507,
+    R510,
+    R513,
+    R101
+  )
+disabled_features_users = subset(disabled_features_users,R101!=0) 
+disabled_features_users$choice <-
+  ifelse(
+    disabled_features_users$R507 == 1 |
+      disabled_features_users$R510 == 1 |
+      disabled_features_users$R513 == 1,
+    1,
+    0
+  )
+count(disabled_features_users$choice)
 
 
 ##### 2.0 RQ2 ----
@@ -1470,6 +1500,7 @@ chisq.test(disabled_features_country$`Current Country of Residence`,
 # the below test can only be done before splitting into >1 
 cor.test(ssot_new$R101, as.numeric(ssot_new$A005)) # greater hh size higher variance of devices
 cor.test(ssot_new$R101, as.numeric(ssot_new$A004)) 
+wilcox.test(ssot_new$R101,as.numeric(ssot_new$A004))
 
 #Discussion
 wilcox_test(ssot_new, formula = E201_11 ~ A005) # smart home smart speaker smart tv risk assessment
@@ -1717,7 +1748,7 @@ responsibilityChildren_LATEX <- data.frame(
                     wilcox_effsize(ssot_new, formula = A204_06 ~ A004)$effsize
   ))
 
-#testing for children affecting the type of usage the user is comfortable with
+# 3.3.3 - testing for children affecting the type of usage the user is comfortable with ---- 
 
 # 1 E205_01	Usage type: Voice commands via a Smart Speaker
 # 2	E205_02	Usage type: Voice commands via a Smartphone Voice Assistant
@@ -1735,30 +1766,19 @@ aggregate(ssot_new$E205_02,
           mean)
 
 
-USAGETYPE_Children_LATEX <- data.frame(
+data.frame(
   "Usage_type" = c("Voice commands via a Smart Speaker",
-                   "Voice commands via a Smartphone Voice Assistant",
-                   "Smartphone App for the Device",
-                   "Smartphone Widgets or Shortcuts",
-                   "Sensors inside the Home",
-                   "Sensors outside the Home",
-                   "Automatic Operation based on Device Programming"
+                   "Voice commands via a Smartphone Voice Assistant"
   ), 
   "p_value"= c(wilcox_test(ssot_new, E205_01 ~ A004)$p,
-               wilcox_test(ssot_new, E205_02 ~ A004)$p,
-               wilcox_test(ssot_new, E205_03 ~ A004)$p,
-               wilcox_test(ssot_new, E205_04 ~ A004)$p,
-               wilcox_test(ssot_new, E205_05 ~ A004)$p,
-               wilcox_test(ssot_new, E205_06 ~ A004)$p,
-               wilcox_test(ssot_new, E205_07 ~ A004)$p
+               wilcox_test(ssot_new, E205_02 ~ A004)$p
   ), 
   "effect_size" = c(wilcox_effsize(ssot_new, formula = E205_01 ~ A004)$effsize,
-                    wilcox_effsize(ssot_new, formula = E205_02 ~ A004)$effsize,
-                    wilcox_effsize(ssot_new, formula = E205_03 ~ A004)$effsize,
-                    wilcox_effsize(ssot_new, formula = E205_04 ~ A004)$effsize,
-                    wilcox_effsize(ssot_new, formula = E205_05 ~ A004)$effsize,
-                    wilcox_effsize(ssot_new, formula = E205_06 ~ A004)$effsize,
-                    wilcox_effsize(ssot_new, formula = E205_07 ~ A004)$effsize
+                    wilcox_effsize(ssot_new, formula = E205_02 ~ A004)$effsize
   ))
+
+# 4.0 Discussion ==== 
+
+
 
 
