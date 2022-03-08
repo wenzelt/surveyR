@@ -1,7 +1,8 @@
 house_anova = select(ssot_new, A007, R101, A004)
+#house_anova = subset(house_anova, A007 != 3)
 
 asd = select(ssot_new,A007,A204_01,A204_02,A204_03,A204_04,A204_05,A204_06)
-asd = subset(asd, A007 != 3)
+#asd = subset(asd, A007 != 3)
 aov_content = aov(as.numeric(asd$A204_01) ~ asd$A007 )
 print(summary(aov_content))
 if ((summary(aov_content)[[1]][["Pr(>F)"]])[1] < 0.1) {
