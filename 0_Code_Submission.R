@@ -1787,10 +1787,10 @@ data.frame(
   ))
 
 # 3.3.3 - testing for children affecting the R101 ---- 
+t.test(ssot_new$R101~ssot_new$A004, var.equal = TRUE, alternative = "two.sided")
 
 
 # 4.0 Discussion ==== 
 
-t.test(ssot_new$R101~ssot_new$A004, var.equal = TRUE, alternative = "two.sided")
 
 
