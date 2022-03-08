@@ -60,6 +60,8 @@ calc_anova <- function(data, column_to_use) {
     # dev.off() 
     #return(tuk)
   }
+  print(means)
+  
 }
 
 #E201 Device Risk ----
@@ -128,13 +130,8 @@ calc_anova(country_anova,'A307_05')
 calc_anova(country_anova,'A307_06')
 calc_anova(country_anova,'A307_07')
 calc_anova(country_anova,'A307_08')
-calc_anova(country_anova,'A307_09')
 calc_anova(country_anova,'A307_10')
 
 
 calc_anova(country_anova,'R101')
 
-calc_anova(devices_combined,'Usage')
-
-aov(select(smartTVUsers, `Current Country of Residence`, Usage))
-calc_anova(smartTVUsers,'Usage')
