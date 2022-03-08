@@ -916,6 +916,11 @@ cor_test(select(subset(ssot_new, R101 > 0),
 # higher legislative protection negatively impacts perceived surveillance greatly
 
 
+cor.test(ssot_new$sebis_ProactiveAwareness_avg, rowMeans(select(ssot_new, E201_11)))#device risk
+cor.test(ssot_new$sebis_ProactiveAwareness_avg, rowMeans(select(ssot_new, E203)))
+chisq_test(ssot_new$sebis_ProactiveAwareness_avg,ssot_new$E203_04)
+
+
 #### 1.3.4 #non users more privacy aware? ----
 no_devices <- subset(select(ssot_new,LA_Mean, LA02_Mean, sebis_avg, R101, A204_01:A204_06, muipc_avg, muipc_PerceivedSur_avg),R101==0) 
 devices <- subset(select(ssot_new,LA_Mean, LA02_Mean, sebis_avg, R101,  A204_01:A204_06, muipc_avg, muipc_PerceivedSur_avg),R101>0) 
@@ -941,6 +946,8 @@ subset(select(cor_test(
 ), var1, var2, cor, p),
 var1 == "LA_Mean" & var2 != "LA_Mean")
 
+# manufacturer responsibility for protecting privacy and security
+cor_test(select(ssot_new, A204_04, muipc_PerceivedSur_avg))
 
 #### 1.3.5 #non users more privacy aware? ----
 cor.test(ssot_new$muipc_PerceivedSur_avg,ssot_new$LA_Mean)
@@ -950,6 +957,7 @@ cor.test(devices$muipc_PerceivedSur_avg,devices$LA_Mean)
 #### 1.3.6 - perceived manufacturer responsibility} for privacy and security protection. ----
 cor.test(no_devices$LA_Mean,no_devices$A204_04)
 cor.test(ssot_new$LA_Mean,rowMeans(select(ssot_new,A204_01:A204_06)))
+cor.test(devices$LA_Mean,devices$A204_06)
 
 #### 1.3.7 - device_owners more disabled features ? 
 
@@ -1554,6 +1562,7 @@ d <- subset(d, Usage != 7)
 
 cor.test(as.numeric(d$A005), as.numeric(d$Usage))
 
+
 #Device Usage x A005
 dtInteresting <- filter(d, Device_Owned == "Smart TV" | Device_Owned == "Smart Lightbulb" | Device_Owned == "Smart Speaker")
 dt = group_by(dtInteresting, Device_Owned)
@@ -1777,8 +1786,11 @@ data.frame(
                     wilcox_effsize(ssot_new, formula = E205_02 ~ A004)$effsize
   ))
 
+# 3.3.3 - testing for children affecting the R101 ---- 
+
+
 # 4.0 Discussion ==== 
 
-
+t.test(ssot_new$R101~ssot_new$A004, var.equal = TRUE, alternative = "two.sided")
 
 
