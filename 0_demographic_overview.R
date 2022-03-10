@@ -1,4 +1,7 @@
 
+
+# D1 - table1 ----
+
 # Demographic overview of the sample. Please run 'install_dependencies.R first'
 
 demographic_data <-
@@ -10,6 +13,8 @@ names(demographic_data)[names(demographic_data) == "Current Country of Residence
   "country"
 names(demographic_data)[names(demographic_data) == "A002"] <-
   "gender"
+
+median(as.numeric(na.omit(demographic_data$age)))
 
 attach(demographic_data)
 
@@ -42,14 +47,11 @@ count(us$gender)
 
 
 
-# 9.1 Demographic by device ====
+# D2 - Demographic by device - table 2 ====
 device_information_region = select(ssot_new, R101,`Current Country of Residence`)
 count(device_information_region, "R101")
 counts <- ddply(device_information_region, .(device_information_region$R101, device_information_region$`Current Country of Residence`), nrow)
 dt <- data.table(device_information_region) # transpose to data.table
 dt = dt[, list(Freq =.N), by=list(R101,`Current Country of Residence`)] # use list to name var directly
-
-
-# Findings 4.0 - Participants for most used devices ====
 
 
