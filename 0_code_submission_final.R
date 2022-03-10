@@ -90,7 +90,8 @@ SSOT <-
   merge(prolific_table_filtered,
         original_set,
         by.x = "participant_id",
-        by.y = "A008_01",)
+        by.y = "A008_01",
+  )
 
 # 0.2.5 remove participants who put "NA" countries of residence
 SSOT <-
@@ -582,16 +583,49 @@ country_anova = select(
   `Current Country of Residence`,
   sebis_avg,
   R101,
-  A204_01:A204_06,
-  E201_01:E201_20,
-  A307_01:A307_10,
+  A204_01,
+  A204_02,
+  A204_03,
+  A204_04,
+  A204_05,
+  A204_06,
+  E201_01,
+  E201_02,
+  E201_03,
+  E201_04,
+  E201_05,
+  E201_06,
+  E201_07,
+  E201_08,
+  E201_09,
+  E201_10,
+  E201_11,
+  E201_12,
+  E201_13,
+  E201_14,
+  E201_15,
+  E201_16,
+  E201_17,
+  E201_18,
+  E201_19,
+  E201_20,
+  A307_01,
+  A307_02,
+  A307_03,
+  A307_04,
+  A307_05,
+  A307_06,
+  A307_07,
+  A307_08,
+  A307_09,
+  A307_10,
 )
 
 titles <- hash()
 
 calc_anova <- function(data, column_to_use) {
   if (!is.null(data[[column_to_use]])) {
-    data <- data[data[[column_to_use]] >= 0, ]
+    data <- data[data[[column_to_use]] >= 0,]
   } else{
     print("Column does not Exist")
   }
@@ -697,8 +731,8 @@ users_table <-
     R503,
     R505,
     `Current Country of Residence`,
-    LA_Mean
-    
+    LA_Mean,
+    A101_07
   )
 
 # 0.5.1 - creating dataset of personally owned devices by participants ----
@@ -709,7 +743,8 @@ device1 <-
     R232_01,
     R501,
     `Current Country of Residence`,
-    LA_Mean
+    LA_Mean,
+    A101_07
   )
 device2 <-
   select(
@@ -718,7 +753,8 @@ device2 <-
     R232_02,
     R503,
     `Current Country of Residence`,
-    LA_Mean
+    LA_Mean,
+    A101_07
   )
 
 device3 <-
@@ -728,26 +764,36 @@ device3 <-
     R232_03,
     R505,
     `Current Country of Residence`,
-    LA_Mean
+    LA_Mean,
+    A101_07
   )
 colnames(device1) <-
-  c("participant_id",
+  c(
+    "participant_id",
     "Device_Owned",
     "Usage",
     "Current Country of Residence",
-    "LA_Mean")
+    "LA_Mean",
+    "Data_Stored"
+  )
 colnames(device2) <-
-  c("participant_id",
+  c(
+    "participant_id",
     "Device_Owned",
     "Usage",
     "Current Country of Residence",
-    "LA_Mean")
+    "LA_Mean",
+    "Data_Stored"
+  )
 colnames(device3) <-
-  c("participant_id",
+  c(
+    "participant_id",
     "Device_Owned",
     "Usage",
     "Current Country of Residence",
-    "LA_Mean")
+    "LA_Mean",
+    "Data_Stored"
+  )
 devices_combined <- rbind(device1, device2, device3)
 devices_combined <-
   subset(devices_combined
@@ -763,9 +809,42 @@ country_anova = select(
   `Current Country of Residence`,
   sebis_avg,
   R101,
-  A204_01:A204_06,
-  E201_01:E201_20,
-  A307_01:A307_10,
+  A204_01,
+  A204_02,
+  A204_03,
+  A204_04,
+  A204_05,
+  A204_06,
+  E201_01,
+  E201_02,
+  E201_03,
+  E201_04,
+  E201_05,
+  E201_06,
+  E201_07,
+  E201_08,
+  E201_09,
+  E201_10,
+  E201_11,
+  E201_12,
+  E201_13,
+  E201_14,
+  E201_15,
+  E201_16,
+  E201_17,
+  E201_18,
+  E201_19,
+  E201_20,
+  A307_01,
+  A307_02,
+  A307_03,
+  A307_04,
+  A307_05,
+  A307_06,
+  A307_07,
+  A307_08,
+  A307_09,
+  A307_10,
 )
 
 
@@ -1057,7 +1136,12 @@ no_devices <-
       LA02_Mean,
       sebis_avg,
       R101,
-      A204_01:A204_06,
+      A204_01,
+      A204_02,
+      A204_03,
+      A204_04,
+      A204_05,
+      A204_06,
       muipc_avg,
       muipc_PerceivedSur_avg
     ),
@@ -1071,7 +1155,12 @@ devices <-
       LA02_Mean,
       sebis_avg,
       R101,
-      A204_01:A204_06,
+      A204_01,
+      A204_02,
+      A204_03,
+      A204_04,
+      A204_05,
+      A204_06,
       muipc_avg,
       muipc_PerceivedSur_avg
     ),
@@ -1084,10 +1173,21 @@ devices_test <- rbind(no_devices, devices)
 wilcox.test((no_devices$muipc_avg), devices$muipc_avg)
 mean(no_devices$muipc_avg)
 mean(devices$muipc_avg)
+# F17.2 -  -----
+
+smart_speaker_users = subset(devices_combined, Device_Owned == "Smart Speaker")
+mean(as.numeric(smart_speaker_users$Data_Stored))
 
 # F18 - No integration selections -----
 
-no_integration = select(ssot_new, E203_01,E203_02,E203_03,E203_04,E203_05,E203_06,E203_07)
+no_integration = select(ssot_new,
+                        E203_01,
+                        E203_02,
+                        E203_03,
+                        E203_04,
+                        E203_05,
+                        E203_06,
+                        E203_07)
 
 prop.table(table(no_integration$E203_01))
 prop.table(table(no_integration$E203_02))
@@ -1168,7 +1268,31 @@ table2 = table2[, list(Freq = .N), by = list(R101, `Current Country of Residence
 
 # table in bold.
 # over all devices. Different devices and use cases generate noise
-risk_all_devices <- rowMeans(select(ssot_new, E201_01:E201_20))
+risk_all_devices <- rowMeans(
+  select(
+    ssot_new,
+    E201_01,
+    E201_02,
+    E201_03,
+    E201_04,
+    E201_05,
+    E201_06,
+    E201_07,
+    E201_08,
+    E201_09,
+    E201_10,
+    E201_11,
+    E201_12,
+    E201_13,
+    E201_14,
+    E201_15,
+    E201_16,
+    E201_17,
+    E201_18,
+    E201_19,
+    E201_20
+  )
+)
 
 
 #correlation of interesting devices (3)
@@ -1179,7 +1303,7 @@ subset(select(cor_test(
          LA_Mean,
          E201_11,
          E201_14,
-         E201_16, )
+         E201_16,)
 ), var1, var2, cor, p),
 var1 == "LA_Mean" & var2 != "LA_Mean")
 
@@ -1189,7 +1313,7 @@ subset(select(cor_test(
          LA01_01,
          E201_11,
          E201_14,
-         E201_16, )
+         E201_16,)
 ), var1, var2, cor, p),
 var1 == "LA01_01" & var2 != "LA01_01")
 
@@ -1200,7 +1324,7 @@ subset(select(cor_test(
          LA01_02,
          E201_11,
          E201_14,
-         E201_16, )
+         E201_16,)
 ), var1, var2, cor, p),
 var1 == "LA01_02" & var2 != "LA01_02")
 
@@ -1211,7 +1335,7 @@ subset(select(cor_test(
          LA01_03,
          E201_11,
          E201_14,
-         E201_16, )
+         E201_16,)
 ), var1, var2, cor, p),
 var1 == "LA01_03" & var2 != "LA01_03")
 
