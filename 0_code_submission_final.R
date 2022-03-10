@@ -90,8 +90,7 @@ SSOT <-
   merge(prolific_table_filtered,
         original_set,
         by.x = "participant_id",
-        by.y = "A008_01",
-  )
+        by.y = "A008_01",)
 
 # 0.2.5 remove participants who put "NA" countries of residence
 SSOT <-
@@ -131,11 +130,11 @@ SSOT <-
   )
 
 # 0.2.6 remove all people not interested in giving good answers
-# Have you answered all questions in the study according to the provided instructions? # reduces by 8 
+# Have you answered all questions in the study according to the provided instructions? # reduces by 8
 SSOT <-
   subset(SSOT,
          CS06 == 1)
-# Will you provide your best answers to each question in this study? # reduces by 0 
+# Will you provide your best answers to each question in this study? # reduces by 0
 SSOT <-
   subset(SSOT,
          CS10 == 1)
@@ -504,28 +503,57 @@ ssot_new$R232_03 <-
 
 # appending avg of our legislative construct to the dataset
 ssot_new$LA_Mean <-
-  rowMeans(select(ssot_new, LA01_01,LA01_02,LA01_03))
+  rowMeans(select(ssot_new, LA01_01, LA01_02, LA01_03))
 ssot_new$LA02_Mean <-
-  rowMeans(select(ssot_new, LA02_01,LA02_01,LA02_03))
+  rowMeans(select(ssot_new, LA02_01, LA02_01, LA02_03))
 
 # appending Sebis/MUIPC Averages to dataset
 ssot_new$sebis_avg <-
-  rowMeans(select(ssot_new, S101_01,S101_02,S101_03,S101_04,S101_05,S101_06,S101_07,S101_08,S101_09,S101_10,S101_11,S101_12))
+  rowMeans(
+    select(
+      ssot_new,
+      S101_01,
+      S101_02,
+      S101_03,
+      S101_04,
+      S101_05,
+      S101_06,
+      S101_07,
+      S101_08,
+      S101_09,
+      S101_10,
+      S101_11,
+      S101_12
+    )
+  )
 ssot_new$sebis_DeviceSecurement_avg <-
-  rowMeans(select(ssot_new, S101_01,S101_02,S101_03,S101_04))
+  rowMeans(select(ssot_new, S101_01, S101_02, S101_03, S101_04))
 ssot_new$sebis_ProactiveAwareness_avg <-
-  rowMeans(select(ssot_new, S101_05,S101_06,S101_07,S101_08,S101_09))
+  rowMeans(select(ssot_new, S101_05, S101_06, S101_07, S101_08, S101_09))
 ssot_new$sebis_UpdatingBehaviour_avg <-
-  rowMeans(select(ssot_new, S101_10,S101_11,S101_12))
+  rowMeans(select(ssot_new, S101_10, S101_11, S101_12))
 
 ssot_new$muipc_avg <-
-  rowMeans(select(ssot_new, S102_01,S102_02,S102_03,S102_04,S102_05,S102_06,S102_07,S102_08,S102_09))
+  rowMeans(
+    select(
+      ssot_new,
+      S102_01,
+      S102_02,
+      S102_03,
+      S102_04,
+      S102_05,
+      S102_06,
+      S102_07,
+      S102_08,
+      S102_09
+    )
+  )
 ssot_new$muipc_PersonalInfo_avg <-
-  rowMeans(select(ssot_new, S102_01,S102_02,S102_03))
+  rowMeans(select(ssot_new, S102_01, S102_02, S102_03))
 ssot_new$muipc_PerceivedSur_avg <-
-  rowMeans(select(ssot_new, S102_04,S102_05,S102_06))
+  rowMeans(select(ssot_new, S102_04, S102_05, S102_06))
 ssot_new$muipc_PerceivedIntrusion_avg <-
-  rowMeans(select(ssot_new, S102_07,S102_08,S102_09))
+  rowMeans(select(ssot_new, S102_07, S102_08, S102_09))
 
 # converting household size to numeric variable
 ssot_new$A005 <-
@@ -563,12 +591,12 @@ titles <- hash()
 
 calc_anova <- function(data, column_to_use) {
   if (!is.null(data[[column_to_use]])) {
-    data <- data[data[[column_to_use]] >= 0,]
+    data <- data[data[[column_to_use]] >= 0, ]
   } else{
     print("Column does not Exist")
   }
   
-  # pdf(sprintf("Plot_'%s'by_region.pdf", titles[[column_to_use]])) 
+  # pdf(sprintf("Plot_'%s'by_region.pdf", titles[[column_to_use]]))
   means <-
     round(tapply(as.numeric(data[[column_to_use]]),
                  data$`Current Country of Residence`,
@@ -606,7 +634,7 @@ calc_anova <- function(data, column_to_use) {
     plot(tuk)
     print(means)
     
-    # dev.off() 
+    # dev.off()
     #return(tuk)
   }
   print(means)
@@ -636,12 +664,10 @@ calc_anova_house <- function(d) {
     ylab = 'mean',
   )
   
-  boxplot(
-    d[[2]] ~ d[[1]],
-    xlab = d[[1]],
-    ylab = names(d[[2]]),
-    col = rainbow(7)
-  )
+  boxplot(d[[2]] ~ d[[1]],
+          xlab = d[[1]],
+          ylab = names(d[[2]]),
+          col = rainbow(7))
   
   aov_content =  aov(d[[2]] ~ as.factor(d[[1]]))
   if ((summary(aov_content)[[1]][["Pr(>F)"]])[1] < 0.1) {
@@ -765,58 +791,78 @@ usage_household <-
   )
 
 temp1 <-
-  select(subset(usage_household, R233_01 == 1),
-         participant_id,
-         `Current Country of Residence`,
-         R232_01,
-         R501,
-         A004,
-         A005,)
+  select(
+    subset(usage_household, R233_01 == 1),
+    participant_id,
+    `Current Country of Residence`,
+    R232_01,
+    R501,
+    A004,
+    A005,
+  )
 temp2 <-
-  select(subset(usage_household, R233_02 == 1),
-         participant_id,
-         `Current Country of Residence`,
-         R232_02,
-         R503,
-         A004,
-         A005,)
+  select(
+    subset(usage_household, R233_02 == 1),
+    participant_id,
+    `Current Country of Residence`,
+    R232_02,
+    R503,
+    A004,
+    A005,
+  )
 temp3 <-
-  select(subset(usage_household, R233_03 == 1),
-         participant_id,
-         `Current Country of Residence`,
-         R232_03,
-         R505,
-         A004,
-         A005,)
+  select(
+    subset(usage_household, R233_03 == 1),
+    participant_id,
+    `Current Country of Residence`,
+    R232_03,
+    R505,
+    A004,
+    A005,
+  )
 colnames(temp1) <-
-  c("participant_id",
+  c(
+    "participant_id",
     "Current Country of Residence",
     "Device",
-    "Usage", "Children", "Household")
+    "Usage",
+    "Children",
+    "Household"
+  )
 colnames(temp2) <-
-  c("participant_id",
+  c(
+    "participant_id",
     "Current Country of Residence",
     "Device",
-    "Usage", "Children", "Household")
+    "Usage",
+    "Children",
+    "Household"
+  )
 colnames(temp3) <-
-  c("participant_id",
+  c(
+    "participant_id",
     "Current Country of Residence",
     "Device",
-    "Usage", "Children", "Household")
+    "Usage",
+    "Children",
+    "Household"
+  )
 temp <- rbind(temp1, temp2, temp3)
 temp_usage <- subset(temp, Usage != 7)
 
-##### 1.0 Findings ---- 
+##### 1.0 Findings ----
 
-# - D3 - Findings - Interesting device users demographics. 
+# - D3 - Findings - Interesting device users demographics.
 
 demographic_data <-
   select(ssot_new,
          A002,
          age, participant_id)
 
-device_owners <- devices_combined %>% distinct(participant_id, .keep_all = TRUE)
-demographic_data <- merge(x=demographic_data, y=device_owners, by = "participant_id")
+device_owners <-
+  devices_combined %>% distinct(participant_id, .keep_all = TRUE)
+demographic_data <-
+  merge(x = demographic_data, y = device_owners, by = "participant_id")
 
 
 names(demographic_data)[names(demographic_data) == "Current Country of Residence"] <-
@@ -826,10 +872,24 @@ names(demographic_data)[names(demographic_data) == "A002"] <-
 
 attach(demographic_data)
 
-demographic_data <- subset(demographic_data, Device_Owned == "Smart Speaker" | Device_Owned == "Smart TV"| Device_Owned == "Smart Lightbulb")
-anon_device <- data.frame(lapply(demographic_data, function(x) {gsub("Smart Speaker", "Device", x)}))
-anon_device <- data.frame(lapply(anon_device, function(x) {gsub("Smart TV", "Device", x)}))
-anon_device <- data.frame(lapply(anon_device, function(x) {gsub("Smart Lightbulb", "Device", x)}))
+demographic_data <-
+  subset(
+    demographic_data,
+    Device_Owned == "Smart Speaker" |
+      Device_Owned == "Smart TV" | Device_Owned == "Smart Lightbulb"
+  )
+anon_device <-
+  data.frame(lapply(demographic_data, function(x) {
+    gsub("Smart Speaker", "Device", x)
+  }))
+anon_device <-
+  data.frame(lapply(anon_device, function(x) {
+    gsub("Smart TV", "Device", x)
+  }))
+anon_device <-
+  data.frame(lapply(anon_device, function(x) {
+    gsub("Smart Lightbulb", "Device", x)
+  }))
 
 anon_mean <- mean(as.numeric(anon_device$age))
 anon_median <- median(as.numeric(anon_device$age))
@@ -858,7 +918,7 @@ cor_test(select(subset(ssot_new, R101 > 0),
                 LA_Mean,
                 muipc_PerceivedSur_avg))
 
-# F4 manufacturer responsibility for protecting privacy and security ---- 
+# F4 manufacturer responsibility for protecting privacy and security ----
 cor_test(select(ssot_new, A204_04, muipc_PerceivedSur_avg))
 
 # F5 - perceived regulatory protection} and the \textsl{number of unique types of devices} ====
@@ -921,14 +981,14 @@ titles$A204_05 = "Fixing a hardware failure"
 calc_anova(country_anova, 'A204_04')
 calc_anova(country_anova, 'A204_05')
 
-no_users = subset(country_anova, R101==0)
+no_users = subset(country_anova, R101 == 0)
 calc_anova(no_users, 'A204_04')
 
 
 # F 8 - Perception Devices Adoption by country and legislative protection ----
-cor.test(Participants_DACH$LA_Mean,Participants_DACH$R101)
-cor.test(Participants_UK$LA_Mean,Participants_UK$R101)
-cor.test(Participants_US$LA_Mean,Participants_US$R101)
+cor.test(Participants_DACH$LA_Mean, Participants_DACH$R101)
+cor.test(Participants_UK$LA_Mean, Participants_UK$R101)
+cor.test(Participants_US$LA_Mean, Participants_US$R101)
 
 # F 9 - Usage of smart TVs across regions ====
 dunnTest(
@@ -940,42 +1000,99 @@ dunnTest(
 )$res
 
 # F 10 - Usage of smart TVs across regions ====
-calc_anova_house(select(house_anova,A007,R101))
+calc_anova_house(select(house_anova, A007, R101))
 
 # F 11 - Amount of types of smart home devices and household size  ====
 cor.test(ssot_new$R101, as.numeric(ssot_new$A005)) # greater hh size higher variance of devices
 
-# F12 - Children no children t test 
-t.test(ssot_new$R101~ssot_new$A004, var.equal = TRUE, alternative = "two.sided")
+# F12 - Children no children t test
+t.test(ssot_new$R101 ~ ssot_new$A004,
+       var.equal = TRUE,
+       alternative = "two.sided")
 
 
-# F13 - children impact usage 
-wilcox.test(as.numeric(temp_usage$Usage)~temp_usage$Children)
+# F13 - children impact usage ----
+wilcox.test(as.numeric(temp_usage$Usage) ~ temp_usage$Children)
 
-mean(as.numeric(subset(d,Children==1)$Usage))
-mean(as.numeric(subset(d,Children==0)$Usage))
+mean(as.numeric(subset(d, Children == 1)$Usage))
+mean(as.numeric(subset(d, Children == 0)$Usage))
 
-# F14 - smart tv owners with kids higher usage 
+# F14 - smart tv owners with kids higher usage ----
 
 children_smartTV = subset(temp_usage, Device == "Smart TV")
-wilcox.test(as.numeric(children_smartTV$Usage)~children_smartTV$Children)
-t.test(as.numeric(children_smartTV$Usage)~children_smartTV$Children) # 231 people enough for t test? 
+wilcox.test(as.numeric(children_smartTV$Usage) ~ children_smartTV$Children)
+t.test(as.numeric(children_smartTV$Usage) ~ children_smartTV$Children) # 231 people enough for t test?
 
-mean(as.numeric(subset(children_smartTV,Children==1)$Usage))
-mean(as.numeric(subset(children_smartTV,Children==0)$Usage))
+mean(as.numeric(subset(children_smartTV, Children == 1)$Usage))
+mean(as.numeric(subset(children_smartTV, Children == 0)$Usage))
 
 # F15 - preference for voice based interaction
 data.frame(
-  "Usage_type" = c("Voice commands via a Smart Speaker",
-                   "Voice commands via a Smartphone Voice Assistant"
-  ), 
-  "p_value"= c(wilcox_test(ssot_new, E205_01 ~ A004)$p,
-               wilcox_test(ssot_new, E205_02 ~ A004)$p
-  ), 
-  "effect_size" = c(wilcox_effsize(ssot_new, formula = E205_01 ~ A004)$effsize,
-                    wilcox_effsize(ssot_new, formula = E205_02 ~ A004)$effsize
-  ))
+  "Usage_type" = c(
+    "Voice commands via a Smart Speaker",
+    "Voice commands via a Smartphone Voice Assistant"
+  ),
+  "p_value" = c(
+    wilcox_test(ssot_new, E205_01 ~ A004)$p,
+    wilcox_test(ssot_new, E205_02 ~ A004)$p
+  ),
+  "effect_size" = c(
+    wilcox_effsize(ssot_new, formula = E205_01 ~ A004)$effsize,
+    wilcox_effsize(ssot_new, formula = E205_02 ~ A004)$effsize
+  )
+)
 
+
+# F16 - mean users non users LA_MEAN ----
+mean(subset(ssot_new, R101 == 0)$LA_Mean)
+mean(subset(ssot_new, R101 > 0)$LA_Mean)
+
+# F17 - wilcox test MUIPC ----
+
+no_devices <-
+  subset(
+    select(
+      ssot_new,
+      LA_Mean,
+      LA02_Mean,
+      sebis_avg,
+      R101,
+      A204_01:A204_06,
+      muipc_avg,
+      muipc_PerceivedSur_avg
+    ),
+    R101 == 0
+  )
+devices <-
+  subset(
+    select(
+      ssot_new,
+      LA_Mean,
+      LA02_Mean,
+      sebis_avg,
+      R101,
+      A204_01:A204_06,
+      muipc_avg,
+      muipc_PerceivedSur_avg
+    ),
+    R101 > 0
+  )
+devices$R101 = 1
+
+devices_test <- rbind(no_devices, devices)
+
+wilcox.test((no_devices$muipc_avg), devices$muipc_avg)
+mean(no_devices$muipc_avg)
+mean(devices$muipc_avg)
+
+# F18 - No integration selections -----
+
+no_integration = select(ssot_new, E203_01,E203_02,E203_03,E203_04,E203_05,E203_06,E203_07)
+
+prop.table(table(no_integration$E203_01))
+prop.table(table(no_integration$E203_02))
+prop.table(table(no_integration$E203_03))
+prop.table(table(no_integration$E203_06))
 
 ##### 9.0 -  Tables ----
 
@@ -1006,9 +1123,13 @@ gender_data <- tabyl(demographic_data_t1, country, gender) %>%
   adorn_percentages("row") %>%
   adorn_pct_formatting(digits = 1)
 
-gender_data_absolute = tabyl(demographic_data_t1,country,gender)
+gender_data_absolute = tabyl(demographic_data_t1, country, gender)
 
-table1 <- bind_cols(count(country),age_data[2:6], gender_data[2:4], gender_data_absolute[2:4])
+table1 <-
+  bind_cols(count(country),
+            age_data[2:6],
+            gender_data[2:4],
+            gender_data_absolute[2:4])
 
 detach(demographic_data_t1)
 
@@ -1025,10 +1146,19 @@ count(us$gender)
 
 
 # T2 - Demographic by device - table 2 ====
-device_information_region = select(ssot_new, R101,`Current Country of Residence`)
-counts <- ddply(device_information_region, .(device_information_region$R101, device_information_region$`Current Country of Residence`), nrow)
-table2 <- data.table(device_information_region) # transpose to data.table
-table2 = table2[, list(Freq =.N), by=list(R101,`Current Country of Residence`)] # use list to name var directly
+device_information_region = select(ssot_new, R101, `Current Country of Residence`)
+counts <-
+  ddply(
+    device_information_region,
+    .(
+      device_information_region$R101,
+      device_information_region$`Current Country of Residence`
+    ),
+    nrow
+  )
+table2 <-
+  data.table(device_information_region) # transpose to data.table
+table2 = table2[, list(Freq = .N), by = list(R101, `Current Country of Residence`)] # use list to name var directly
 
 
 # T3 -  H3_Perception - How is perception affected by the feeling of legislative protection ? (table 3 ) ----
@@ -1049,7 +1179,7 @@ subset(select(cor_test(
          LA_Mean,
          E201_11,
          E201_14,
-         E201_16,)
+         E201_16, )
 ), var1, var2, cor, p),
 var1 == "LA_Mean" & var2 != "LA_Mean")
 
@@ -1059,7 +1189,7 @@ subset(select(cor_test(
          LA01_01,
          E201_11,
          E201_14,
-         E201_16,)
+         E201_16, )
 ), var1, var2, cor, p),
 var1 == "LA01_01" & var2 != "LA01_01")
 
@@ -1070,7 +1200,7 @@ subset(select(cor_test(
          LA01_02,
          E201_11,
          E201_14,
-         E201_16,)
+         E201_16, )
 ), var1, var2, cor, p),
 var1 == "LA01_02" & var2 != "LA01_02")
 
@@ -1081,11 +1211,11 @@ subset(select(cor_test(
          LA01_03,
          E201_11,
          E201_14,
-         E201_16,)
+         E201_16, )
 ), var1, var2, cor, p),
 var1 == "LA01_03" & var2 != "LA01_03")
 
-# T4 - perceived benefits of smart home devices across countries ANOVA 
+# T4 - perceived benefits of smart home devices across countries ANOVA
 #A307 Perceived Feature benefit ----
 
 titles$A307_01 = "Saving money"
@@ -1099,13 +1229,12 @@ titles$A307_08 = "Providing care"
 titles$A307_09 = "Improving quality of life"
 titles$A307_10 = "Increasing property value"
 
-calc_anova(country_anova,'A307_04')
-calc_anova(country_anova,'A307_05')
-calc_anova(country_anova,'A307_06')
-calc_anova(country_anova,'A307_07')
-calc_anova(country_anova,'A307_08')
-calc_anova(country_anova,'A307_10')
+calc_anova(country_anova, 'A307_04')
+calc_anova(country_anova, 'A307_05')
+calc_anova(country_anova, 'A307_06')
+calc_anova(country_anova, 'A307_07')
+calc_anova(country_anova, 'A307_08')
+calc_anova(country_anova, 'A307_10')
 
 
-calc_anova(country_anova,'R101')
-
+calc_anova(country_anova, 'R101')
