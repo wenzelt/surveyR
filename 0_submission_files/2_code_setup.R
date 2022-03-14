@@ -1,3 +1,118 @@
+##### Installation of dependencies ----
+list.of.packages <- c(
+  "Hmisc",
+  
+  "tidyverse",
+  
+  "summarytools",
+  
+  "stringi",
+  
+  "sjPlot",
+  
+  "doBy",
+  
+  "janitor" ,
+  
+  "data.table",
+  
+  "plyr",
+  
+  "psych",
+  
+  "lattice",
+  
+  "multcompView",
+  
+  "dplyr",
+  
+  "ggpubr",
+  
+  "QCA",
+  
+  "FSA",
+  
+  "dunn.test",
+  
+  "rcompanion",
+  
+  "gplots",
+  
+  "hash",
+  
+  'knitr',
+  
+  'pagedown',
+  
+  'rmarkdown',
+  
+  "gtools"
+  
+)
+
+
+
+new.packages <-
+  
+  list.of.packages[!(list.of.packages %in% installed.packages()[, "Package"])]
+
+if (length(new.packages))
+  
+  install.packages(new.packages)
+
+
+
+library(Hmisc)
+
+library(summarytools)
+
+library(rcompanion)
+
+library(FSA)
+
+library(dunn.test)
+
+library(tidyverse)
+
+library(dplyr)
+
+library(ggplot2)
+
+library(sjPlot)
+
+library(ggpubr)
+
+library(rstatix)
+
+library(readxl)
+
+library(psych)
+
+library(QCA)
+
+library(xtable)
+
+library(data.table)
+
+library(plyr)
+
+library(doBy)
+
+library(janitor)
+
+library(gplots)
+
+library(hash)
+
+library(knitr)
+
+library(pagedown)
+
+library(rmarkdown)
+
+
+
+
 ssot_new <- read_csv("0_submission_files/0_submission_dataset.csv")
 
 # 0.3 appending measures to dataset ----

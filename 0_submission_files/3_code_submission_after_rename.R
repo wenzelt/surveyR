@@ -344,32 +344,11 @@ mean(as.numeric(subset(children_smartTV, Children == 0)$Usage))
 
 
 
-# F15 - preference for voice based interaction
+# F15 - preference for voice based interaction ----
 
-data.frame(
-  "Usage_type" = c(
-    "Voice commands via a Smart Speaker",
-    
-    "Voice commands via a Smartphone Voice Assistant"
-    
-  ),
-  
-  "p_value" = c(
-    wilcox_test(ssot_new, interactcomfort_speaker ~ numberofchildren)$p,
-    
-    wilcox_test(ssot_new, interactcomfort_assistant ~ numberofchildren)$p
-    
-  ),
-  
-  "effect_size" = c(
-    wilcox_effsize(ssot_new, formula = interactcomfort_speaker ~ numberofchildren)$effsize,
-    
-    wilcox_effsize(ssot_new, formula = interactcomfort_assistant ~ numberofchildren)$effsize
-    
-  )
-  
-)
 
+wilcox_test(ssot_new, formula = interactcomfort_speaker ~ numberofchildren)
+wilcox_test(ssot_new, formula = interactcomfort_assistant ~ numberofchildren)
 
 
 
