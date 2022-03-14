@@ -104,7 +104,7 @@ detach(demographic_data)
 
 # perception - how does perceived legislative protection influence Perceived Intrusion
 
-cor_test(select(ssot_new, LA_Mean, muipc_PerceivedIntrusion_avg))
+cor.test( ssot_new$LA_Mean, ssot_new$muipc_PerceivedIntrusion_avg)
 
 # strong negative correlation for non device users.
 
@@ -112,13 +112,11 @@ cor_test(select(ssot_new, LA_Mean, muipc_PerceivedIntrusion_avg))
 
 
 
-cor_test(select(
-  subset(ssot_new, numberofshds < 1),
+cor.test(
+  subset(ssot_new, numberofshds < 1)$LA_Mean,
   
-  LA_Mean,
-  
-  muipc_PerceivedIntrusion_avg
-))
+  subset(ssot_new, numberofshds < 1)$muipc_PerceivedIntrusion_avg
+)
 
 
 
@@ -126,19 +124,18 @@ cor_test(select(
 
 
 
-cor_test(select(
-  subset(ssot_new, numberofshds > 0),
+cor.test(
+  subset(ssot_new, numberofshds > 0)$LA_Mean,
   
-  LA_Mean,
-  
-  muipc_PerceivedIntrusion_avg
-))
+  subset(ssot_new, numberofshds > 0)$muipc_PerceivedIntrusion_avg
+)
 
 
 
 # F4 manufacturer responsibility for protecting privacy and security ----
 
-cor_test(select(ssot_new, devicesecurity, muipc_PerceivedIntrusion_avg))
+cor.test(ssot_new$devicesecurity,
+         ssot_new$muipc_PerceivedIntrusion_avg)
 
 
 
@@ -166,9 +163,7 @@ devices_interesting <-
   
   subset(
     devices_combined
-    
     ,
-    
     Device_Owned == "Smart TV" |
       
       Device_Owned == "Smart Lightbulb" |
@@ -179,58 +174,41 @@ devices_interesting <-
 
 devices_grouped = group_by(devices_interesting, Device_Owned)
 
-LA_MEAN_USAGE_DEVICE_INTERESTING <-
+cor.test(
+  subset(devices_interesting, Device_Owned == "Smart Lightbulb")$LA_Mean,
   
-  dplyr::summarize(devices_grouped, cor(LA_Mean, as.numeric(Usage)))
-
-LA_MEAN_USAGE_DEVICE_INTERESTING[3] <- "Pearson"
-
-LA_MEAN_USAGE_DEVICE_INTERESTING[4] <-
+  as.numeric(
+    subset(devices_interesting, Device_Owned == "Smart Lightbulb")$Usage
+    
+  ),
   
-  c(
-    cor.test(
-      subset(devices_interesting, Device_Owned == "Smart Lightbulb")$LA_Mean,
-      
-      as.numeric(
-        subset(devices_interesting, Device_Owned == "Smart Lightbulb")$Usage
-        
-      ),
-      
-      method = "pearson"
-      
-    )$p.value,
-    
-    cor.test(
-      subset(devices_interesting, Device_Owned == "Smart Speaker")$LA_Mean,
-      
-      as.numeric(
-        subset(devices_interesting, Device_Owned == "Smart Speaker")$Usage
-        
-      ),
-      
-      method = "pearson"
-      
-    )$p.value,
-    
-    cor.test(
-      subset(devices_interesting, Device_Owned == "Smart TV")$LA_Mean,
-      
-      as.numeric(subset(
-        devices_interesting, Device_Owned == "Smart TV"
-        
-      )$Usage),
-      
-      method = "pearson"
-      
-    )$p.value
-    
-  )
-
-colnames(LA_MEAN_USAGE_DEVICE_INTERESTING) <-
+  method = "pearson"
   
-  c("Device", "Cor", "Method", "P-Value")
+)
 
-LA_MEAN_USAGE_DEVICE_INTERESTING
+cor.test(
+  subset(devices_interesting, Device_Owned == "Smart Speaker")$LA_Mean,
+  
+  as.numeric(
+    subset(devices_interesting, Device_Owned == "Smart Speaker")$Usage
+    
+  ),
+  
+  method = "pearson"
+  
+)
+
+cor.test(
+  subset(devices_interesting, Device_Owned == "Smart TV")$LA_Mean,
+  
+  as.numeric(subset(
+    devices_interesting, Device_Owned == "Smart TV"
+    
+  )$Usage),
+  
+  method = "pearson"
+  
+)
 
 ####
 
@@ -277,14 +255,13 @@ cor.test(Participants_US$LA_Mean, Participants_US$numberofshds)
 dunnTest(
   x = subset(devices_combined, Device_Owned == "Smart TV")$Usage,
   
-  g = as.factor(
-    subset(devices_combined, Device_Owned == "Smart TV")$region
-    
-  ),
+  g = as.factor(subset(
+    devices_combined, Device_Owned == "Smart TV"
+  )$region),
   
   method = "bonferroni"
   
-)$res
+)
 
 
 
@@ -461,6 +438,7 @@ mean(as.numeric(smart_speaker_users$Data_Stored))
 
 
 
+
 # F18 - No integration selections -----
 
 
@@ -493,7 +471,36 @@ prop.table(table(no_integration$notown_guestprivacy))
 
 prop.table(table(no_integration$notown_cost))
 
+### 
 
+devicerisk_selected_devices = select(
+  ssot_new,
+  devicerisk_tv,
+  devicerisk_lightbulb,
+  devicerisk_speaker
+)
+
+
+
+tv = as.data.frame(ssot_new$devicerisk_tv)
+tv$id = 'tv'
+
+speaker = as.data.frame(ssot_new$devicerisk_speaker)
+speaker$id = 'speaker'
+
+lightbulb= as.data.frame(ssot_new$devicerisk_lightbulb)
+lightbulb$id = 'lightbulb'
+
+
+colnames(tv)=colnames(speaker)=colnames(lightbulb)
+
+interesting_devices_risk_stacked = rbind(tv,speaker,lightbulb)
+colnames(interesting_devices_risk_stacked) = c('risk','device')
+aov_content =  aov(interesting_devices_risk_stacked$risk~ interesting_devices_risk_stacked$device)
+
+tuk = TukeyHSD(aov_content)
+print(summary(aov_content))
+print(tuk)
 
 ##### 9.0 -  Tables ----
 
