@@ -104,7 +104,7 @@ detach(demographic_data)
 
 # perception - how does perceived legislative protection influence Perceived Intrusion
 
-cor.test( ssot_new$LA_Mean, ssot_new$muipc_PerceivedIntrusion_avg)
+cor.test(ssot_new$LA_Mean, ssot_new$muipc_PerceivedIntrusion_avg)
 
 # strong negative correlation for non device users.
 
@@ -323,6 +323,11 @@ mean(as.numeric(subset(children_smartTV, Children == 0)$Usage))
 
 # F15 - preference for voice based interaction ----
 
+mean(subset(select(ssot_new, interactcomfort_speaker,numberofchildren),numberofchildren ==0)$interactcomfort_speaker)
+mean(subset(select(ssot_new, interactcomfort_speaker,numberofchildren),numberofchildren ==1)$interactcomfort_speaker)
+
+mean(subset(select(ssot_new, interactcomfort_assistant,numberofchildren),numberofchildren ==0)$interactcomfort_assistant)
+mean(subset(select(ssot_new, interactcomfort_assistant,numberofchildren),numberofchildren ==1)$interactcomfort_assistant)
 
 wilcox_test(ssot_new, formula = interactcomfort_speaker ~ numberofchildren)
 wilcox_test(ssot_new, formula = interactcomfort_assistant ~ numberofchildren)
@@ -471,7 +476,8 @@ prop.table(table(no_integration$notown_guestprivacy))
 
 prop.table(table(no_integration$notown_cost))
 
-### 
+# F19 - No integration selections -----
+
 
 devicerisk_selected_devices = select(
   ssot_new,
@@ -479,8 +485,6 @@ devicerisk_selected_devices = select(
   devicerisk_lightbulb,
   devicerisk_speaker
 )
-
-
 
 tv = as.data.frame(ssot_new$devicerisk_tv)
 tv$id = 'tv'
@@ -531,10 +535,6 @@ names(demographic_data_t1)[names(demographic_data_t1) == "gender"] <-
 
 
 attach(demographic_data_t1)
-
-
-
-
 
 #3 people preferred not to enter their age
 
@@ -847,7 +847,5 @@ calc_anova(region_anova, 'benefit_care')
 calc_anova(region_anova, 'benefit_propertyvalue')
 
 
-
-
-
+# number of devices by region 
 calc_anova(region_anova, 'numberofshds')

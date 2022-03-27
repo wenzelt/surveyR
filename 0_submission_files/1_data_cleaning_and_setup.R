@@ -291,40 +291,10 @@ SSOT <- subset(SSOT, attentioncheck == 1)
 
 
 
-# reverse one item in Sebis proactive awareness
-
-SSOT <- mutate(SSOT, comparison = 7 - sebis_awareness_openlink)
-
-SSOT <- mutate(SSOT, comparison = 7 - sebis_awareness_sitelookfeel)
-
-SSOT <-
-  mutate(SSOT, comparison = 7 - sebis_awareness_urlverification)
-
-SSOT <- mutate(SSOT, comparison = 7 - sebis_awareness_someoneelse)
-
-
-
-
-
 # copy to new dataset for modification
 
 ssot_new <- SSOT
 
-
-
-#remove attention check column
-
-# ssot_new <-
-#   
-#   within(ssot_new, rm(attentioncheck))
-
-
-
-# create bool if participant has children or not from numeric var
-
-ssot_new$numberofchildren <-
-  
-  ifelse(ssot_new$numberofchildren > 1, 1, 0) # having children
 
 
 
@@ -1255,7 +1225,7 @@ submission_dataset = select(
   device1_useimages,
   device1_useenvironment,
   device1_useinternet,
-  device1_onlinepurchases,
+  device1_useonlinepurchases,
   device1_useofflinepurchases,
   device1_usepowerconsumption,
   device1_useactivities,
@@ -1268,7 +1238,7 @@ submission_dataset = select(
   device1_useimages,
   device1_useenvironment,
   device1_useinternet,
-  device1_onlinepurchases,
+  device1_useonlinepurchases,
   device1_useofflinepurchases,
   device1_usepowerconsumption,
   device1_useactivities,
@@ -1281,7 +1251,7 @@ submission_dataset = select(
   device2_useimages,
   device2_useenvironment,
   device2_useinternet,
-  device2_onlinepurchases,
+  device2_useonlinepurchases,
   device2_useofflinepurchases,
   device2_usepowerconsumption,
   device2_useactivities,
@@ -1294,7 +1264,7 @@ submission_dataset = select(
   device2_useimages,
   device2_useenvironment,
   device2_useinternet,
-  device2_onlinepurchases,
+  device2_useonlinepurchases,
   device2_useofflinepurchases,
   device2_usepowerconsumption,
   device2_useactivities,
@@ -1307,7 +1277,7 @@ submission_dataset = select(
   device3_useimages,
   device3_useenvironment,
   device3_useinternet,
-  device3_onlinepurchases,
+  device3_useonlinepurchases,
   device3_useofflinepurchases,
   device3_usepowerconsumption,
   device3_useactivities,
@@ -1320,7 +1290,7 @@ submission_dataset = select(
   device3_useimages,
   device3_useenvironment,
   device3_useinternet,
-  device3_onlinepurchases,
+  device3_useonlinepurchases,
   device3_useofflinepurchases,
   device3_usepowerconsumption,
   device3_useactivities,
@@ -1561,7 +1531,6 @@ submission_dataset = select(
   smartbenefit_washer,
   smartbenefit_other,
   smartbenefit_othertext,
-  smartsecurityrisk_,
   smartsecurityrisk_coffeemaker,
   smartsecurityrisk_dishwasher,
   smartsecurityrisk_doorlock,
@@ -1653,12 +1622,12 @@ submission_dataset = select(
   interactcomfort_outsidesensor,
   interactcomfort_automation,
   interactcomfort_othertext,
-  consult_friendsfamily,
-  consult_forums,
-  consult_printmedia,
-  consult_reviews,
-  consult_other,
-  consult_othertext,
+  # consult_friendsfamily,
+  # consult_forums,
+  # consult_printmedia,
+  # consult_reviews,
+  # consult_other,
+  # consult_othertext,
   purchaseinfluence_price,
   purchaseinfluence_bundle,
   purchaseinfluence_trial,

@@ -1,3 +1,115 @@
+##### 0.1 Installation of dependencies ----
+list.of.packages <- c(
+  "Hmisc",
+  
+  "tidyverse",
+  
+  "summarytools",
+  
+  "stringi",
+  
+  "sjPlot",
+  
+  "doBy",
+  
+  "janitor" ,
+  
+  "data.table",
+  
+  "plyr",
+  
+  "psych",
+  
+  "lattice",
+  
+  "multcompView",
+  
+  "dplyr",
+  
+  "ggpubr",
+  
+  "QCA",
+  
+  "FSA",
+  
+  "dunn.test",
+  
+  "rcompanion",
+  
+  "gplots",
+  
+  "hash",
+  
+  'knitr',
+  
+  'pagedown',
+  
+  'rmarkdown',
+  
+  "gtools"
+  
+)
+
+
+
+new.packages <-
+  
+  list.of.packages[!(list.of.packages %in% installed.packages()[, "Package"])]
+
+if (length(new.packages))
+  
+  install.packages(new.packages)
+
+
+
+library(Hmisc)
+
+library(summarytools)
+
+library(rcompanion)
+
+library(FSA)
+
+library(dunn.test)
+
+library(tidyverse)
+
+library(dplyr)
+
+library(ggplot2)
+
+library(sjPlot)
+
+library(ggpubr)
+
+library(rstatix)
+
+library(readxl)
+
+library(psych)
+
+library(QCA)
+
+library(xtable)
+
+library(data.table)
+
+library(plyr)
+
+library(doBy)
+
+library(janitor)
+
+library(gplots)
+
+library(hash)
+
+library(knitr)
+
+library(pagedown)
+
+library(rmarkdown)
+
 soSciData = read_delim(
   "0_submission_files/rdata_smarthomestudy_2019-12-08_11-45.csv",
   delim = "\t",
@@ -9,6 +121,23 @@ soSciData = read_delim(
 soSciData['R523_06a'] = NA
 soSciData['HP01_05a'] = NA
 soSciData['A002_04'] = NA
+
+#recoding variablefor numerofchildren
+soSciData$A004 = with(soSciData, ifelse( soSciData$A004 > 0 , soSciData$A004 -1, soSciData$A004)) 
+
+#rescaling device prices 
+soSciData$R201 = with(soSciData, ifelse( soSciData$R201 < 26 & soSciData$R201 > 0 , soSciData$R201 + 2, soSciData$R201)) 
+soSciData$R201 = with(soSciData, ifelse( soSciData$R201 > 25  , soSciData$R201 -25 , soSciData$R201))
+
+#rescaling device prices 
+soSciData$R202 = with(soSciData, ifelse( soSciData$R202 < 26 & soSciData$R202 > 0 , soSciData$R202 + 2, soSciData$R202)) 
+soSciData$R202 = with(soSciData, ifelse( soSciData$R202 > 25  , soSciData$R202 -25 , soSciData$R202))
+
+#rescaling device prices 
+soSciData$R203 = with(soSciData, ifelse( soSciData$R203 < 26 & soSciData$R203 > 0 , soSciData$R203 + 2, soSciData$R203)) 
+soSciData$R203 = with(soSciData, ifelse( soSciData$R203 > 25  , soSciData$R203 -25 , soSciData$R203))
+
+
 
 preCleaningData = soSciData %>% mutate(
   device1_primaryuse_convenience = dplyr::coalesce(R210_01, R211_01),
@@ -156,7 +285,7 @@ preCleaningData = soSciData %>% mutate(
   device1_useimages = dplyr::coalesce(R516_10, R517_10),
   device1_useenvironment = dplyr::coalesce(R516_11, R517_11),
   device1_useinternet = dplyr::coalesce(R516_05, R517_05),
-  device1_onlinepurchases = dplyr::coalesce(R516_06, R517_06),
+  device1_useonlinepurchases = dplyr::coalesce(R516_06, R517_06),
   device1_useofflinepurchases = dplyr::coalesce(R516_14, R517_14),
   device1_usepowerconsumption = dplyr::coalesce(R516_09, R517_09),
   device1_useactivities = dplyr::coalesce(R516_12, R517_12),
@@ -171,7 +300,7 @@ preCleaningData = soSciData %>% mutate(
   device2_useimages = dplyr::coalesce(R518_10, R519_10),
   device2_useenvironment = dplyr::coalesce(R518_11, R519_11),
   device2_useinternet = dplyr::coalesce(R518_05, R519_05),
-  device2_onlinepurchases = dplyr::coalesce(R518_06, R519_06),
+  device2_useonlinepurchases = dplyr::coalesce(R518_06, R519_06),
   device2_useofflinepurchases = dplyr::coalesce(R518_14, R519_14),
   device2_usepowerconsumption = dplyr::coalesce(R518_09, R519_09),
   device2_useactivities = dplyr::coalesce(R518_12, R519_12),
@@ -186,7 +315,7 @@ preCleaningData = soSciData %>% mutate(
   device3_useimages = dplyr::coalesce(R520_10, R521_10),
   device3_useenvironment = dplyr::coalesce(R520_11, R521_11),
   device3_useinternet = dplyr::coalesce(R520_05, R521_05),
-  device3_onlinepurchases = dplyr::coalesce(R520_06, R521_06),
+  device3_useonlinepurchases = dplyr::coalesce(R520_06, R521_06),
   device3_useofflinepurchases = dplyr::coalesce(R520_14, R521_14),
   device3_usepowerconsumption = dplyr::coalesce(R520_09, R521_09),
   device3_useactivities = dplyr::coalesce(R520_12, R521_12),
@@ -452,7 +581,6 @@ preCleaningData = preCleaningData %>%
     smartbenefit_other = A302_20,
     smartbenefit_othertext = A302_20a,
     
-    smartsecurityrisk_ = A303,
     smartsecurityrisk_coffeemaker = A303_01,
     smartsecurityrisk_dishwasher = A303_02,
     smartsecurityrisk_doorlock = A303_03,
@@ -553,12 +681,12 @@ preCleaningData = preCleaningData %>%
     interactcomfort_automation = E205_07,
     interactcomfort_othertext = E206_01,
     
-    consult_friendsfamily = HP01_01,
-    consult_forums = HP01_02,
-    consult_printmedia = HP01_03,
-    consult_reviews = HP01_04,
-    consult_other = HP01_05,
-    consult_othertext = HP01_05a,
+    # consult_friendsfamily = HP01_01,
+    # consult_forums = HP01_02,
+    # consult_printmedia = HP01_03,
+    # consult_reviews = HP01_04,
+    # consult_other = HP01_05,
+    # consult_othertext = HP01_05a,
     
     purchaseinfluence_price = HP02_01,
     purchaseinfluence_bundle = HP02_02,
@@ -677,6 +805,7 @@ deClutteredData = select(
   device2_price,
   device3_price,
   device1_purchaselocation,
+  device1_purchaselocation_othertext,
   device2_purchaselocation,
   device2_purchaselocation_othertext,
   device3_purchaselocation,
@@ -692,22 +821,7 @@ deClutteredData = select(
   device1_primaryuse_latesttech,
   device1_primaryuse_other,
   device1_primaryuse_othertext,
-  device1_primaryuse_convenience,
-  device1_primaryuse_savemoney,
-  device1_primaryuse_savepower,
-  device1_primaryuse_safety,
-  device1_primaryuse_automation,
-  device1_primaryuse_latesttech,
-  device1_primaryuse_other,
-  device1_primaryuse_othertext,
-  device2_primaryuse_convenience,
-  device2_primaryuse_savemoney,
-  device2_primaryuse_savepower,
-  device2_primaryuse_safety,
-  device2_primaryuse_automation,
-  device2_primaryuse_latesttech,
-  device2_primaryuse_other,
-  device2_primaryuse_othertext,
+  
   device2_primaryuse_convenience,
   device2_primaryuse_savemoney,
   device2_primaryuse_savepower,
@@ -724,14 +838,7 @@ deClutteredData = select(
   device3_primaryuse_latesttech,
   device3_primaryuse_other,
   device3_primaryuse_othertext,
-  device3_primaryuse_convenience,
-  device3_primaryuse_savemoney,
-  device3_primaryuse_savepower,
-  device3_primaryuse_safety,
-  device3_primaryuse_automation,
-  device3_primaryuse_latesttech,
-  device3_primaryuse_other,
-  device3_primaryuse_othertext,
+  
   device1_infosources_reviews,
   device1_infosources_forums,
   device1_infosources_printmedia,
@@ -739,13 +846,7 @@ deClutteredData = select(
   device1_infosources_news,
   device1_infosources_other,
   device1_infosources_othertext,
-  device1_infosources_reviews,
-  device1_infosources_forums,
-  device1_infosources_printmedia,
-  device1_infosources_friendsfamily,
-  device1_infosources_news,
-  device1_infosources_other,
-  device1_infosources_othertext,
+  
   device2_infosources_reviews,
   device2_infosources_forums,
   device2_infosources_printmedia,
@@ -753,13 +854,7 @@ deClutteredData = select(
   device2_infosources_news,
   device2_infosources_other,
   device2_infosources_othertext,
-  device2_infosources_reviews,
-  device2_infosources_forums,
-  device2_infosources_printmedia,
-  device2_infosources_friendsfamily,
-  device2_infosources_news,
-  device2_infosources_other,
-  device2_infosources_othertext,
+
   device3_infosources_reviews,
   device3_infosources_forums,
   device3_infosources_printmedia,
@@ -767,13 +862,7 @@ deClutteredData = select(
   device3_infosources_news,
   device3_infosources_other,
   device3_infosources_othertext,
-  device3_infosources_reviews,
-  device3_infosources_forums,
-  device3_infosources_printmedia,
-  device3_infosources_friendsfamily,
-  device3_infosources_news,
-  device3_infosources_other,
-  device3_infosources_othertext,
+  
   device1_purchasereason,
   device2_purchasereason,
   device3_purchasereason,
@@ -801,30 +890,7 @@ deClutteredData = select(
   device3_hearinfo_tradeshow,
   device3_hearinfo_other,
   device3_hearinfo_othertext,
-  device1_hearinfo_tv,
-  device1_hearinfo_internet,
-  device1_hearinfo_printmedia,
-  device1_hearinfo_friendsfamily,
-  device1_hearinfo_store,
-  device1_hearinfo_tradeshow,
-  device1_hearinfo_other,
-  device1_hearinfo_othertext,
-  device2_hearinfo_tv,
-  device2_hearinfo_internet,
-  device2_hearinfo_printmedia,
-  device2_hearinfo_friendsfamily,
-  device2_hearinfo_store,
-  device2_hearinfo_tradeshow,
-  device2_hearinfo_other,
-  device2_hearinfo_othertext,
-  device3_hearinfo_tv,
-  device3_hearinfo_internet,
-  device3_hearinfo_printmedia,
-  device3_hearinfo_friendsfamily,
-  device3_hearinfo_store,
-  device3_hearinfo_tradeshow,
-  device3_hearinfo_other,
-  device3_hearinfo_othertext,
+  
   device1_protectdata,
   device1_preventthirdparty,
   device2_protectdata,
@@ -856,14 +922,7 @@ deClutteredData = select(
   device1_disabledfeatures_unused,
   device1_disabledfeatures_other,
   device1_disabledfeatures_othertext,
-  device1_disabledfeatures_battery,
-  device1_disabledfeatures_savepower,
-  device1_disabledfeatures_privacy,
-  device1_disabledfeatures_security,
-  device1_disabledfeatures_ux,
-  device1_disabledfeatures_unused,
-  device1_disabledfeatures_other,
-  device1_disabledfeatures_othertext,
+  
   device2_disabledfeatures,
   device2_disabledfeatures_text,
   device2_disabledfeatures_battery,
@@ -874,14 +933,7 @@ deClutteredData = select(
   device2_disabledfeatures_unused,
   device2_disabledfeatures_other,
   device2_disabledfeatures_othertext,
-  device2_disabledfeatures_battery,
-  device2_disabledfeatures_savepower,
-  device2_disabledfeatures_privacy,
-  device2_disabledfeatures_security,
-  device2_disabledfeatures_ux,
-  device2_disabledfeatures_unused,
-  device2_disabledfeatures_other,
-  device2_disabledfeatures_othertext,
+ 
   device3_disabledfeatures,
   device3_disabledfeatures_text,
   device3_disabledfeatures_battery,
@@ -892,14 +944,7 @@ deClutteredData = select(
   device3_disabledfeatures_unused,
   device3_disabledfeatures_other,
   device3_disabledfeatures_othertext,
-  device3_disabledfeatures_battery,
-  device3_disabledfeatures_savepower,
-  device3_disabledfeatures_privacy,
-  device3_disabledfeatures_security,
-  device3_disabledfeatures_ux,
-  device3_disabledfeatures_unused,
-  device3_disabledfeatures_other,
-  device3_disabledfeatures_othertext,
+  
   device1_uselocation,
   device1_useroutines,
   device1_usespeech,
@@ -907,25 +952,13 @@ deClutteredData = select(
   device1_useimages,
   device1_useenvironment,
   device1_useinternet,
-  device1_onlinepurchases,
+  device1_useonlinepurchases,
   device1_useofflinepurchases,
   device1_usepowerconsumption,
   device1_useactivities,
   device1_useother,
   device1_useothertext,
-  device1_uselocation,
-  device1_useroutines,
-  device1_usespeech,
-  device1_usevideo,
-  device1_useimages,
-  device1_useenvironment,
-  device1_useinternet,
-  device1_onlinepurchases,
-  device1_useofflinepurchases,
-  device1_usepowerconsumption,
-  device1_useactivities,
-  device1_useother,
-  device1_useothertext,
+  
   device2_uselocation,
   device2_useroutines,
   device2_usespeech,
@@ -933,25 +966,13 @@ deClutteredData = select(
   device2_useimages,
   device2_useenvironment,
   device2_useinternet,
-  device2_onlinepurchases,
+  device2_useonlinepurchases,
   device2_useofflinepurchases,
   device2_usepowerconsumption,
   device2_useactivities,
   device2_useother,
   device2_useothertext,
-  device2_uselocation,
-  device2_useroutines,
-  device2_usespeech,
-  device2_usevideo,
-  device2_useimages,
-  device2_useenvironment,
-  device2_useinternet,
-  device2_onlinepurchases,
-  device2_useofflinepurchases,
-  device2_usepowerconsumption,
-  device2_useactivities,
-  device2_useother,
-  device2_useothertext,
+  
   device3_uselocation,
   device3_useroutines,
   device3_usespeech,
@@ -959,25 +980,13 @@ deClutteredData = select(
   device3_useimages,
   device3_useenvironment,
   device3_useinternet,
-  device3_onlinepurchases,
+  device3_useonlinepurchases,
   device3_useofflinepurchases,
   device3_usepowerconsumption,
   device3_useactivities,
   device3_useother,
   device3_useothertext,
-  device3_uselocation,
-  device3_useroutines,
-  device3_usespeech,
-  device3_usevideo,
-  device3_useimages,
-  device3_useenvironment,
-  device3_useinternet,
-  device3_onlinepurchases,
-  device3_useofflinepurchases,
-  device3_usepowerconsumption,
-  device3_useactivities,
-  device3_useother,
-  device3_useothertext,
+  
   device1_storeinternet,
   device1_storecloud,
   device1_storelocal,
@@ -986,14 +995,7 @@ deClutteredData = select(
   device1_storethirdparties,
   device1_storeother,
   device1_storeothertext,
-  device1_storeinternet,
-  device1_storecloud,
-  device1_storelocal,
-  device1_storeisp,
-  device1_storemanufacturer,
-  device1_storethirdparties,
-  device1_storeother,
-  device1_storeothertext,
+  
   device2_storeinternet,
   device2_storecloud,
   device2_storelocal,
@@ -1002,14 +1004,7 @@ deClutteredData = select(
   device2_storethirdparties,
   device2_storeother,
   device2_storeothertext,
-  device2_storeinternet,
-  device2_storecloud,
-  device2_storelocal,
-  device2_storeisp,
-  device2_storemanufacturer,
-  device2_storethirdparties,
-  device2_storeother,
-  device2_storeothertext,
+  
   device3_storeinternet,
   device3_storecloud,
   device3_storelocal,
@@ -1018,14 +1013,7 @@ deClutteredData = select(
   device3_storethirdparties,
   device3_storeother,
   device3_storeothertext,
-  device3_storeinternet,
-  device3_storecloud,
-  device3_storelocal,
-  device3_storeisp,
-  device3_storemanufacturer,
-  device3_storethirdparties,
-  device3_storeother,
-  device3_storeothertext,
+  
   device1_locationattic,
   device1_locationbalcony,
   device1_locationbasement,
@@ -1041,21 +1029,7 @@ deClutteredData = select(
   device1_locationyard,
   device1_locationother,
   device1_locationothertext,
-  device1_locationattic,
-  device1_locationbalcony,
-  device1_locationbasement,
-  device1_locationkidsroom,
-  device1_locationdining,
-  device1_locationgarage,
-  device1_locationguestbedroom,
-  device1_locationhallway,
-  device1_locationkitchen,
-  device1_locationlivingroom,
-  device1_locationmasterbedroom,
-  device1_locationpatio,
-  device1_locationyard,
-  device1_locationother,
-  device1_locationothertext,
+  
   device2_locationattic,
   device2_locationbalcony,
   device2_locationbasement,
@@ -1071,21 +1045,7 @@ deClutteredData = select(
   device2_locationyard,
   device2_locationother,
   device2_locationothertext,
-  device2_locationattic,
-  device2_locationbalcony,
-  device2_locationbasement,
-  device2_locationkidsroom,
-  device2_locationdining,
-  device2_locationgarage,
-  device2_locationguestbedroom,
-  device2_locationhallway,
-  device2_locationkitchen,
-  device2_locationlivingroom,
-  device2_locationmasterbedroom,
-  device2_locationpatio,
-  device2_locationyard,
-  device2_locationother,
-  device2_locationothertext,
+  
   device3_locationattic,
   device3_locationbalcony,
   device3_locationbasement,
@@ -1101,21 +1061,7 @@ deClutteredData = select(
   device3_locationyard,
   device3_locationother,
   device3_locationothertext,
-  device3_locationattic,
-  device3_locationbalcony,
-  device3_locationbasement,
-  device3_locationkidsroom,
-  device3_locationdining,
-  device3_locationgarage,
-  device3_locationguestbedroom,
-  device3_locationhallway,
-  device3_locationkitchen,
-  device3_locationlivingroom,
-  device3_locationmasterbedroom,
-  device3_locationpatio,
-  device3_locationyard,
-  device3_locationother,
-  device3_locationothertext,
+  
   device1_interactvoice,
   device1_interactapp,
   device1_interactbuttons,
@@ -1124,14 +1070,7 @@ deClutteredData = select(
   device1_interactrouter,
   device1_interactother,
   device1_interactothertext,
-  device1_interactvoice,
-  device1_interactapp,
-  device1_interactbuttons,
-  device1_interactscreen,
-  device1_interactinternet,
-  device1_interactrouter,
-  device1_interactother,
-  device1_interactothertext,
+  
   device2_interactvoice,
   device2_interactapp,
   device2_interactbuttons,
@@ -1140,14 +1079,7 @@ deClutteredData = select(
   device2_interactrouter,
   device2_interactother,
   device2_interactothertext,
-  device2_interactvoice,
-  device2_interactapp,
-  device2_interactbuttons,
-  device2_interactscreen,
-  device2_interactinternet,
-  device2_interactrouter,
-  device2_interactother,
-  device2_interactothertext,
+  
   device3_interactvoice,
   device3_interactapp,
   device3_interactbuttons,
@@ -1156,14 +1088,7 @@ deClutteredData = select(
   device3_interactrouter,
   device3_interactother,
   device3_interactothertext,
-  device3_interactvoice,
-  device3_interactapp,
-  device3_interactbuttons,
-  device3_interactscreen,
-  device3_interactinternet,
-  device3_interactrouter,
-  device3_interactother,
-  device3_interactothertext,
+  
   shddata_kinds,
   shddata_value,
   shddata_collection,
@@ -1213,7 +1138,6 @@ deClutteredData = select(
   smartbenefit_washer,
   smartbenefit_other,
   smartbenefit_othertext,
-  smartsecurityrisk_,
   smartsecurityrisk_coffeemaker,
   smartsecurityrisk_dishwasher,
   smartsecurityrisk_doorlock,
@@ -1305,12 +1229,12 @@ deClutteredData = select(
   interactcomfort_outsidesensor,
   interactcomfort_automation,
   interactcomfort_othertext,
-  consult_friendsfamily,
-  consult_forums,
-  consult_printmedia,
-  consult_reviews,
-  consult_other,
-  consult_othertext,
+  # consult_friendsfamily,
+  # consult_forums,
+  # consult_printmedia,
+  # consult_reviews,
+  # consult_other,
+  # consult_othertext,
   purchaseinfluence_price,
   purchaseinfluence_bundle,
   purchaseinfluence_trial,
